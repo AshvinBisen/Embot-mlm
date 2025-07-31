@@ -1,0 +1,62 @@
+src/
+├── Admin/
+│   ├── Components/
+│   │   └── AdminNavbar.jsx
+│   ├── Layout/
+│   │   └── AdminLayout.jsx
+│   ├── Pages/
+│   │   ├── Dashboard.jsx
+│   │   └── Login.jsx
+│   └── Auth/
+│       └── useAdminAuth.jsx
+│
+├── User/
+│   ├── Components/
+│   │   └── UserNavbar.jsx
+│   ├── Layout/
+│   │   └── UserLayout.jsx
+│   ├── Pages/
+│   │   ├── Dashboard.jsx
+│   │   └── Login.jsx
+│   └── Auth/
+│       └── useUserAuth.jsx
+│
+├── Common/
+│   ├── Components/
+│   │   ├── CommonNavbar.jsx
+│   │   └── Footer.jsx
+│   ├── Layout/
+│   │   └── CommonLayout.jsx
+│   └── Pages/
+│       ├── HomePage.jsx
+│       └── NotFound.jsx
+│
+├── Routes/
+│   └── AppRoutes.jsx
+│
+├── Services/
+│   ├── adminAuthService.js
+│   └── userAuthService.js
+│
+├── Context/
+│   ├── SidebarContext.jsx
+│   └── ThemeContext.jsx
+│
+├── Hooks/
+│   └── useAuthRedirect.jsx
+│
+├── Utils/
+│   └── formatDate.js
+│
+├── Config/
+│   └── appConfig.js
+│
+├── Icons/
+│   ├── IconDashboard.jsx
+│   ├── IconLogout.jsx
+│   └── ...
+│
+├── App.jsx
+├── main.jsx
+├── index.css
+└── vite.config.js (or webpack.config.js)

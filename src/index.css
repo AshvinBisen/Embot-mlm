@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @font-face {
+  font-family: "montb";
+  src: url("/public/FONT/Montserrat-Bold.ttf");
+} */
+
+/* customs fonts  */
+
+/* pera fonts  */
+.plight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+.pregular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.pmedium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.pbold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.hlight {
+  font-family: "Philosopher", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.hmedium {
+  font-family: "Philosopher", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.hbold {
+  font-family: "Philosopher", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+h1 {
+  font-family: "Philosopher", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background-color: black;
+  color: white;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+  
+}
+.headroom {
+  z-index: 50 !important;
+}
+
+.text-shadow {
+  text-shadow: 2px 3px 12.5px #000;
+}
+
+.text_neo {
+  /* NEO TEXT */
+  text-shadow: -5px -5px 6.4px #fff, 12px 11px 21.9px rgba(0, 0, 0, 0.401);
+}
+.text_neop {
+  /* NEO TEXT */
+  text-shadow: -1px -3px 3.3px rgba(255, 255, 255, 0.99),
+    6px 4px 7px rgba(0, 0, 0, 0.38);
+}
+
+.neo_box1 {
+  /* neo */
+  background: #dfdfdf;
+  box-shadow: -7px -6px 16.8px -7px #fff inset,
+    6px 10px 19.6px -11px rgba(0, 0, 0, 0.07) inset, -12px -11px 21px 4px #fff,
+    12px 11px 21.9px 0px rgba(0, 0, 0, 0.25);
+}
+.neo_box2 {
+  box-shadow: -7px -6px 16.8px -7px rgba(0, 0, 0, 0.19) inset,
+    6px 10px 19.6px -11px #ffffffa8 inset,
+    -4px -7px 11px 0px rgba(0, 0, 0, 0.099), 7px 13px 18.9px 0px #fff;
+}
+
+#Presale {
+  background-image: url(../src/assets/images/PB.jpg);
+  background-size: cover;
+
+  /* -webkit-text-stroke: 1px #a6a5a5; */
+}
+
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
