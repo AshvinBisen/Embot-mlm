@@ -18,19 +18,24 @@ const navItems = [
   {
     icon: <FaThLarge />,
     name: "Dashboard",
+    path: "/dashboard",
+  },
+  {
+    icon: <FaThLarge />,
+    name: "Other",
     subItems: [
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/s", pro: false },
-      { name: "Manage Flexible Packages", path: "/s", pro: false },
-      { name: "Manage Flexible Packages", path: "/s", pro: false },
-      { name: "Manage Flexible Packages", path: "/s", pro: false },
-      { name: "Manage Flexible Packages", path: "/s", pro: false },
-      { name: "Ecommerce", path: "/s", pro: false },
-      { name: "Ecommerce", path: "/s", pro: false },
-      { name: "Ecommerce", path: "/s", pro: false },
-      { name: "Ecommerce", path: "/s", pro: false },
-      { name: "Ecommerce", path: "/s", pro: false },
-      { name: "Ecommerce", path: "/s", pro: false },
+      { name: "Manage Flexible Packages1", path: "/", pro: false },
+      { name: "Manage Flexible Packages2", path: "/s", pro: false },
+      { name: "Manage Flexible Packages3", path: "/s", pro: false },
+      { name: "Manage Flexible Packages4", path: "/s", pro: false },
+      { name: "Manage Flexible Packages5", path: "/s", pro: false },
+      { name: "Manage Flexible Package6", path: "/s", pro: false },
+      { name: "1", path: "/s", pro: false },
+      { name: "Ecommerce2", path: "/s", pro: false },
+      { name: "Ecommerce3", path: "/s", pro: false },
+      { name: "Ecommerce4", path: "/s", pro: false },
+      { name: "Ecommerce5", path: "/s", pro: false },
+      { name: "Ecommerce6", path: "/s", pro: false },
     ],
   },
   {
@@ -197,7 +202,7 @@ const Sidebar = () => {
                   <li key={subItem.name}>
                     <Link
                       to={subItem.path}
-                      className={`flex items-center justify-between py-1.5 px-3 rounded-lg text-xs font-medium transition-all duration-200 group relative overflow-hidden
+                      className={`flex items-center justify-between py-1.5 px-3 rounded-lg text-sm font-medium transition-all duration-200 group relative overflow-hidden
                         ${isActive(subItem.path)
                           ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/10 dark:to-indigo-900/10 text-green-600 dark:text-green-400 shadow-sm"
                         : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
@@ -213,12 +218,12 @@ const Sidebar = () => {
                       {(subItem.new || subItem.pro) && (
                         <span className="relative z-10 flex gap-1.5 ml-2">
                           {subItem.new && (
-                            <span className="bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                            <span className="bg-gradient-to-r from-emerald-500 to-green-500 text-white text-sm font-semibold px-2 py-0.5 rounded-full shadow-sm">
                               NEW
                             </span>
                           )}
                           {subItem.pro && (
-                            <span className="bg-gradient-to-r from-purple-500 to-violet-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                            <span className="bg-gradient-to-r from-purple-500 to-violet-500 text-white text-sm font-semibold px-2 py-0.5 rounded-full shadow-sm">
                               PRO
                             </span>
                           )}
@@ -237,19 +242,20 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed top-0  left-0 z-50 h-screen bg-white/95 dark:bg-[#121A1C] backdrop-blur-sm border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
+      className={`fixed top-0 z-[999]  left-0   h-[100vh] bg-white/95 dark:bg-[#0000004b] backdrop-blur-md border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
         ${isExpanded || isMobileOpen
           ? "w-[230px]"
           : isHovered
             ? "w-[230px]"
-            : "w-[80px]"
+            : "w-[73px]"
         }
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+
       {/* LOGO SECTION */}
-      <div className={`py-6 px-6 flex border-b border-gray-100 dark:border-gray-800/50
+      <div className={`py-6  px-6 flex border-b border-gray-100 dark:border-gray-800/50
         ${!isExpanded && !isHovered ? "  lg:px-[0.9rem]" : ""} justify-start`}>
         <Link to="/" className="transition-transform duration-200 hover:scale-105">
           {isExpanded || isHovered || isMobileOpen ? (
@@ -282,14 +288,13 @@ const Sidebar = () => {
           )}
         </Link>
       </div>
-
       {/* NAVIGATION SECTION */}
-      <div className="flex flex-col h-full overflow-y-auto no-scrollbar scrollbar-hide">
+      <div className="flex flex-col h-full pb-36 overflow-y-auto no-scrollbar  ">
         <nav className="flex-1 px-3 py-6">
           <div className="space-y-8">
             {/* Menu Section */}
             <div>
-              <h2 className={`mb-6 text-xs font-bold uppercase tracking-wider flex leading-5
+              <h2 className={`mb-6 text-sm font-bold uppercase tracking-wider flex leading-5
                 ${!isExpanded && !isHovered
                   ? "lg:justify-center text-gray-400 dark:text-gray-500"
                   : "justify-start text-gray-500 dark:text-gray-400"
@@ -306,14 +311,14 @@ const Sidebar = () => {
         </nav>
 
         {/* Footer Section */}
-        {(isExpanded || isHovered || isMobileOpen) && (
+        {/* {(isExpanded || isHovered || isMobileOpen) && (
           <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-800/50 bg-gray-50/50 dark:bg-[#121A1C]">
-            <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="font-medium">System Online</span>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </aside>
   );
