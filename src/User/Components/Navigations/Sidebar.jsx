@@ -20,17 +20,17 @@ const navItems = [
     name: "Dashboard",
     subItems: [
       { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
+      { name: "Manage Flexible Packages", path: "/s", pro: false },
+      { name: "Manage Flexible Packages", path: "/s", pro: false },
+      { name: "Manage Flexible Packages", path: "/s", pro: false },
+      { name: "Manage Flexible Packages", path: "/s", pro: false },
+      { name: "Manage Flexible Packages", path: "/s", pro: false },
+      { name: "Ecommerce", path: "/s", pro: false },
+      { name: "Ecommerce", path: "/s", pro: false },
+      { name: "Ecommerce", path: "/s", pro: false },
+      { name: "Ecommerce", path: "/s", pro: false },
+      { name: "Ecommerce", path: "/s", pro: false },
+      { name: "Ecommerce", path: "/s", pro: false },
     ],
   },
   {
@@ -115,19 +115,19 @@ const Sidebar = () => {
               onClick={() => handleSubmenuToggle(index)}
               className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 group relative overflow-hidden 
                 ${openSubmenu?.index === index
-                  ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800/30"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/20 dark:to-indigo-900/20 text-green-600 dark:text-green-400 shadow-sm border border-green-100 dark:border-green-800/30"
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
                 } 
                 ${!isExpanded && !isHovered ? " lg:px-[0.9rem]" : " "} lg:justify-start
               `}
             >
               {/* Hover effect background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl" />
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl" />
 
               <span className={`relative  z-10 flex-shrink-0 text-lg transition-colors duration-200
                 ${openSubmenu?.index === index
-                  ? "text-blue-600 dark:text-blue-400"
-                  : "text-gray-500 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400"
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-gray-500 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-green-400"
                 }`}>
                 {nav.icon}
               </span>
@@ -140,8 +140,8 @@ const Sidebar = () => {
                   <FaChevronDown
                     className={`relative z-10 w-4 h-4 transition-all duration-300 flex-shrink-0
                       ${openSubmenu?.index === index
-                        ? "rotate-180 text-blue-600 dark:text-blue-400"
-                        : "text-gray-400 dark:text-gray-500 group-hover:text-blue-500 dark:group-hover:text-blue-400"
+                        ? "rotate-180 text-green-600 dark:text-green-400"
+                        : "text-gray-400 dark:text-gray-500 group-hover:text-green-500 dark:group-hover:text-green-400"
                       }`}
                   />
                 </>
@@ -153,19 +153,19 @@ const Sidebar = () => {
                 to={nav.path}
                 className={`flex   items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 group relative overflow-hidden
                   ${isActive(nav.path)
-                    ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800/30"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
+                    ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/20 dark:to-indigo-900/20 text-green-600 dark:text-green-400 shadow-sm border border-green-100 dark:border-green-800/30"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
                   }
                   ${!isExpanded && !isHovered ? "  lg:px-[0.9rem]" : " " }lg:justify-start
                 `}
               >
                 {/* Hover effect background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl " />
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl " />
 
                 <span className={`relative z-10 flex-shrink-0 ml-[-0.1rem] text-lg transition-colors duration-200 
                   ${isActive(nav.path)
-                    ? "text-blue-600 dark:text-blue-400"
-                    : "text-gray-500 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400"
+                    ? "text-green-600 dark:text-green-400"
+                    : "text-gray-500 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-green-400"
                   }`}>
                   {nav.icon} 
                 </span>
@@ -199,12 +199,12 @@ const Sidebar = () => {
                       to={subItem.path}
                       className={`flex items-center justify-between py-1.5 px-3 rounded-lg text-xs font-medium transition-all duration-200 group relative overflow-hidden
                         ${isActive(subItem.path)
-                          ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 text-blue-600 dark:text-blue-400 shadow-sm"
-                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/30 hover:text-gray-900 dark:hover:text-white"
+                          ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/10 dark:to-indigo-900/10 text-green-600 dark:text-green-400 shadow-sm"
+                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
                         }`}
                     >
                       {/* Hover effect background */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/3 to-indigo-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-500/3 to-indigo-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg" />
 
                       <span className="relative z-10 tracking-wide">
                         {subItem.name}
@@ -237,7 +237,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed top-0  left-0 z-50 h-screen bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
+      className={`fixed top-0  left-0 z-50 h-screen bg-white/95 dark:bg-[#121A1C] backdrop-blur-sm border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
         ${isExpanded || isMobileOpen
           ? "w-[230px]"
           : isHovered
@@ -270,7 +270,7 @@ const Sidebar = () => {
               />
             </>
           ) : (
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
               <img
                 src="/images/logo/logo-icon.svg"
                 alt="Logo"
@@ -297,7 +297,7 @@ const Sidebar = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Navigation"
                 ) : (
-                  <div className="w-6 h-0.5 mb-3   bg-gray-300 dark:bg-gray-600 rounded-full" />
+                    <div className="w-6 h-0.5 mb-3   bg-gray-300 dark:bg-[#121A1C] rounded-full" />
                 )}
               </h2>
               {renderMenuItems()}
@@ -307,7 +307,7 @@ const Sidebar = () => {
 
         {/* Footer Section */}
         {(isExpanded || isHovered || isMobileOpen) && (
-          <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20">
+          <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-800/50 bg-gray-50/50 dark:bg-[#121A1C]">
             <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="font-medium">System Online</span>

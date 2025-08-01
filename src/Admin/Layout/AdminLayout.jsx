@@ -15,7 +15,7 @@ const LayoutContent = () => {
                 <Backdrop />
             </div>
             <div
-                className={`flex-1 transition-all duration-300 ease-in-out ${isExpanded || isHovered ? "lg:ml-[230px]" : "lg:ml-[80px]"
+                className={`flex-1 bg-white transition-all duration-300 ease-in-out ${isExpanded || isHovered ? "lg:ml-[230px]" : "lg:ml-[80px]"
                     } ${isMobileOpen ? "ml-0" : ""}`}
             >
                 <TopNav />
