@@ -21,12 +21,12 @@ const Dashboard = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('https://zeyro.biz/portal/register?ref=ZY934678');
+    navigator.clipboard.writeText('https://Easy Money.biz/portal/register?ref=EM934678');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // bg - [#182c2d54]
+  // bg-[#12212154]
  
   return (
     <div className="text-white p-4 overflow-x-hidden">
@@ -36,7 +36,7 @@ const Dashboard = () => {
           <h1 className="text-2xl uppercase text-[#48D77C] font-bold">
             Welcome, TEST CALLBACK Have a nice day!
           </h1>
-          <p className="text-blue-300 text-sm">ZY934678</p>
+          <p className="text-blue-300 text-sm">EM934678</p>
         </div>
         <div className="flex items-center gap-4">
           <button className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
@@ -46,7 +46,7 @@ const Dashboard = () => {
             <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
               <span className="text-sm font-bold">TC</span>
             </div>
-            <span className="text-sm">TEST CALLBACK (ZY934678)</span>
+            <span className="text-sm">TEST CALLBACK (EM934678)</span>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@ const Dashboard = () => {
           { title: 'Total Investment', value: '0', color: 'bg-green-500', icon: <FaBullseye /> },
           { title: 'ROI Wallet', value: '$0', color: 'bg-blue-500', icon: <FaDollarSign /> },
         ].map((item, idx) => (
-          <div key={idx} className="   bg - [#182c2d54]   backdrop-blur-sm border-gradient p-4 border border-slate-700 shadow-md shadow-blue-800/20">
+          <div key={idx} className="   bg-[#12212154]   backdrop-blur-xl border-gradient p-4 border border-slate-700 shadow-md shadow-slate-800/50">
             <div className="flex items-center gap-2 mb-2">
               <div className={`w-8 h-8 ${item.color} rounded-full flex items-center justify-center`}>
                 {item.icon}
@@ -74,7 +74,7 @@ const Dashboard = () => {
       {/* Row 2: Referral + Incomes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         <div className=" space-y-5 ">
-          <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+          <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
             <div className={`w-8 h-8 bg-green-500 mb-3 rounded-full flex items-center justify-center`}>
               <TbShare3 />
 
@@ -83,7 +83,7 @@ const Dashboard = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 bg-slate-700 rounded-lg p-3">
               <input
                 type="text"
-                value="https://zeyro.biz/portal/register?ref=ZY934678"
+                value="https://Easy Money.biz/portal/register?ref=EM934678"
                 readOnly
                 className="flex-1 bg-transparent text-blue-300 text-sm outline-none w-full sm:w-auto"
               />
@@ -96,7 +96,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+          <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
             <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TEAM BUSINESS OVERVIEW</h3>
             <div className="space-y-4">
               {['Direct Business', 'Total Team Business', 'Today Team Business'].map((text, idx) => (
@@ -115,7 +115,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+        <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TOTAL INCOMES</h3>
           <div className="flex justify-center mb-4">
             <div className="relative">
@@ -145,7 +145,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-6">
 
 
-        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 flex flex-col justify-center text-center">
+        <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 flex flex-col justify-center text-center">
           <div className={`w-full mb-4 h-14 mx-auto bg-gradient-to-br from-green-500 to-blue-900 rounded-md flex items-center justify-center`}>
             <TbPigMoney className='text-2xl' />
           </div>
@@ -154,7 +154,7 @@ const Dashboard = () => {
           <p className="text-2xl font-bold">$0</p>
         </div>
 
-        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+        <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
           <div className="grid grid-cols-2 gap-4 text-center      ">
             <div className='space-y-4'>
               <div className={`w-full h-14 mx-auto bg-gradient-to-br from-green-500 to-blue-900 rounded-md flex items-center justify-center`}>
@@ -173,7 +173,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="md:col-span-2 bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
+        <div className="md:col-span-2 bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TRANSACTIONS</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -202,7 +202,7 @@ const Dashboard = () => {
           { title: 'Total Team', value: "1", icon: <FaPeopleGroup className='text-2xl' /> },
           { title: 'My Direct', value: "2", icon: <BsMicrosoftTeams className='text-2xl' /> },
           { title: 'Indirect', value: "3", icon: <FaPeopleArrows className='text-2xl' /> }].map((label, idx) => (
-            <div key={idx} className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+            <div key={idx} className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
               <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center`}>
                 {label.icon}
 
@@ -216,7 +216,7 @@ const Dashboard = () => {
 
       {/* Row 5: Announcements + Token */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
-        <div className=" relative lg:col-span-2 bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+        <div className=" relative lg:col-span-2 bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
           <div className="absolute right-[-1rem] top-[-1rem]">
             <BiSolidOffer className='text-[6rem]  text-green-500 ' />
           </div>
@@ -228,24 +228,24 @@ const Dashboard = () => {
 
             <h3 className="text-lg font-semibold glow-text  text-[#48D77C] mb-4">LATEST ANNOUNCEMENT</h3>
           </div>
-          <h4 className="text-xl glow-text font-bold mb-4">Empowering Decentralized Income with ZEYRO</h4>
+          <h4 className="text-xl glow-text font-bold mb-4">Empowering Decentralized Income with Easy Money</h4>
           <p className="text-slate-300 glow-text text-sm leading-relaxed">
-            ZEYRO Project is a next-gen blockchain-based MLM (Multi-Level Marketing) platform designed to empower individuals with a decentralized, secure, and transparent income model.
+            Easy Money Project is a next-gen blockchain-based MLM (Multi-Level Marketing) platform designed to empower individuals with a decentralized, secure, and transparent income model.
           </p>
         </div>
-        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
-          <h3 className="text-lg font-semibold text-[#48D77C] mb-4">ZEYRO TOKEN OVERVIEW</h3>
+        <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 text-center">
+          <h3 className="text-lg font-semibold text-[#48D77C] mb-4">Easy Money TOKEN OVERVIEW</h3>
           <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
             <span className="text-lg font-bold">Z</span>
           </div>
-          <p className="text-lg font-bold mb-1">ZEYRO Token Price</p>
-          <p className="text-white text-sm">1 ZEYRO = 0.01 USDT</p>
+          <p className="text-lg font-bold mb-1">Easy Money Token Price</p>
+          <p className="text-white text-sm">1 Easy Money = 0.01 USDT</p>
         </div>
       </div>
 
       {/* Row 6: Transactions + Bonus */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className="md:col-span-2 bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
+        <div className="md:col-span-2 bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TRANSACTIONS</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -259,7 +259,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
+        <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">BONUS ACHIEVEMENT</h3>
           <div className="text-yellow-500 font-bold mb-2">Not Qualified</div>
           <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm">View Report</button>
@@ -267,8 +267,8 @@ const Dashboard = () => {
       </div>
 
       {/* Footer */}
-      <footer className="mt-10 text-center text-sm text-slate-400 border-t border-slate-700 shadow-md shadow-blue-800/20 pt-4">
-        Copyright 2024-25 © ZEYRO. All Rights Reserved
+      <footer className="mt-10 text-center text-sm text-slate-400 border-t border-slate-700 shadow-md shadow-slate-800/50 pt-4">
+        Copyright 2024-25 © Easy Money. All Rights Reserved
       </footer>
     </div>
   );

@@ -242,7 +242,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed top-0 z-[999]  left-0   h-[100vh] bg-white/95 dark:bg-[#0000004b] backdrop-blur-md border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
+      className={`fixed top-0 z-[999]  left-0   h-[100vh] bg-white/95 dark:bg-[#00000082] backdrop-blur-md border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
         ${isExpanded || isMobileOpen
           ? "w-[230px]"
           : isHovered

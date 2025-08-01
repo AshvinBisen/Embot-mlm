@@ -11,7 +11,7 @@ const UserLayout = () => {
 
     return (
         <div className="  relative      min-h-screen xl:flex">
-            <div className="fixed z-[-99] left-0 top-0 object-cover inset-0 bg-[url('/assets/userImages/images/mainbg3.jpg')]  bg-cover bg-fixed blur-xl opacity-[0.7]  scale-110" />
+            <div className="fixed z-[-99] left-0 top-0 object-cover inset-0 bg-[url('/assets/userImages/images/mainbg3.jpg')]  bg-cover bg-fixed blur-xl opacity-[0.6]  scale-110" />
 
             {/* <video
                 muted
