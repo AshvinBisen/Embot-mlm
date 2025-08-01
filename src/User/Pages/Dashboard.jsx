@@ -25,7 +25,7 @@ const Dashboard = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-  
+
   // bg - [#182c2d54]
  
   return (
@@ -59,7 +59,7 @@ const Dashboard = () => {
           { title: 'Total Investment', value: '0', color: 'bg-green-500', icon: <FaBullseye /> },
           { title: 'ROI Wallet', value: '$0', color: 'bg-blue-500', icon: <FaDollarSign /> },
         ].map((item, idx) => (
-          <div key={idx} className="   bg-gradient-to-br from-green-400/20 to-blue-900/20   backdrop-blur-sm border-gradient p-4 border border-slate-700 shadow-md shadow-blue-800/20">
+          <div key={idx} className="   bg - [#182c2d54]   backdrop-blur-sm border-gradient p-4 border border-slate-700 shadow-md shadow-blue-800/20">
             <div className="flex items-center gap-2 mb-2">
               <div className={`w-8 h-8 ${item.color} rounded-full flex items-center justify-center`}>
                 {item.icon}
@@ -74,7 +74,7 @@ const Dashboard = () => {
       {/* Row 2: Referral + Incomes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         <div className=" space-y-5 ">
-          <div className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+          <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
             <div className={`w-8 h-8 bg-green-500 mb-3 rounded-full flex items-center justify-center`}>
               <TbShare3 />
 
@@ -96,7 +96,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+          <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
             <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TEAM BUSINESS OVERVIEW</h3>
             <div className="space-y-4">
               {['Direct Business', 'Total Team Business', 'Today Team Business'].map((text, idx) => (
@@ -115,7 +115,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TOTAL INCOMES</h3>
           <div className="flex justify-center mb-4">
             <div className="relative">
@@ -145,7 +145,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-6">
 
 
-        <div className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 flex flex-col justify-center text-center">
+        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 flex flex-col justify-center text-center">
           <div className={`w-full mb-4 h-14 mx-auto bg-gradient-to-br from-green-500 to-blue-900 rounded-md flex items-center justify-center`}>
             <TbPigMoney className='text-2xl' />
           </div>
@@ -154,7 +154,7 @@ const Dashboard = () => {
           <p className="text-2xl font-bold">$0</p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
           <div className="grid grid-cols-2 gap-4 text-center      ">
             <div className='space-y-4'>
               <div className={`w-full h-14 mx-auto bg-gradient-to-br from-green-500 to-blue-900 rounded-md flex items-center justify-center`}>
@@ -173,7 +173,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="md:col-span-2 bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
+        <div className="md:col-span-2 bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TRANSACTIONS</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -202,7 +202,7 @@ const Dashboard = () => {
           { title: 'Total Team', value: "1", icon: <FaPeopleGroup className='text-2xl' /> },
           { title: 'My Direct', value: "2", icon: <BsMicrosoftTeams className='text-2xl' /> },
           { title: 'Indirect', value: "3", icon: <FaPeopleArrows className='text-2xl' /> }].map((label, idx) => (
-            <div key={idx} className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+            <div key={idx} className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
               <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center`}>
                 {label.icon}
 
@@ -216,7 +216,7 @@ const Dashboard = () => {
 
       {/* Row 5: Announcements + Token */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
-        <div className=" relative lg:col-span-2 bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
+        <div className=" relative lg:col-span-2 bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20">
           <div className="absolute right-[-1rem] top-[-1rem]">
             <BiSolidOffer className='text-[6rem]  text-green-500 ' />
           </div>
@@ -233,7 +233,7 @@ const Dashboard = () => {
             ZEYRO Project is a next-gen blockchain-based MLM (Multi-Level Marketing) platform designed to empower individuals with a decentralized, secure, and transparent income model.
           </p>
         </div>
-        <div className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
+        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">ZEYRO TOKEN OVERVIEW</h3>
           <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
             <span className="text-lg font-bold">Z</span>
@@ -245,7 +245,7 @@ const Dashboard = () => {
 
       {/* Row 6: Transactions + Bonus */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className="md:col-span-2 bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
+        <div className="md:col-span-2 bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TRANSACTIONS</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -259,7 +259,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-400/20 to-blue-900/20  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
+        <div className="bg - [#182c2d54]  backdrop-blur-md border-gradient p-6 border border-slate-700 shadow-md shadow-blue-800/20 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">BONUS ACHIEVEMENT</h3>
           <div className="text-yellow-500 font-bold mb-2">Not Qualified</div>
           <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm">View Report</button>
