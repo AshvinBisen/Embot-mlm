@@ -5,7 +5,7 @@ import Backdrop from "../Components/Navigations/Backdrop";
 import Sidebar from "../Components/Navigations/Sidebar";
 import { ThemeProvider } from "../Contexts/ThemeContext";
 
-const LayoutContent = () => {
+const UserLayout = () => {
     const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
     return (
@@ -21,6 +21,7 @@ const LayoutContent = () => {
                 <TopNav />
                 <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
                     <Outlet />  {/* like chindren */}
+                    
                 </div>
             </div>
         </div>
@@ -31,7 +32,7 @@ const AdminLayout = () => {
     return (
         <ThemeProvider>
             <SidebarProvider>
-                <LayoutContent />
+                <UserLayout />
             </SidebarProvider>
         </ThemeProvider>
     );

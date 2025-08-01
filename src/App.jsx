@@ -16,7 +16,7 @@ function App() {
       <BrowserRouter>
         <AdminRoutes />
         {/* <CommanRoutes /> */}
-        {/* <UserRoutes /> */}
+        <UserRoutes />
       </BrowserRouter>
 
 
