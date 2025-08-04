@@ -13,15 +13,7 @@ import {
 
 const glass = "bg-white bg-opacity-40 backdrop-blur-md border border-white border-opacity-80 shadow-xl";
 
-const Sidebar = () => (
-  <aside className={`fixed inset-y-0 left-0 w-20 flex flex-col items-center pt-8 ${glass} z-30`}>
-    {[FaUsers, FaChartLine, FaHandHoldingUsd, FaGift].map((Icon, idx) => (
-      <Icon key={idx} className="mb-8 text-3xl text-white hover:scale-110 transition-transform duration-200" />
-    ))}
-  </aside>
-);
-
-const StatCard = ({ title, value, icon: Icon, gradient }) => (
+  const StatCard = ({ title, value, icon: Icon, gradient }) => (
   <div
     className={`m-2 p-4 rounded-2xl flex items-center transition-transform hover:scale-105 ${glass} justify-start`}
     style={{ minWidth: '220px' }}
@@ -92,8 +84,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-white-100 via-blue-100 to-white">
-      <Sidebar />
-      <main className="flex-1 ml-10 p-6">
+      {/* <main className="flex-1 ml-10 p-6"> */}
+      <main className="flex-1 min-h-screen p-4 md:p-6 lg:ml-20 overflow-x-hidden overflow-y-auto">
+        <div className="max-w-screen-2xl mx-auto">
         <header className="mb-8">
           <h1 className="text-3xl font-extrabold bg-gradient-to-r from-[#254A6B] to-[#234767] bg-clip-text text-transparent">
             Dashboard
@@ -105,6 +98,135 @@ const Dashboard = () => {
             <StatCard key={idx} {...item} />
           ))}
         </section>
+
+
+        <section className="mt-10 flex flex-col lg:flex-row gap-6">
+          {/* Left Side - Latest Transactions */}
+          <div className={`${glass} lg:w-2/5 w-full p-6 rounded-xl`}>
+            <h3 className="font-bold text-xl mb-4 text-[#254A6B]">Latest Transactions</h3>
+            <div className="space-y-4">
+              {[
+                {
+                  user: 'Ram Verma',
+                  amount: '$200',
+                  type: 'Credit',
+                  date: '2025-08-04 11:00 AM',
+                },
+                {
+                  user: 'Ravi Sharma',
+                  amount: '$150',
+                  type: 'Debit',
+                  date: '2025-08-03 04:30 PM',
+                },
+                {
+                  user: 'Aman Yadav',
+                  amount: '$500',
+                  type: 'Credit',
+                  date: '2025-08-02 03:20 PM',
+                },
+              ].map((txn, idx) => (
+                <div key={idx} className="flex justify-between items-center p-3 rounded-lg bg-white/70 shadow-sm">
+                  <div>
+                    <div className="font-medium text-[#254A6B]">{txn.user}</div>
+                    <div className="text-xs text-gray-500">{txn.date}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className={`font-bold ${txn.type === 'Credit' ? 'text-green-600' : 'text-red-600'}`}>
+                      {txn.amount}
+                    </div>
+                    <div className="text-xs">{txn.type}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Side - Manage Token Price & Wallet Request */}
+          <div className="lg:w-3/5 w-full flex flex-col gap-6">
+            {/* Manage Token Price */}
+            <div className={`${glass} p-6 rounded-xl`}>
+              <h3 className="font-bold text-xl mb-4 text-[#254A6B]">Manage Token Price</h3>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 grid-cols-1 gap-4 sm:grid-cols-none">
+                <label className="text-sm font-medium sm:w-1/3">Current Token Price</label>
+                
+                <input
+                  type="text"
+                  placeholder="$0.50"
+                  className="w-full sm:w-2/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                />
+
+                <button className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#10B25E] text-white hover:bg-[#0e9d52] transition">
+                  Update
+                </button>
+              </div>
+
+              {/* <div className="flex items-center gap-4">
+                <label className="text-sm font-medium w-1/3">Current Token Price</label>
+                <input
+                  type="text"
+                  placeholder="$0.50"
+                  className="w-2/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                />
+                <button className="ml-2 px-4 py-2 rounded-lg bg-[#10B25E] text-white hover:bg-[#0e9d52] transition">
+                  Update
+                </button>
+              </div> */}
+            </div>
+
+            {/* User Wallet Request */}
+            <div className={`${glass} p-6 rounded-xl`}>
+              <h3 className="font-bold text-xl mb-4 text-[#254A6B]">User Wallet Requests</h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-sm text-left">
+                  <thead>
+                    <tr className="text-xs uppercase bg-[#254A6B] text-white">
+                      <th className="px-5 py-3">User</th>
+                      <th className="px-5 py-3">Amount</th>
+                      <th className="px-5 py-3">Status</th>
+                      <th className="px-5 py-3">Request Date</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    {[
+                      {
+                        user: 'Ram Verma',
+                        amount: '$300',
+                        status: 'Pending',
+                        date: '2025-08-04',
+                      },
+                      {
+                        user: 'Ravi Sharma',
+                        amount: '$100',
+                        status: 'Approved',
+                        date: '2025-08-03',
+                      },
+                    ].map((req, idx) => (
+                      <tr
+                        key={idx}
+                        className={`transition hover:bg-gray-100/60 ${idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'} border-b border-gray-200`}
+                      >
+                        <td className="px-5 py-4 font-medium">{req.user}</td>
+                        <td className="px-5 py-4">{req.amount}</td>
+                        <td className="px-5 py-4">
+                          <span
+                            className={`px-3 py-1 text-xs font-medium rounded-full shadow-sm ${
+                              req.status === 'Approved' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-800'
+                            }`}
+                          >
+                            {req.status}
+                          </span>
+                        </td>
+                        <td className="px-5 py-4 whitespace-nowrap">{req.date}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
 
         <section className="flex flex-col gap-6 mt-10">
           <div className="bg-white/70 backdrop-blur-lg shadow-md rounded-2xl p-6 w-full">
@@ -156,70 +278,71 @@ const Dashboard = () => {
           </div>
 
           <div className={`${glass} flex-1 rounded-xl p-6`}>
-            <h3 className="font-bold text-xl mb-4 text-gray-700">Recent Tickets</h3>
+            <h3 className="font-bold text-xl mb-4 text-[#254A6B]">Recent Tickets</h3>
             {/* <div className="text-gray-500">No data available.</div> */}
             <div className="overflow-x-auto">
-  <table className="min-w-full text-sm text-left">
-    <thead>
-      <tr className="text-xs uppercase bg-[#254A6B] text-white">
-        <th className="px-5 py-3">Name</th>
-        <th className="px-5 py-3">Issue</th>
-        <th className="px-5 py-3">Status</th>
-        <th className="px-5 py-3">Ticket Date</th>
-      </tr>
-    </thead>
-    <tbody className="text-gray-700">
-      {[
-        {
-          name: 'Ram Verma',
-          issue: 'Technical Issue',
-          status: 'Processing',
-          date: '2025-08-04 09:45 AM',
-        },
-        {
-          name: 'Ravi Sharma',
-          issue: 'Bonus Issue',
-          status: 'Unread',
-          date: '2025-08-03 02:15 PM',
-        },
-        {
-          name: 'Aman Yadav',
-          issue: 'Other',
-          status: 'Read',
-          date: '2025-08-02 11:00 AM',
-        },
-      ].map((ticket, idx) => (
-        <tr
-          key={idx}
-          className={`transition hover:bg-gray-100/60 ${
-            idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'
-          } border-b border-gray-200`}
-        >
-          <td className="px-5 py-4 font-medium whitespace-nowrap">{ticket.name}</td>
-          <td className="px-5 py-4">{ticket.issue}</td>
-          <td className="px-5 py-4">
-            <span
-              className={`px-3 py-1 text-xs font-medium rounded-full shadow-sm ${
-                ticket.status === 'Read'
-                  ? 'bg-green-100 text-green-600'
-                  : ticket.status === 'Unread'
-                  ? 'bg-red-100 text-red-600'
-                  : 'bg-yellow-100 text-yellow-800'
-              }`}
-            >
-              {ticket.status}
-            </span>
-          </td>
-          <td className="px-5 py-4 whitespace-nowrap">{ticket.date}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+          <table className="min-w-full text-sm text-left">
+            <thead>
+              <tr className="text-xs uppercase bg-[#254A6B] text-white">
+                <th className="px-5 py-3">Name</th>
+                <th className="px-5 py-3">Issue</th>
+                <th className="px-5 py-3">Status</th>
+                <th className="px-5 py-3">Ticket Date</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-700">
+              {[
+                {
+                  name: 'Ram Verma',
+                  issue: 'Technical Issue',
+                  status: 'Processing',
+                  date: '2025-08-04 09:45 AM',
+                },
+                {
+                  name: 'Ravi Sharma',
+                  issue: 'Bonus Issue',
+                  status: 'Unread',
+                  date: '2025-08-03 02:15 PM',
+                },
+                {
+                  name: 'Aman Yadav',
+                  issue: 'Other',
+                  status: 'Read',
+                  date: '2025-08-02 11:00 AM',
+                },
+              ].map((ticket, idx) => (
+                <tr
+                  key={idx}
+                  className={`transition hover:bg-gray-100/60 ${
+                    idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'
+                  } border-b border-gray-200`}
+                >
+                  <td className="px-5 py-4 font-medium whitespace-nowrap">{ticket.name}</td>
+                  <td className="px-5 py-4">{ticket.issue}</td>
+                  <td className="px-5 py-4">
+                    <span
+                      className={`px-3 py-1 text-xs font-medium rounded-full shadow-sm ${
+                        ticket.status === 'Read'
+                          ? 'bg-green-100 text-green-600'
+                          : ticket.status === 'Unread'
+                          ? 'bg-red-100 text-red-600'
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}
+                    >
+                      {ticket.status}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 whitespace-nowrap">{ticket.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
           </div>
         </section>
 
+</div>
 
         {selectedUser && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4">

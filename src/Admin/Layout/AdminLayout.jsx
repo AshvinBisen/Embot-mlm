@@ -4,6 +4,7 @@ import TopNav from "../Components/Navigations/TopNav";
 import Backdrop from "../Components/Navigations/Backdrop";
 import Sidebar from "../Components/Navigations/Sidebar";
 import { ThemeProvider } from "../Contexts/ThemeContext";
+import "../../Styles/AdminStyles/AdminComman.css"
 
 const LayoutContent = () => {
     const { isExpanded, isHovered, isMobileOpen } = useSidebar();
