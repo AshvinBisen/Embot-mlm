@@ -21,12 +21,14 @@
     "lenis": "^1.1.13",
     "leva": "^0.9.35",
     "locomotive-scroll": "^5.0.0-beta.21",
+    "lucide-react": "^0.535.0",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-headroom": "^3.2.1",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.15.1",
     "react-router-dom": "^6.23.1",
+    "react-table": "^7.8.0",
     "swiper": "^11.2.5"
   },
   "devDependencies": {
