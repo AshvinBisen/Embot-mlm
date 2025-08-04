@@ -15,6 +15,7 @@ import { useSidebar } from "../../Contexts/SidebarContext";
 
 import logo1 from "../../../assets/userImages/Logo/logo_lght.png"
 import logo2 from "../../../assets/userImages/Logo/icon2.png"
+ 
 
 // MAIN NAVIGATION ITEMS
 const navItems = [
@@ -22,6 +23,11 @@ const navItems = [
     icon: <FaThLarge />,
     name: "Dashboard",
     path: "/dashboard",
+  },
+  {
+    icon: <FaUserCircle />,
+    name: "My Profile",
+    path: "/my-profile",
   },
   {
     icon: <FaThLarge />,

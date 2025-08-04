@@ -4,13 +4,14 @@ import TopNav from "../Components/Navigations/TopNav";
 import Backdrop from "../Components/Navigations/Backdrop";
 import Sidebar from "../Components/Navigations/Sidebar";
 import { ThemeProvider } from "../Contexts/ThemeContext";
+// import { ToastContainer } from "react-toastify";
 // import vid from "../../../public/assets/userImages/images/bg-video.mp4"
 
 const UserLayout = () => {
     const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
     return (
-        <div className="  relative      min-h-screen xl:flex">
+        <div className="  relative  text-white     min-h-screen xl:flex">
             <div className="fixed z-[-99] left-0 top-0 object-cover inset-0 bg-[url('/publicImagesUser/mainbg3.jpg')]  bg-cover bg-fixed blur-xl opacity-[0.6]  scale-110" />
 
             {/* <video
@@ -35,7 +36,6 @@ const UserLayout = () => {
                 <TopNav />
                 <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
                     <Outlet />  {/* like chindren */}
-
                 </div>
             </div>
         </div>

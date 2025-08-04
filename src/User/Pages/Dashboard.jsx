@@ -27,6 +27,7 @@ import 'swiper/css'; // Required core styles
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import Footer from '../Components/Comman/Footer';
 
 
 
@@ -348,7 +349,7 @@ const Dashboard = () => {
       {/* Row 5: Announcements + Token */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
         <div className=" relative lg:col-span-2 bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
-          <div className="absolute right-[-1rem] top-[-1rem]">
+          <div className="absolute right-0 top-0">
             <BiSolidOffer className='text-[6rem]  text-green-500 ' />
           </div>
           <div className=" flex items-center gap-4 ">
@@ -382,9 +383,7 @@ const Dashboard = () => {
 
 
       {/* Footer */}
-      <footer className="mt-10 text-center text-sm text-slate-400 border-t border-slate-700 shadow-md shadow-slate-800/50 pt-4">
-        Copyright 2024-25 © Easy Money. All Rights Reserved
-      </footer>
+      <Footer/>
     </div>
   );
 };
