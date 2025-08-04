@@ -1,65 +1,106 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  FaCube,
-  FaCalendarAlt,
-  FaChevronDown,
-  FaThLarge,
-  FaEllipsisH,
-  FaList,
-  FaFileAlt,
-  FaTable,
-  FaUserCircle,
-} from "react-icons/fa";
 import { useSidebar } from "../../Contexts/SidebarContext";
+import logo from '../../../assets/adminImages/Logo/logo_main.png'
+
+import {
+  FaThLarge,
+  FaDollarSign,
+  FaWallet,
+  FaChartPie,
+  FaMoneyCheckAlt,
+  FaHandHoldingUsd,
+  FaExchangeAlt,
+  FaCog,
+  FaHistory,
+  FaSignOutAlt,
+  FaUsers,
+  FaList,
+  FaChevronDown,
+} from "react-icons/fa";
+
 
 // MAIN NAVIGATION ITEMS
+
 const navItems = [
   {
     icon: <FaThLarge />,
     name: "Dashboard",
+    path: "/admin/dashboard",
+  },
+  {
+    icon: <FaUsers />,
+    name: "User Management",
+    path: "/admin/user-managment",
+  },
+  {
+    icon: <FaDollarSign />,
+    name: "Set Price",
     subItems: [
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Manage Flexible Packages", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Ecommerce", path: "/", pro: false },
+      { name: "Set Token Price", path: "/", pro: false },
+      { name: "Report", path: "/", pro: false },
     ],
   },
   {
-    icon: <FaCalendarAlt />,
-    name: "Calendar",
-    path: "/calendar",
+    icon: <FaWallet />,
+    name: "Users Deposite",
+    subItems: [
+      { name: "Deposit", path: "/", pro: false },
+      { name: "Report", path: "/", pro: false },
+    ],
   },
   {
-    icon: <FaUserCircle />,
-    name: "User Profile",
-    path: "/profile",
+    icon: <FaChartPie />,
+    name: "Investment Management",
+    subItems: [
+      { name: "Investments Plan", path: "/", pro: false },
+      { name: "Staking Profits", path: "/", pro: false },
+      { name: "Report", path: "/", pro: false },
+    ],
   },
   {
-    name: "Forms",
+    icon: <FaMoneyCheckAlt />,
+    name: "Payout Management",
+    subItems: [
+      { name: "Withdrawals", path: "/", pro: false },
+      { name: "Report", path: "/", pro: false },
+    ],
+  },
+  {
+    icon: <FaHandHoldingUsd />,
+    name: "Income Management",
+    subItems: [
+      { name: "Per Day Income", path: "/", pro: false },
+      { name: "Referral Income", path: "/", pro: false },
+      { name: "Bonanza Rewards", path: "/", pro: false },
+    ],
+  },
+  {
+    icon: <FaExchangeAlt />,
+    name: "Swap Management",
+    subItems: [
+      { name: "Report", path: "/admin/swap-management/report", pro: false },
+    ],
+  },
+  {
+    icon: <FaCog />,
+    name: "Platform Settings",
+    path: "/admin/platform-settings",
+  },
+  {
+    icon: <FaHistory />,
+    name: "Transaction History",
+    path: "/admin/transaction-history",
+  },
+  {
     icon: <FaList />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
+    name: "Session Log",
+    path: "/admin/session-log",
   },
   {
-    name: "Tables",
-    icon: <FaTable />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <FaFileAlt />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
+    icon: <FaSignOutAlt />,
+    name: "Logout",
+    path: "/admin/logout",
   },
 ];
 
@@ -237,7 +278,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed top-0  left-0 z-50 h-screen bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
+      className={`fixed top-0  left-0 z-50 h-screen bg-white dark:bg-gray-900/95 backdrop-blur-sm border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
         ${isExpanded || isMobileOpen
           ? "w-[230px]"
           : isHovered
@@ -256,14 +297,14 @@ const Sidebar = () => {
             <>
               <img
                 className="dark:hidden drop-shadow-sm"
-                src="/images/logo/logo.svg"
+                src={logo}
                 alt="Logo"
                 width={140}
                 height={36}
               />
               <img
                 className="hidden dark:block drop-shadow-sm"
-                src="/images/logo/logo-dark.svg"
+                src={logo}
                 alt="Logo"
                 width={140}
                 height={36}
@@ -272,7 +313,7 @@ const Sidebar = () => {
           ) : (
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
               <img
-                src="/images/logo/logo-icon.svg"
+                src={logo}
                 alt="Logo"
                 width={20}
                 height={20}
@@ -284,7 +325,7 @@ const Sidebar = () => {
       </div>
 
       {/* NAVIGATION SECTION */}
-      <div className="flex flex-col h-full overflow-y-auto no-scrollbar scrollbar-hide">
+      <div className="flex flex-col h-[90%] overflow-y-auto no-scrollbar scrollbar-hide">
         <nav className="flex-1 px-3 py-6">
           <div className="space-y-8">
             {/* Menu Section */}

@@ -15,7 +15,7 @@ const glass = "bg-white bg-opacity-40 backdrop-blur-md border border-white borde
 
   const StatCard = ({ title, value, icon: Icon, gradient }) => (
   <div
-    className={`m-2 p-4 rounded-2xl flex items-center transition-transform hover:scale-105 ${glass} justify-start`}
+    className={`m-2 p-4 rounded-2xl flex items-center transition-transform hover:scale-105 ${glass} justify-start shadow-[inset_-7px_-6px_16.8px_-7px_#fff,inset_6px_10px_19.6px_-11px_#00000012,-12px_-11px_21px_4px_#fff,12px_11px_21.9px_#00000040]`}
     style={{ minWidth: '220px' }}
   >
     <div
@@ -32,7 +32,7 @@ const glass = "bg-white bg-opacity-40 backdrop-blur-md border border-white borde
 );
 
 const InfoRow = ({ label, value }) => (
-  <div className="flex justify-between items-center border-b pb-2">
+  <div className="flex justify-between items-center border-b pb-2 z-1">
     <span className="font-medium">{label}</span>
     <span className="text-gray-600">{value}</span>
   </div>
@@ -83,12 +83,12 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-white-100 via-blue-100 to-white">
+    <div className="min-h-screen flex bg-gradient-to-br from-white-100 via-blue-100 to-white z-1">
       {/* <main className="flex-1 ml-10 p-6"> */}
-      <main className="flex-1 min-h-screen p-4 md:p-6 lg:ml-20 overflow-x-hidden overflow-y-auto">
+      <main className="flex-1 min-h-screen p-4 md:p-6 lg:ml-5 overflow-x-hidden overflow-y-auto">
         <div className="max-w-screen-2xl mx-auto">
         <header className="mb-8">
-          <h1 className="text-3xl font-extrabold bg-gradient-to-r from-[#254A6B] to-[#234767] bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#103944] to-[#234767] bg-clip-text text-transparent">
             Dashboard
           </h1>
         </header>
@@ -100,10 +100,10 @@ const Dashboard = () => {
         </section>
 
 
-        <section className="mt-10 flex flex-col lg:flex-row gap-6">
+        <section className="mt-10 flex flex-col lg:flex-row gap-6 ">
           {/* Left Side - Latest Transactions */}
-          <div className={`${glass} lg:w-2/5 w-full p-6 rounded-xl`}>
-            <h3 className="font-bold text-xl mb-4 text-[#254A6B]">Latest Transactions</h3>
+          <div className={`${glass} lg:w-2/5 w-full p-6 rounded-xl shadow-[inset_-7px_-6px_16.8px_-7px_#fff,inset_6px_10px_19.6px_-11px_#00000012,-12px_-11px_21px_4px_#fff,12px_11px_21.9px_#00000040]`}>
+            <h3 className="text-2xl font-semibold mb-4 text-[#103944]">Latest Transactions</h3>
             <div className="space-y-4">
               {[
                 {
@@ -127,7 +127,7 @@ const Dashboard = () => {
               ].map((txn, idx) => (
                 <div key={idx} className="flex justify-between items-center p-3 rounded-lg bg-white/70 shadow-sm">
                   <div>
-                    <div className="font-medium text-[#254A6B]">{txn.user}</div>
+                    <div className="font-medium text-[#103944]">{txn.user}</div>
                     <div className="text-xs text-gray-500">{txn.date}</div>
                   </div>
                   <div className="text-right">
@@ -144,42 +144,30 @@ const Dashboard = () => {
           {/* Right Side - Manage Token Price & Wallet Request */}
           <div className="lg:w-3/5 w-full flex flex-col gap-6">
             {/* Manage Token Price */}
-            <div className={`${glass} p-6 rounded-xl`}>
-              <h3 className="font-bold text-xl mb-4 text-[#254A6B]">Manage Token Price</h3>
+            <div className={`${glass} p-6 rounded-xl shadow-[inset_-7px_-6px_16.8px_-7px_#fff,inset_6px_10px_19.6px_-11px_#00000012,-12px_-11px_21px_4px_#fff,12px_11px_21.9px_#00000040]`}>
+              <h3 className="text-2xl font-semibold mb-4 text-[#103944]">Manage Token Price</h3>
               <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 grid-cols-1 gap-4 sm:grid-cols-none">
                 <label className="text-sm font-medium sm:w-1/3">Current Token Price</label>
                 
                 <input
                   type="text"
                   placeholder="$0.50"
-                  className="w-full sm:w-2/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  className="w-full sm:w-2/3 px-4 py-2 rounded-lg border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 />
 
-                <button className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#10B25E] text-white hover:bg-[#0e9d52] transition">
+                <button className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#2298D3] text-white hover:bg-[#0e9d52] transition">
                   Update
                 </button>
               </div>
-
-              {/* <div className="flex items-center gap-4">
-                <label className="text-sm font-medium w-1/3">Current Token Price</label>
-                <input
-                  type="text"
-                  placeholder="$0.50"
-                  className="w-2/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                />
-                <button className="ml-2 px-4 py-2 rounded-lg bg-[#10B25E] text-white hover:bg-[#0e9d52] transition">
-                  Update
-                </button>
-              </div> */}
             </div>
 
             {/* User Wallet Request */}
-            <div className={`${glass} p-6 rounded-xl`}>
-              <h3 className="font-bold text-xl mb-4 text-[#254A6B]">User Wallet Requests</h3>
+            <div className={`${glass} p-6 rounded-xl shadow-[inset_-7px_-6px_16.8px_-7px_#fff,inset_6px_10px_19.6px_-11px_#00000012,-12px_-11px_21px_4px_#fff,12px_11px_21.9px_#00000040]`}>
+              <h3 className="text-2xl font-semibold mb-4 text-[#103944]">User Wallet Requests</h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-sm text-left">
                   <thead>
-                    <tr className="text-xs uppercase bg-[#254A6B] text-white">
+                    <tr className="text-xs uppercase bg-[#103944] text-white">
                       <th className="px-5 py-3">User</th>
                       <th className="px-5 py-3">Amount</th>
                       <th className="px-5 py-3">Status</th>
@@ -203,7 +191,7 @@ const Dashboard = () => {
                     ].map((req, idx) => (
                       <tr
                         key={idx}
-                        className={`transition hover:bg-gray-100/60 ${idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'} border-b border-gray-200`}
+                        className={`transition hover:bg-gray-100/60 ${idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'} border-b border-gray-400`}
                       >
                         <td className="px-5 py-4 font-medium">{req.user}</td>
                         <td className="px-5 py-4">{req.amount}</td>
@@ -229,15 +217,15 @@ const Dashboard = () => {
 
 
         <section className="flex flex-col gap-6 mt-10">
-          <div className="bg-white/70 backdrop-blur-lg shadow-md rounded-2xl p-6 w-full">
-            <h3 className="text-2xl font-semibold text-[#254A6B] mb-5">Latest Sign Ups</h3>
+          <div className="bg-white/70 backdrop-blur-lg shadow-md rounded-2xl p-6 w-full shadow-[inset_-7px_-6px_16.8px_-7px_#fff,inset_6px_10px_19.6px_-11px_#00000012,-12px_-11px_21px_4px_#fff,12px_11px_21.9px_#00000040]">
+            <h3 className="text-2xl font-semibold text-[#103944] mb-5">Latest Sign Ups</h3>
             {signUps.length === 0 ? (
               <div className="text-gray-500 text-center py-6">No data available.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full text-sm text-left">
                   <thead>
-                    <tr className="text-xs uppercase bg-[#254A6B] text-white rounded-t-xl">
+                    <tr className="text-xs uppercase bg-[#103944] text-white rounded-t-xl">
                       <th className="px-5 py-3">Joining Date</th>
                       <th className="px-5 py-3">Status</th>
                       <th className="px-5 py-3">Name</th>
@@ -248,13 +236,13 @@ const Dashboard = () => {
                     {signUps.map((user, idx) => (
                       <tr
                         key={user.id}
-                        className={`transition hover:bg-gray-100/60 ${idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'} border-b border-gray-200 rounded-lg`}
+                        className={`transition hover:bg-gray-100/60 ${idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'} border-b border-gray-400 rounded-lg`}
                       >
                         <td className="px-5 py-4 whitespace-nowrap text-sm">{user.joiningDate}</td>
                         <td className="px-5 py-4">
                           <span
                             className={`px-3 py-1 text-xs font-medium rounded-full shadow-sm ${
-                              user.status === 'Member' ? 'bg-[#10B25E]/20 text-[#10B25E]' : 'bg-red-100 text-red-600'
+                              user.status === 'Member' ? 'bg-[#2298D3]/20 text-[#2298D3]' : 'bg-red-100 text-red-600'
                             }`}
                           >
                             {user.status}
@@ -264,7 +252,7 @@ const Dashboard = () => {
                         <td className="px-5 py-4">
                           <button
                             onClick={() => setSelectedUser(user)}
-                            className="bg-[#10B25E] hover:bg-[#0e9d52] text-white text-xs px-4 py-1.5 rounded-full shadow-md transition"
+                            className="bg-[#2298D3] hover:bg-[#0e9d52] text-white text-xs px-4 py-1.5 rounded-full shadow-md transition"
                           >
                             View Profile
                           </button>
@@ -277,13 +265,13 @@ const Dashboard = () => {
             )}
           </div>
 
-          <div className={`${glass} flex-1 rounded-xl p-6`}>
-            <h3 className="font-bold text-xl mb-4 text-[#254A6B]">Recent Tickets</h3>
+          <div className={`${glass} flex-1 rounded-xl p-6 shadow-[inset_-7px_-6px_16.8px_-7px_#fff,inset_6px_10px_19.6px_-11px_#00000012,-12px_-11px_21px_4px_#fff,12px_11px_21.9px_#00000040]`}>
+            <h3 className="text-2xl font-semibold text-[#103944] mb-5">Recent Tickets</h3>
             {/* <div className="text-gray-500">No data available.</div> */}
             <div className="overflow-x-auto">
           <table className="min-w-full text-sm text-left">
             <thead>
-              <tr className="text-xs uppercase bg-[#254A6B] text-white">
+              <tr className="text-xs uppercase bg-[#103944] text-white">
                 <th className="px-5 py-3">Name</th>
                 <th className="px-5 py-3">Issue</th>
                 <th className="px-5 py-3">Status</th>
@@ -315,7 +303,7 @@ const Dashboard = () => {
                   key={idx}
                   className={`transition hover:bg-gray-100/60 ${
                     idx % 2 === 0 ? 'bg-white/40' : 'bg-gray-50/50'
-                  } border-b border-gray-200`}
+                  } border-b border-gray-400`}
                 >
                   <td className="px-5 py-4 font-medium whitespace-nowrap">{ticket.name}</td>
                   <td className="px-5 py-4">{ticket.issue}</td>
@@ -355,7 +343,7 @@ const Dashboard = () => {
               </button>
 
               {/* Header Section */}
-              <div className="bg-[#10B25E] p-6 flex flex-col items-center text-white">
+              <div className="bg-[#2298D3] p-6 flex flex-col items-center text-white">
                 <img
                   src={selectedUser.image}
                   alt={selectedUser.name}
@@ -365,7 +353,7 @@ const Dashboard = () => {
                 <span
                   className={`mt-1 px-3 py-1 rounded-full text-sm font-medium ${
                     selectedUser.status === 'Member'
-                      ? 'bg-white text-[#10B25E]'
+                      ? 'bg-white text-[#2298D3]'
                       : 'bg-red-100 text-red-600'
                   }`}
                 >
@@ -374,7 +362,7 @@ const Dashboard = () => {
               </div>
 
               {/* Info Section */}
-              <div className="p-6 space-y-4 text-sm text-[#254A6B]">
+              <div className="p-6 space-y-4 text-sm text-[#103944]">
                 <InfoRow label="Sponsor Name" value={selectedUser.sponsorName} />
                 <InfoRow label="Email ID" value={selectedUser.email} />
                 <InfoRow label="Contact No." value={selectedUser.phone} />
