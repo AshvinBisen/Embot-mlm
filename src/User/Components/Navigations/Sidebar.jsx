@@ -13,6 +13,9 @@ import {
 } from "react-icons/fa";
 import { useSidebar } from "../../Contexts/SidebarContext";
 
+import logo1 from "../../../assets/userImages/Logo/logo_lght.png"
+import logo2 from "../../../assets/userImages/Logo/icon2.png"
+
 // MAIN NAVIGATION ITEMS
 const navItems = [
   {
@@ -242,7 +245,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed top-0 z-[999]  left-0   h-[100vh] bg-white/95 dark:bg-[#00000082] backdrop-blur-md border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
+      className={`fixed top-0 z-[99999]  left-0   h-[100vh] bg-white/95 dark:bg-[#00000082] backdrop-blur-md border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
         ${isExpanded || isMobileOpen
           ? "w-[230px]"
           : isHovered
@@ -262,27 +265,27 @@ const Sidebar = () => {
             <>
               <img
                 className="dark:hidden drop-shadow-sm"
-                src="/images/logo/logo.svg"
+                src={logo1}
                 alt="Logo"
-                width={140}
-                height={36}
+                width={100}
+                // height={36}
               />
               <img
                 className="hidden dark:block drop-shadow-sm"
-                src="/images/logo/logo-dark.svg"
+                src={logo1}
                 alt="Logo"
-                width={140}
-                height={36}
+                width={100}
+                // height={36}
               />
             </>
           ) : (
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10  rounded-xl flex items-center justify-center shadow-lg">
               <img
-                src="/images/logo/logo-icon.svg"
+                  src={logo2}
                 alt="Logo"
-                width={20}
-                height={20}
-                className="brightness-0 invert"
+                width={50}
+                 
+                className="   "
               />
             </div>
           )}
