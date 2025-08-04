@@ -10,11 +10,20 @@ import {
   FaFileAlt,
   FaTable,
   FaUserCircle,
+  FaMoneyBillWave,
+  FaWallet,
+  FaChartLine,
+  FaExchangeAlt,
+  FaUsers,
+  FaGift,
+  FaSignOutAlt,
+  FaShare,
 } from "react-icons/fa";
 import { useSidebar } from "../../Contexts/SidebarContext";
 
 import logo1 from "../../../assets/userImages/Logo/logo_lght.png"
 import logo2 from "../../../assets/userImages/Logo/icon2.png"
+import { IoIosGitNetwork } from "react-icons/io";
  
 
 // MAIN NAVIGATION ITEMS
@@ -25,55 +34,83 @@ const navItems = [
     path: "/dashboard",
   },
   {
+    icon: <FaMoneyBillWave />,
+    name: "Deposit",
+    subItems: [
+      { name: "Deposit", path: "/deposit", pro: false },
+      { name: "Report", path: "/deposit-report", pro: false },
+    ],
+  },
+  {
+    icon: <FaWallet />,
+    name: "Wallet",
+    subItems: [
+      { name: "My Wallet", path: "/my-wallet", pro: false },
+      { name: "Principle Wallet", path: "/principle-wallet", pro: false },
+    ],
+  },
+  {
+    icon: <FaChartLine />,
+    name: "Invest",
+    subItems: [
+      { name: "Investments", path: "/investments", pro: false },
+      { name: "Report", path: "/investment-report", pro: false },
+    ],
+  },
+  {
+    icon: <FaExchangeAlt />,
+    name: "Swap",
+    subItems: [
+      { name: "Swap (USDT To EMGT)", path: "/swap", pro: false },
+      { name: "Report", path: "/swap-report", pro: false },
+    ],
+  },
+  {
+    icon: <FaUsers />,
+    name: "Referral Program",
+    subItems: [
+      { name: "Referral Income", path: "/referral-income", pro: false },
+      { name: "Report", path: "/referral-report", pro: false },
+    ],
+  },
+  {
+    icon: <IoIosGitNetwork/>,
+    name: "Network",
+    subItems: [
+      { name: "Level", path: "/network-level", pro: false },
+      { name: "Downline", path: "/downline", pro: false },
+    ],
+  },
+  {
+    icon: <FaGift />,
+    name: "Bonanza Plan",
+    subItems: [
+      { name: "Bonanza Rewards", path: "/bonanza-rewards", pro: false },
+      { name: "Report", path: "/bonanza-report", pro: false },
+    ],
+  },
+  {
+    icon: <FaMoneyBillWave />,
+    name: "Withdraw",
+    subItems: [
+      { name: "Withdrawals", path: "/withdrawals", pro: false },
+      { name: "Report", path: "/withdraw-report", pro: false },
+    ],
+  },
+  {
+    icon: <FaFileAlt />,
+    name: "Transaction History",
+    path: "/transaction-history",
+  },
+  {
     icon: <FaUserCircle />,
-    name: "My Profile",
+    name: "Profile",
     path: "/my-profile",
   },
   {
-    icon: <FaThLarge />,
-    name: "Other",
-    subItems: [
-      { name: "Manage Flexible Packages1", path: "/", pro: false },
-      { name: "Manage Flexible Packages2", path: "/s", pro: false },
-      { name: "Manage Flexible Packages3", path: "/s", pro: false },
-      { name: "Manage Flexible Packages4", path: "/s", pro: false },
-      { name: "Manage Flexible Packages5", path: "/s", pro: false },
-      { name: "Manage Flexible Package6", path: "/s", pro: false },
-      { name: "1", path: "/s", pro: false },
-      { name: "Ecommerce2", path: "/s", pro: false },
-      { name: "Ecommerce3", path: "/s", pro: false },
-      { name: "Ecommerce4", path: "/s", pro: false },
-      { name: "Ecommerce5", path: "/s", pro: false },
-      { name: "Ecommerce6", path: "/s", pro: false },
-    ],
-  },
-  {
-    icon: <FaCalendarAlt />,
-    name: "Calendar",
-    path: "/calendar",
-  },
-  {
-    icon: <FaUserCircle />,
-    name: "User Profile",
-    path: "/profile",
-  },
-  {
-    name: "Forms",
-    icon: <FaList />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
-  {
-    name: "Tables",
-    icon: <FaTable />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <FaFileAlt />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
+    icon: <FaSignOutAlt />,
+    name: "Logout",
+    path: "/logout",
   },
 ];
 

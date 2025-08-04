@@ -59,7 +59,7 @@ const Dashboard = () => {
     pieStartAngle: 270,
     slices: {
       0: { color: '#4ade80' }, // Tailwind green-400
-      1: { color: '#1e3a8a' }, // Tailwind blue-900
+      1: { color: '#3cadf3' }, // Tailwind sky-900
     },
     tooltip: { trigger: 'selection' }, // ✅ Tooltips show on hover
     legend: 'none',
@@ -76,14 +76,14 @@ const Dashboard = () => {
           <h1 className="text-2xl uppercase text-[#48D77C] font-bold">
             Welcome, TEST CALLBACK Have a nice day!
           </h1>
-          <p className="text-blue-300 text-sm">EM934678</p>
+          <p className="text-sky-300 text-sm">EM934678</p>
         </div>
         <div className="flex items-center gap-4">
-          <button className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+          <button className="p-2 bg-sky-600 rounded-lg hover:bg-sky-700 transition-colors">
             <FaCog className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-lg">
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-sky-500 rounded-full flex items-center justify-center">
               <span className="text-sm font-bold">TC</span>
             </div>
             <span className="text-sm">TEST CALLBACK (EM934678)</span>
@@ -98,11 +98,11 @@ const Dashboard = () => {
             { title: 'My Wallet', value: '$0234', color: 'bg-purple-500', icon: <FaDollarSign /> },
             { title: 'Deposit Wallet', value: '$2234', color: 'bg-orange-500', icon: <FaChartLine /> },
             { title: 'Total Investment', value: '023423', color: 'bg-green-500', icon: <FaBullseye /> },
-            { title: 'ROI Wallet', value: '$02434', color: 'bg-blue-500', icon: <FaDollarSign /> },
+            { title: 'ROI Wallet', value: '$02434', color: 'bg-sky-500', icon: <FaDollarSign /> },
             { title: 'My Wallet', value: '$0234', color: 'bg-purple-500', icon: <FaDollarSign /> },
             { title: 'Deposit Wallet', value: '$2234', color: 'bg-orange-500', icon: <FaChartLine /> },
             { title: 'Total Investment', value: '023423', color: 'bg-green-500', icon: <FaBullseye /> },
-            { title: 'ROI Wallet', value: '$02434', color: 'bg-blue-500', icon: <FaDollarSign /> },
+            { title: 'ROI Wallet', value: '$02434', color: 'bg-sky-500', icon: <FaDollarSign /> },
           ].map((item, idx) => (
             <div key={idx} className="    bg-[#12212154]   backdrop-blur-xl border-gradient p-4       shadow-md shadow-slate-800/50">
               <div className="flex items-center gap-2 mb-2">
@@ -118,7 +118,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className='   lg:col-span-2 border-gradient border  bg-gradient-to-br from-green-400/10 to-blue-900/10    '>
+        <div className='   lg:col-span-2 border-gradient border  bg-gradient-to-br from-green-400/10 to-sky-900/10    '>
           
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
@@ -150,7 +150,7 @@ const Dashboard = () => {
           </div>
           <div className="flex justify-center mb-4">
             <div className="relative">
-              <div className="w-44 h-44 bg-gradient-to-br from-green-400 to-blue-900 rounded-full flex items-center justify-center">
+              <div className="w-44 h-44 bg-gradient-to-br from-green-400 to-sky-600 rounded-full flex items-center justify-center">
                 <GiTakeMyMoney className="h-20 w-20     " />
               </div>
               <div className="absolute -top-1 -right-1 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
@@ -181,7 +181,7 @@ const Dashboard = () => {
                 type="text"
                 value="https://Easy Money.biz/portal/register?ref=EM934678"
                 readOnly
-                className="flex-1 bg-transparent text-blue-300 text-sm outline-none w-full sm:w-auto"
+                className="flex-1 bg-transparent text-sky-300 text-sm outline-none w-full sm:w-auto"
               />
 
             </div>
@@ -249,7 +249,7 @@ const Dashboard = () => {
               />
               {/* Center Icon */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-blue-900 rounded-full flex items-center justify-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-sky-600 rounded-full flex items-center justify-center">
                   <GiProfit className="text-white w-10 h-10" />
                 </div>
               </div>
@@ -269,7 +269,7 @@ const Dashboard = () => {
 
 
         <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 flex flex-col justify-center text-center">
-          <div className={`w-full mb-4 h-14 mx-auto bg-gradient-to-br from-green-500 to-blue-900 rounded-md flex items-center justify-center`}>
+          <div className={`w-full mb-4 h-14 mx-auto bg-gradient-to-br from-green-500 to-sky-600 rounded-md flex items-center justify-center`}>
             <TbPigMoney className='text-2xl' />
           </div>
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">INVESTMENT OVERVIEW</h3>
@@ -280,14 +280,14 @@ const Dashboard = () => {
         <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
           <div className="grid grid-cols-2 gap-4 text-center      ">
             <div className='space-y-4'>
-              <div className={`w-full h-14 mx-auto bg-gradient-to-br from-green-500 to-blue-900 rounded-md flex items-center justify-center`}>
+              <div className={`w-full h-14 mx-auto bg-gradient-to-br from-green-500 to-sky-600 rounded-md flex items-center justify-center`}>
                 <MdOutlineCalendarMonth className='text-2xl' />
               </div>
               <p className="text-sm text-slate-400">Monthly Income</p>
               <p className="text-xl font-bold">$0</p>
             </div>
             <div className='space-y-4'>
-              <div className={`w-full h-14 mx-auto bg-gradient-to-br from-green-500 to-blue-900 rounded-md flex items-center justify-center`}>
+              <div className={`w-full h-14 mx-auto bg-gradient-to-br from-green-500 to-sky-600 rounded-md flex items-center justify-center`}>
                 <IoTodayOutline className='text-2xl' />
               </div>
               <p className="text-sm text-slate-400">Daily Income</p>
@@ -300,14 +300,14 @@ const Dashboard = () => {
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">TRANSACTIONS</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center`}>
+              <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-cyan-500 to-sky-600 rounded-full flex items-center justify-center`}>
                 <GrMoney className='text-2xl' />
               </div>
               <p className="text-slate-400 text-sm">Total Earning</p>
               <p className="text-3xl font-bold">$0</p>
             </div>
             <div>
-              <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center`}>
+              <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-cyan-500 to-sky-600 rounded-full flex items-center justify-center`}>
                 <PiHandWithdrawDuotone className='text-2xl' />
               </div>
               <p className="text-slate-400 text-sm">Total Withdraw</p>
@@ -326,7 +326,7 @@ const Dashboard = () => {
           { title: 'My Direct', value: "2", icon: <BsMicrosoftTeams className='text-2xl' /> },
           { title: 'Indirect', value: "3", icon: <FaPeopleArrows className='text-2xl' /> }].map((label, idx) => (
             <div key={idx} className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50">
-              <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center`}>
+              <div className={`w-14 mb-4 h-14  mx-auto bg-gradient-to-br from-purple-500 to-sky-600 rounded-xl flex items-center justify-center`}>
                 {label.icon}
 
               </div>
@@ -367,7 +367,7 @@ const Dashboard = () => {
         </div>
         {/* <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">Easy Money TOKEN OVERVIEW</h3>
-          <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+          <div className="w-12 h-12 bg-sky-500 rounded-full flex items-center justify-center mx-auto mb-3">
             <span className="text-lg font-bold">Z</span>
           </div>
           <p className="text-lg font-bold mb-1">Easy Money Token Price</p>
@@ -376,7 +376,7 @@ const Dashboard = () => {
         <div className="bg-[#12212154]  backdrop-blur-xl border-gradient p-6 border border-slate-700 shadow-md shadow-slate-800/50 text-center">
           <h3 className="text-lg font-semibold text-[#48D77C] mb-4">BONUS ACHIEVEMENT</h3>
           <div className="text-yellow-500 font-bold mb-2">Not Qualified</div>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm">View Report</button>
+          <button className="bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded text-sm">View Report</button>
         </div>
       </div>
 
