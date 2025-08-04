@@ -6,7 +6,7 @@ import AdminLayout from '../Admin/Layout/AdminLayout';
 
 // Lazy-loaded pages
 const Dashboard = lazy(() => import('../Admin/Pages/Dashboard'));
-const Test = lazy(() => import('../Admin/Pages/Test'));
+const UserManagment = lazy(() => import('../Admin/Pages/UserManagement'));
 
 const AdminRoutes = () => {
   return (
@@ -15,7 +15,7 @@ const AdminRoutes = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="test" element={<Test />} />
+          <Route path="user-managment" element={<UserManagment />} />
         </Route>
       </Routes>
     </Suspense>
