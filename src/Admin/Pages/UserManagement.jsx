@@ -1,92 +1,257 @@
-import React, { useState } from "react";
-
-const usersData = [
-  {
-    id: 1,
-    wallet: "0xAbc123...456",
-    email: "ashvin@example.com",
-    package: "Premium",
-    earnings: { usd: 1200, emgt: 350 },
-  },
-  {
-    id: 2,
-    wallet: "0xDef456...789",
-    email: "john@example.com",
-    package: "Starter",
-    earnings: { usd: 300, emgt: 90 },
-  },
-  {
-    id: 3,
-    wallet: "0x987654...321",
-    email: "jane@example.com",
-    package: "Gold",
-    earnings: { usd: 600, emgt: 150 },
-  },
-];
+import React, { useMemo, useState } from "react";
+import { useTable, usePagination, useGlobalFilter } from "react-table";
+import { FaEye, FaEyeSlash, FaEdit } from "react-icons/fa";
 
 const UserManagement = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [showPasswordRow, setShowPasswordRow] = useState({});
 
-  const filteredUsers = usersData.filter((user) =>
-    `${user.wallet} ${user.email} ${user.package}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+  const data = useMemo(() => {
+    return Array.from({ length: 60 }).map((_, i) => ({
+      sNo: i + 1,
+      name: `User ${i + 1}`,
+      sponsorId: `SPONSOR${i + 100}`,
+      userId: `USER${i + 1000}`,
+      password: "user@123",
+      myWallet: "50",
+      eWallet: "100",
+      tradeProfitWallet: "30",
+      reward: i % 2 === 0 ? "Reward 1" : "No reward",
+      mobile: "9876543210",
+      email: `user${i + 1}@mail.com`,
+      walletAddress: "0x12...abcd",
+      package: "Gold",
+      earnings: "$150 / EMGT 200",
+      registrationDate: "2025-08-01",
+      upgradeDate: "2025-08-04",
+      city: "Mumbai",
+      state: "Maharashtra",
+      paidStatus: i % 2 === 0 ? "Paid" : "Unpaid",
+      status: i % 2 === 0 ? "Active" : "Inactive",
+    }));
+  }, []);
+
+  const columns = useMemo(() => [
+    { Header: "S.No.", accessor: "sNo" },
+    { Header: "Name", accessor: "name" },
+    { Header: "Sponsor ID", accessor: "sponsorId" },
+    { Header: "User ID", accessor: "userId" },
+    {
+      Header: "Password",
+      accessor: "password",
+      Cell: ({ row }) => {
+        const rowIndex = row.index;
+        const isShown = showPasswordRow[rowIndex];
+        return (
+          <div className="flex items-center gap-2">
+            <span>{isShown ? row.original.password : "********"}</span>
+            <button
+              onClick={() =>
+                setShowPasswordRow((prev) => ({
+                  ...prev,
+                  [rowIndex]: !prev[rowIndex],
+                }))
+              }
+            >
+              {isShown ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+        );
+      },
+    },
+    { Header: "My Wallet", accessor: "myWallet" },
+    { Header: "E Wallet", accessor: "eWallet" },
+    { Header: "Trade Profit Wallet", accessor: "tradeProfitWallet" },
+    { Header: "Reward", accessor: "reward" },
+    { Header: "Mobile Number", accessor: "mobile" },
+    { Header: "Email ID", accessor: "email" },
+    { Header: "Wallet Address", accessor: "walletAddress" },
+    { Header: "Investment Package", accessor: "package" },
+    { Header: "Total Earnings (USD/EMGT)", accessor: "earnings" },
+    { Header: "Registration Date", accessor: "registrationDate" },
+    { Header: "Upgrade Date", accessor: "upgradeDate" },
+    { Header: "City", accessor: "city" },
+    { Header: "State", accessor: "state" },
+    { Header: "Paid Status", accessor: "paidStatus" },
+    { Header: "Status", accessor: "status" },
+    {
+      Header: "Block Action",
+      Cell: () => (
+        <div className="flex gap-2">
+          <button className="bg-green-500 px-2 py-1 rounded text-white text-sm">Active</button>
+          <button className="bg-red-500 px-2 py-1 rounded text-white text-sm">Block</button>
+        </div>
+      ),
+    },
+    {
+      Header: "USDT Withdraw",
+      Cell: () => (
+        <div className="flex gap-2">
+          <button className="bg-blue-500 px-2 py-1 rounded text-white text-sm">On</button>
+          <button className="bg-gray-500 px-2 py-1 rounded text-white text-sm">Off</button>
+        </div>
+      ),
+    },
+    {
+      Header: "ROI",
+      Cell: () => (
+        <div className="flex gap-2">
+          <button className="bg-blue-500 px-2 py-1 rounded text-white text-sm">On</button>
+          <button className="bg-gray-500 px-2 py-1 rounded text-white text-sm">Off</button>
+        </div>
+      ),
+    },
+    {
+      Header: "Quick Login",
+      Cell: () => (
+        <button className="bg-purple-600 text-white px-3 py-1 rounded text-sm">Login</button>
+      ),
+    },
+    {
+      Header: "Action",
+      Cell: () => (
+        <button className="text-blue-500 text-lg">
+          <FaEdit />
+        </button>
+      ),
+    },
+  ], [showPasswordRow]);
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    state,
+    setGlobalFilter,
+  } = useTable(
+    { columns, data, initialState: { pageSize: 20 } },
+    useGlobalFilter,
+    usePagination
   );
 
-  return (
-    <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">User Management</h2>
+  const { globalFilter, pageIndex } = state;
 
+  return (
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4 text-left text-[#103944]">User Management</h2>
       <div className="mb-4">
         <input
-          type="text"
-          placeholder="Search by wallet, email or package..."
-          className="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={globalFilter || ""}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Search users..."
+          className="w-[220px] p-2 border rounded shadow"
         />
       </div>
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-100 text-left text-gray-600 font-medium">
-            <tr>
-              <th className="px-4 py-3">Wallet Address</th>
-              <th className="px-4 py-3">Email</th>
-              <th className="px-4 py-3">Investment Package</th>
-              <th className="px-4 py-3">Total Earnings (USD / EMGT)</th>
-              <th className="px-4 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2">{user.wallet}</td>
-                  <td className="px-4 py-2">{user.email}</td>
-                  <td className="px-4 py-2">{user.package}</td>
-                  <td className="px-4 py-2">
-                    ${user.earnings.usd} / {user.earnings.emgt} EMGT
-                  </td>
-                  <td className="px-4 py-2 space-x-2">
-                    <button className="px-3 py-1 text-xs rounded bg-blue-500 text-white hover:bg-blue-600">
-                      Edit
-                    </button>
-                    <button className="px-3 py-1 text-xs rounded bg-red-500 text-white hover:bg-red-600">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="px-4 py-4 text-center text-gray-500">
-                  No users found.
-                </td>
+      {/* <div className="w-full overflow-x-auto">
+        <table {...getTableProps()} className="min-w-[2000px] w-full text-sm border">
+          <thead className="sticky top-0 z-10 bg-[#103944] text-white">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="text-left">
+                {headerGroup.headers.map((column, colIndex) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className={`p-2 border whitespace-nowrap ${
+                      colIndex === 0 ? "sticky left-0 z-20 bg-[#103944]" : ""
+                    }`}
+                  >
+                    {column.render("Header")}
+                  </th>
+                ))}
               </tr>
-            )}
+            ))}
+          </thead>
+
+          <tbody {...getTableBodyProps()}>
+            {page.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="hover:bg-gray-100">
+                  {row.cells.map((cell, colIndex) => (
+                    <td
+                      {...cell.getCellProps()}
+                      className={`p-2 border whitespace-nowrap ${
+                        colIndex === 0 ? "sticky left-0 bg-white z-10" : ""
+                      }`}
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
+      </div> */}
+
+      <div className="w-full overflow-x-auto">
+  <div className="min-w-[2200px]">
+    <table {...getTableProps()} className="w-full text-sm border">
+      <thead className="sticky top-0 z-10 bg-[#103944] text-white">
+        {headerGroups.map((headerGroup, hgIndex) => (
+          <tr {...headerGroup.getHeaderGroupProps()} key={hgIndex} className="text-left">
+            {headerGroup.headers.map((column, colIndex) => (
+              <th
+                {...column.getHeaderProps()}
+                key={column.id} // ✅ Key added here
+                className={`p-2 border whitespace-nowrap ${colIndex === 0 ? "sticky left-0 z-20 bg-[#103944]" : ""}`}
+              >
+                {column.render("Header")}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+
+      <tbody {...getTableBodyProps()}>
+            {page.map((row, rowIndex) => {
+      prepareRow(row);
+      return (
+        <tr {...row.getRowProps()} key={row.id} className="hover:bg-gray-100"> {/* ✅ key={row.id} */}
+          {row.cells.map((cell, cellIndex) => (
+            <td
+              {...cell.getCellProps()}
+              key={cell.column.id} // ✅ Key here too
+              className={`p-2 border whitespace-nowrap ${cellIndex === 0 ? "sticky left-0 bg-white z-10" : ""}`}
+            >
+              {cell.render("Cell")}
+            </td>
+          ))}
+        </tr>
+      );
+    })}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+      <div className="flex justify-between items-center mt-4">
+        <span>
+          Page {pageIndex + 1} of {pageOptions.length}
+        </span>
+        <div className="space-x-2">
+          <button
+            onClick={previousPage}
+            disabled={!canPreviousPage}
+            className="bg-blue-500 px-4 py-1 text-white rounded disabled:opacity-50"
+          >
+            Prev
+          </button>
+          <button
+            onClick={nextPage}
+            disabled={!canNextPage}
+            className="bg-blue-500 px-4 py-1 text-white rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
