@@ -35,44 +35,41 @@ const navItems = [
   },
   {
     icon: <FaDollarSign />,
-    name: "Set Price",
-    subItems: [
-      { name: "Set Token Price", path: "/", pro: false },
-      { name: "Report", path: "/", pro: false },
-    ],
+    name: "Set Token Price",
+     path: "/admin/set-token-price",
   },
   {
     icon: <FaWallet />,
-    name: "Users Deposite",
+    name: "Users Deposit",
     subItems: [
-      { name: "Deposit", path: "/", pro: false },
-      { name: "Report", path: "/", pro: false },
+      { name: "Deposit", path: "/admin/user-deposit/deposit", pro: false },
+      { name: "Report", path: "/admin/user-deposit/deposit-report", pro: false },
     ],
   },
   {
     icon: <FaChartPie />,
     name: "Investment Management",
     subItems: [
-      { name: "Investments Plan", path: "/", pro: false },
-      { name: "Staking Profits", path: "/", pro: false },
-      { name: "Report", path: "/", pro: false },
+      { name: "Investments Plan", path: "/admin/investment-management/investments-plan", pro: false },
+      { name: "Staking Profits", path: "/admin/investment-management/staking-profits", pro: false },
+      { name: "Report", path: "/admin/investment-management/report", pro: false },
     ],
   },
   {
     icon: <FaMoneyCheckAlt />,
     name: "Payout Management",
     subItems: [
-      { name: "Withdrawals", path: "/", pro: false },
-      { name: "Report", path: "/", pro: false },
+      { name: "Withdrawals", path: "/admin/payout-management/withdrawals", pro: false },
+      { name: "Report", path: "/admin/payout-management/report", pro: false },
     ],
   },
   {
     icon: <FaHandHoldingUsd />,
     name: "Income Management",
     subItems: [
-      { name: "Per Day Income", path: "/", pro: false },
-      { name: "Referral Income", path: "/", pro: false },
-      { name: "Bonanza Rewards", path: "/", pro: false },
+      { name: "Per Day Income", path: "/admin/income-management/per-day-income", pro: false },
+      { name: "Referral Income", path: "/admin/income-management/referrel-income", pro: false },
+      { name: "Bonanza Rewards", path: "/admin/income-management/bonanza-rewards", pro: false },
     ],
   },
   {
