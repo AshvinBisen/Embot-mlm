@@ -1,0 +1,75 @@
+.investment-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(18,33,33,0.33);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.investment-card__border {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;
+  height: 110%;
+  background: linear-gradient(0deg, #2298D3 -30%, #05CE99 100%);
+  transform: translate(-50%, -50%) scale(1.1);
+  border-radius: 1.2rem;
+  filter: blur(12px);
+  animation: rotate 6s linear infinite;
+  z-index: -1;
+}
+
+@keyframes rotate {
+  to { transform: translate(-50%, -50%) rotate(360deg) scale(1.1); }
+}
+
+.investment-content {
+  position: relative;
+  color: #fff;
+}
+
+.investment-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.investment-amount {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #05CE99;
+  margin-bottom: 1rem;
+}
+
+.investment-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.investment-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.investment-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(90deg, #2298D3, #05CE99);
+  color: #000;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.investment-btn:hover {
+  transform: scale(1.03);
+}

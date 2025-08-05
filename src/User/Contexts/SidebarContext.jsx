@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
-
+import { useLocation } from 'react-router-dom';
+ 
 const SidebarContext = createContext();
 
 export const useSidebar = () => {
@@ -17,7 +18,8 @@ export const SidebarProvider = ({ children }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [activeItem, setActiveItem] = useState(null);
     const [openSubmenu, setOpenSubmenu] = useState(null);
-
+    const location = useLocation();
+    
     useEffect(() => {
         const handleResize = () => {
             const mobile = window.innerWidth < 768;
@@ -31,6 +33,11 @@ export const SidebarProvider = ({ children }) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    useEffect(() => {
+        // Auto close mobile sidebar on route change
+        setIsMobileOpen(false);
+    }, [location.pathname]);
 
     const toggleSidebar = () => {
         setIsExpanded((prev) => !prev);

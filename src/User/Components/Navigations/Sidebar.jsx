@@ -24,7 +24,7 @@ import { useSidebar } from "../../Contexts/SidebarContext";
 import logo1 from "../../../assets/userImages/Logo/logo_lght.png"
 import logo2 from "../../../assets/userImages/Logo/icon2.png"
 import { IoIosGitNetwork } from "react-icons/io";
- 
+
 
 // MAIN NAVIGATION ITEMS
 const navItems = [
@@ -43,17 +43,16 @@ const navItems = [
   },
   {
     icon: <FaWallet />,
-    name: "Wallet",
-    subItems: [
-      { name: "My Wallet", path: "/my-wallet", pro: false },
-      { name: "Principle Wallet", path: "/principle-wallet", pro: false },
-    ],
+    name: "Wallets",
+    path: "/wallets",
+
   },
   {
     icon: <FaChartLine />,
     name: "Invest",
     subItems: [
       { name: "Investments", path: "/investments", pro: false },
+      { name: "Active Plan", path: "/active-plan", pro: false },
       { name: "Report", path: "/investment-report", pro: false },
     ],
   },
@@ -74,7 +73,7 @@ const navItems = [
     ],
   },
   {
-    icon: <IoIosGitNetwork/>,
+    icon: <IoIosGitNetwork />,
     name: "Network",
     subItems: [
       { name: "Level", path: "/network-level", pro: false },
@@ -166,8 +165,8 @@ const Sidebar = () => {
               onClick={() => handleSubmenuToggle(index)}
               className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 group relative overflow-hidden 
                 ${openSubmenu?.index === index
-                  ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/20 dark:to-indigo-900/20 text-green-600 dark:text-green-400 shadow-sm border border-green-100 dark:border-green-800/30"
-                : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/20 dark:to-indigo-900/20 text-green-600 dark:text-primary shadow-sm border border-green-100 dark:border-green-800/30"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
                 } 
                 ${!isExpanded && !isHovered ? " lg:px-[0.9rem]" : " "} lg:justify-start
               `}
@@ -177,8 +176,8 @@ const Sidebar = () => {
 
               <span className={`relative  z-10 flex-shrink-0 text-lg transition-colors duration-200
                 ${openSubmenu?.index === index
-                  ? "text-green-600 dark:text-green-400"
-                  : "text-gray-500 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-green-400"
+                  ? "text-green-600 dark:text-primary"
+                  : "text-gray-500 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-primary"
                 }`}>
                 {nav.icon}
               </span>
@@ -186,13 +185,13 @@ const Sidebar = () => {
               {(isExpanded || isHovered || isMobileOpen) && (
                 <>
                   <span className="relative z-10 flex-1 text-left font-medium tracking-wide">
-                    {nav.name}  
+                    {nav.name}
                   </span>
                   <FaChevronDown
                     className={`relative z-10 w-4 h-4 transition-all duration-300 flex-shrink-0
                       ${openSubmenu?.index === index
-                        ? "rotate-180 text-green-600 dark:text-green-400"
-                        : "text-gray-400 dark:text-gray-500 group-hover:text-green-500 dark:group-hover:text-green-400"
+                        ? "rotate-180 text-green-600 dark:text-primary"
+                        : "text-gray-400 dark:text-gray-500 group-hover:text-green-500 dark:group-hover:text-primary"
                       }`}
                   />
                 </>
@@ -204,21 +203,21 @@ const Sidebar = () => {
                 to={nav.path}
                 className={`flex   items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 group relative overflow-hidden
                   ${isActive(nav.path)
-                    ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/20 dark:to-indigo-900/20 text-green-600 dark:text-green-400 shadow-sm border border-green-100 dark:border-green-800/30"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
+                    ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/20 dark:to-indigo-900/20 text-green-600 dark:text-primary shadow-sm border border-green-100 dark:border-green-800/30"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
                   }
-                  ${!isExpanded && !isHovered ? "  lg:px-[0.9rem]" : " " }lg:justify-start
+                  ${!isExpanded && !isHovered ? "  lg:px-[0.9rem]" : " "}lg:justify-start
                 `}
               >
                 {/* Hover effect background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl " />
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl " />
 
                 <span className={`relative z-10 flex-shrink-0 ml-[-0.1rem] text-lg transition-colors duration-200 
                   ${isActive(nav.path)
-                    ? "text-green-600 dark:text-green-400"
-                    : "text-gray-500 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-green-400"
+                    ? "text-green-600 dark:text-primary"
+                    : "text-gray-500 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-primary"
                   }`}>
-                  {nav.icon} 
+                  {nav.icon}
                 </span>
 
                 {(isExpanded || isHovered || isMobileOpen) && (
@@ -250,8 +249,8 @@ const Sidebar = () => {
                       to={subItem.path}
                       className={`flex items-center justify-between py-1.5 px-3 rounded-lg text-sm font-medium transition-all duration-200 group relative overflow-hidden
                         ${isActive(subItem.path)
-                          ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/10 dark:to-indigo-900/10 text-green-600 dark:text-green-400 shadow-sm"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
+                          ? "bg-gradient-to-r from-green-50 to-indigo-50 dark:from-green-900/10 dark:to-indigo-900/10 text-green-600 dark:text-primary shadow-sm"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#182C2D] hover:text-gray-900 dark:hover:text-white"
                         }`}
                     >
                       {/* Hover effect background */}
@@ -311,23 +310,23 @@ const Sidebar = () => {
                 src={logo1}
                 alt="Logo"
                 width={100}
-                // height={36}
+              // height={36}
               />
               <img
                 className="hidden dark:block drop-shadow-sm"
                 src={logo1}
                 alt="Logo"
                 width={100}
-                // height={36}
+              // height={36}
               />
             </>
           ) : (
             <div className="w-10 h-10  rounded-xl flex items-center justify-center shadow-lg">
               <img
-                  src={logo2}
+                src={logo2}
                 alt="Logo"
                 width={50}
-                 
+
                 className="   "
               />
             </div>
@@ -348,7 +347,7 @@ const Sidebar = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Navigation"
                 ) : (
-                    <div className="w-6 h-0.5 mb-3   bg-gray-300 dark:bg-[#121A1C] rounded-full" />
+                  <div className="w-6 h-0.5 mb-3   bg-gray-300 dark:bg-[#121A1C] rounded-full" />
                 )}
               </h2>
               {renderMenuItems()}

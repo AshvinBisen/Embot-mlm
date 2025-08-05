@@ -10,6 +10,11 @@ import {
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { PiMicrosoftExcelLogo } from 'react-icons/pi';
+
+
 
 // 🔹 Local dummy data
 const fullData = [
@@ -42,7 +47,9 @@ const columns = [
     {
         id: 'sno',
         header: 'S.No',
-        cell: ({ row }) => row.index + 1,
+        cell: ({ row }) => (
+            <div className="text-left text-sm text-secondary">{row.index + 1}</div>
+        ),
     },
     columnHelper.accessor('username', {
         header: 'Username',
@@ -91,10 +98,31 @@ const DepositReport = () => {
         getPaginationRowModel: getPaginationRowModel(),
     });
 
+
+    // excel export 
+    const exportToExcel = () => {
+        const worksheet = XLSX.utils.json_to_sheet(filteredData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'DepositReport');
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: 'xlsx',
+            type: 'array',
+        });
+        const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        saveAs(data, 'deposit-report.xlsx');
+    };
+
     return (
         <div className="bg-[#12212154] backdrop-blur-xl border border-slate-700 border-gradient shadow-md shadow-slate-800/50 text-white p-6 rounded-md max-w-full mx-auto">
-            <ToastContainer position="top-right" />
-            <h2 className="text-2xl font-bold mb-6">Deposit Report</h2>
+            <div className="flex justify-between mb-6 gap-4   flex-wrap-reverse">
+                <h2 className="text-2xl text-primary font-bold ">Deposit Report</h2>
+
+                <button
+                    onClick={exportToExcel}
+                    className="px-3 py-1  h-fit text-base border flex items-center justify-center gap-2    border-slate-600 rounded bg-slate-800 hover:bg-slate-700 transition">
+                    <PiMicrosoftExcelLogo className="text-green-600" /> <span> Export </span>
+                </button>
+            </div>
 
             {/* 🔍 Search & Filter */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -125,7 +153,7 @@ const DepositReport = () => {
                                 {headerGroup.headers.map(header => (
                                     <th
                                         key={header.id}
-                                        className="text-left px-4 py-2 border-b border-slate-700 text-nowrap "
+                                        className="text-left px-4 py-2 border-b border-slate-700 text-primary text-nowrap "
                                     >
                                         {flexRender(header.column.columnDef.header, header.getContext())}
                                     </th>
@@ -153,7 +181,7 @@ const DepositReport = () => {
 
             {/* 📃 Pagination Controls */}
             <div className="mt-6 flex md:flex-row flex-col gap-4 items-center justify-between text-sm">
-                <div className="text-slate-400">
+                <div className="text-secondary">
                     Page {table.getState().pagination.pageIndex + 1} of{' '}
                     {table.getPageCount()}
                 </div>
@@ -170,7 +198,7 @@ const DepositReport = () => {
                         disabled={!table.getCanPreviousPage()}
                         className="px-3 py-1 border   md:text-sm text-xs rounded disabled:opacity-40"
                     >
-                        <FaAngleLeft/>
+                        <FaAngleLeft />
                     </button>
                     <button
                         onClick={() => table.nextPage()}
