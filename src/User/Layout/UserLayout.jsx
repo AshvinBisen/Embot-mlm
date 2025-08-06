@@ -7,7 +7,7 @@ import { ThemeProvider } from "../Contexts/ThemeContext";
 import { ToastContainer } from "react-toastify";
 // import vid from "../../../public/assets/userImages/images/bg-video.mp4"
 import "../../Styles/UserStyles/UserComman.css"
-import Footer from "../Components/Comman/Footer";
+ 
 
 const UserLayout = () => {
     const { isExpanded, isHovered, isMobileOpen } = useSidebar();

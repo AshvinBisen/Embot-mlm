@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { FaDollarSign } from 'react-icons/fa';
 import { SiExpensify, SiTether } from 'react-icons/si';
+import favlogo from "../../assets/userImages/Logo/icon2.png"
+
 
 const Swap = () => {
     const usdtBalance = 1000;
@@ -54,8 +56,11 @@ const Swap = () => {
                 {/* USDT Input */}
                 <div className="relative">
                     <label className="block text-slate-400 text-sm mb-1">USDT Amount</label>
-                    <div className="flex items-center bg-transparent border border-white/10 rounded-md px-3">
-                        <SiTether className="text-slate-400 mr-2" />
+                    <div className="flex items-center bg-transparent border border-white/10 rounded-md gap-3 px-3 py-1 ">
+                        <div className={`   aspect-[1/1]  glow-text bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center`}>
+
+                            <SiTether className=" m-2     " />
+                        </div>
                         <input
                             type="number"
                             step="0.01"
@@ -71,8 +76,11 @@ const Swap = () => {
                 {/* EMGT Output */}
                 <div className="relative">
                     <label className="block text-slate-400 text-sm mb-1">You’ll Receive (EMGT)</label>
-                    <div className="flex items-center bg-transparent border border-white/10 rounded-md px-3">
-                        <SiExpensify className="text-slate-400 mr-2" />
+                    <div className="flex items-center bg-transparent border border-white/10 rounded-md gap-3 py-1 px-3">
+                        <div className={`   aspect-[1/1]  glow-text bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center`}>
+
+                            <img src={favlogo} className='w-9' alt="favlogo" />
+                        </div>
                         <input
                             type="number"
                             step="0.01"

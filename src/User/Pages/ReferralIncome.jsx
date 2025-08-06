@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaArrowsDownToPeople, FaPeopleGroup, FaPeoplePulling } from 'react-icons/fa6';
 
 const referralData = [
     {
@@ -27,39 +28,64 @@ const ReferralIncome = () => {
 
     return (
         <div className=" ">
-            <h2 className="text-2xl font-bold mb-8 text-center text-white">Your 3-Level Referral Income</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center text-primary">Your 3-Level Referral Income</h2>
 
             {/* Levels Tree */}
-            <div className="flex flex-col items-center space-y-8 relative">
+            <div className="flex flex-col items-center space-y-5 relative">
 
                 {/* Level 1 */}
-                <div className="bg-gradient-to-br from-green-400/10 to-green-700/10 border border-green-500/30 border-gradient px-6 py-4 rounded-lg w-full max-w-md shadow-lg text-center">
-                    <h3 className="text-xl font-semibold text-green-300 mb-1">Level 1</h3>
-                    <p className="text-sm text-slate-300">3% Commission</p>
-                    <p className="text-sm text-slate-300">Users Referred: <span className="font-bold text-white">{referralData[0].users}</span></p>
-                    <p className="text-sm text-slate-300">Income Earned: <span className="text-green-400 font-semibold">${referralData[0].income}</span></p>
+                <div className="bg-gradient-to-br from-green-400/10 to-green-700/10 border border-green-500/30 border-gradient px-6 py-4 rounded-lg w-full max-w-md shadow-lg  flex sm:flex-row flex-col-reverse sm:text-left text-center gap-5 ">
+                    <div className="sm:w-1/2 w-full ">
+                        <h3 className="text-xl font-semibold text-green-300 mb-1">Level 1</h3>
+                        <p className="text-sm text-slate-300">3% Commission</p>
+                        <p className="text-sm text-slate-300">Users Referred: <span className="font-bold text-white">{referralData[0].users}</span></p>
+                        <p className="text-sm text-slate-300">Income Earned: <span className="text-green-400 font-semibold">${referralData[0].income}</span></p>
+                    </div>
+                    <div className=" sm:w-1/2 w-full">
+                        <div className={`   w-24 h-24  mx-auto bg-gradient-to-br from-purple-500 to-secondary rounded-xl flex items-center justify-center`}>
+                            <FaPeoplePulling className='text-3xl' />
+
+                        </div>
+                    </div>
                 </div>
 
                 {/* Down arrow */}
-                <div className="w-px h-8 bg-slate-500/30"></div>
+                <div className="w-px h-8 bg-slate-500"></div>
 
                 {/* Level 2 */}
-                <div className="bg-gradient-to-br from-blue-400/10 to-blue-700/10 border border-blue-500/30 border-gradient px-6 py-4 rounded-lg w-full max-w-md shadow-lg text-center">
-                    <h3 className="text-xl font-semibold text-blue-300 mb-1">Level 2</h3>
-                    <p className="text-sm text-slate-300">2% Commission</p>
-                    <p className="text-sm text-slate-300">Users Referred: <span className="font-bold text-white">{referralData[1].users}</span></p>
-                    <p className="text-sm text-slate-300">Income Earned: <span className="text-blue-400 font-semibold">${referralData[1].income}</span></p>
+                <div className="bg-gradient-to-br from-blue-400/10 to-blue-700/10 border border-green-500/30 border-gradient px-6 py-4 rounded-lg w-full max-w-md shadow-lg  flex sm:flex-row flex-col-reverse sm:text-left text-center gap-5 ">
+                    <div className="sm:w-1/2 w-full ">
+                        <h3 className="text-xl font-semibold text-blue-300 mb-1">Level 2</h3>
+                        <p className="text-sm text-slate-300">2% Commission</p>
+                        <p className="text-sm text-slate-300">Users Referred: <span className="font-bold text-white">{referralData[1].users}</span></p>
+                        <p className="text-sm text-slate-300">Income Earned: <span className="text-green-400 font-semibold">${referralData[1].income}</span></p>
+                    </div>
+                    <div className=" sm:w-1/2 w-full">
+                        <div className={`   w-24 h-24  mx-auto bg-gradient-to-br from-secondary to-primary rounded-xl flex items-center justify-center`}>
+                            <FaArrowsDownToPeople className='text-3xl' />
+
+                        </div>
+                    </div>
                 </div>
+                
 
                 {/* Down arrow */}
-                <div className="w-px h-8 bg-slate-500/30"></div>
+                <div className="w-px h-8 bg-slate-500"></div>
 
                 {/* Level 3 */}
-                <div className="bg-gradient-to-br from-purple-400/10 to-purple-700/10 border border-purple-500/30 border-gradient px-6 py-4 rounded-lg w-full max-w-md shadow-lg text-center">
-                    <h3 className="text-xl font-semibold text-purple-300 mb-1">Level 3</h3>
-                    <p className="text-sm text-slate-300">1% Commission</p>
-                    <p className="text-sm text-slate-300">Users Referred: <span className="font-bold text-white">{referralData[2].users}</span></p>
-                    <p className="text-sm text-slate-300">Income Earned: <span className="text-purple-400 font-semibold">${referralData[2].income}</span></p>
+                <div className="bg-gradient-to-br from-purple-400/10 to-purple-700/10 border border-green-500/30 border-gradient px-6 py-4 rounded-lg w-full max-w-md shadow-lg  flex sm:flex-row flex-col-reverse sm:text-left text-center gap-5 ">
+                    <div className="sm:w-1/2 w-full ">
+                        <h3 className="text-xl font-semibold text-purple-300 mb-1">Level 3</h3>
+                        <p className="text-sm text-slate-300">1% Commission</p>
+                        <p className="text-sm text-slate-300">Users Referred: <span className="font-bold text-white">{referralData[2].users}</span></p>
+                        <p className="text-sm text-slate-300">Income Earned: <span className="text-green-400 font-semibold">${referralData[2].income}</span></p>
+                    </div>
+                    <div className=" sm:w-1/2 w-full">
+                        <div className={`   w-24 h-24  mx-auto bg-gradient-to-br from-secondary to-purple-500 rounded-xl flex items-center justify-center`}>
+                            <FaPeopleGroup className='text-3xl' />
+
+                        </div>
+                    </div>
                 </div>
             </div>
 

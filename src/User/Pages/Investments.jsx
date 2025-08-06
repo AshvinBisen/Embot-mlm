@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 const plans = [
@@ -106,7 +105,7 @@ const Investments = () => {
                                 Invest Now
                             </button>
 
-                            <div className="z-10 mt-5 pt-4 border-t border-white/10 text-sm space-y-2">
+                            {/* <div className="z-10 mt-5 pt-4 border-t border-white/10 text-sm space-y-2">
                                 {[
                                     'Stable Returns',
                                     'Secure Staking',
@@ -117,7 +116,7 @@ const Investments = () => {
                                         {feature}
                                     </div>
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 ))}
