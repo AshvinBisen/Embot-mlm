@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { FaDollarSign } from 'react-icons/fa';
-import { SiExpensify } from 'react-icons/si';
+import { SiExpensify, SiTether } from 'react-icons/si';
 
 const Swap = () => {
     const usdtBalance = 1000;
@@ -55,7 +55,7 @@ const Swap = () => {
                 <div className="relative">
                     <label className="block text-slate-400 text-sm mb-1">USDT Amount</label>
                     <div className="flex items-center bg-transparent border border-white/10 rounded-md px-3">
-                        <FaDollarSign className="text-slate-400 mr-2" />
+                        <SiTether className="text-slate-400 mr-2" />
                         <input
                             type="number"
                             step="0.01"
