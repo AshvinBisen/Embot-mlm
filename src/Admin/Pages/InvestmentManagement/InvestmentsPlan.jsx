@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useTable, usePagination } from "react-table";
 import { FaEdit, FaBan, FaPlus, FaTrash } from "react-icons/fa";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
 
 const InvestmentPlan = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editRowData, setEditRowData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const [data, setData] = useState([
     {
@@ -52,13 +56,60 @@ const InvestmentPlan = () => {
     },
   ]);
 
-  // ✅ DELETE FUNCTION
+  const [originalData] = useState([...data]);
+
   const handleDelete = (packageName) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this package?");
     if (confirmDelete) {
       const updatedData = data.filter((pkg) => pkg.packageName !== packageName);
       setData(updatedData);
     }
+  };
+
+  const handleSearch = () => {
+    const filteredData = originalData.filter((item) =>
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(searchInput.toLowerCase())
+      )
+    );
+    setData(filteredData);
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    const tableColumn = ["S.No.", "Package Name", "Description", "From Amount", "To Amount", "Per Day %", "Monthly %"];
+    const tableRows = data.map((row, index) => [
+      index + 1,
+      row.packageName,
+      row.description,
+      row.fromAmount,
+      row.toAmount,
+      row.perDay,
+      row.monthly,
+    ]);
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+    });
+
+    doc.save("investment_plans.pdf");
+  };
+
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data.map((row, index) => ({
+      "S.No.": index + 1,
+      "Package Name": row.packageName,
+      "Description": row.description,
+      "From Amount": row.fromAmount,
+      "To Amount": row.toAmount,
+      "Per Day %": row.perDay,
+      "Monthly %": row.monthly,
+    })));
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "InvestmentPlans");
+    XLSX.writeFile(workbook, "investment_plans.xlsx");
   };
 
   const columns = React.useMemo(
@@ -194,25 +245,54 @@ const InvestmentPlan = () => {
           onClick={openAddModal}
           className="flex items-center gap-2 bg-[#103944] text-white px-4 py-2 rounded hover:bg-[#0e9d52]"
         >
-          <FaPlus />
-          Add Package
+          <FaPlus /> Add Package
         </button>
       </div>
 
+      {/* 🔍 Search and Export Section */}
+      <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
+        {/* Export Buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={handleExportPDF}
+            className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 text-sm"
+          >
+            Export PDF
+          </button>
+          <button
+            onClick={handleExportExcel}
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm"
+          >
+            Export Excel
+          </button>
+        </div>
+
+        {/* Search Bar */}
+        <div className="flex items-center justify-end">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search..."
+            className="border border-gray-300 rounded px-4 py-2 w-full max-w-xs"
+          />
+          <button
+            onClick={handleSearch}
+            className="ml-2 bg-[#103944] text-white px-4 py-2 rounded hover:bg-[#0e9d52] text-sm"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
+      {/* Table */}
       <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 overflow-x-auto">
-        <table
-          {...getTableProps()}
-          className="min-w-full text-sm text-left text-gray-800"
-        >
+        <table {...getTableProps()} className="min-w-full text-sm text-left text-gray-800">
           <thead className="bg-[#103944] text-white uppercase">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
                 {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className="px-4 py-2 whitespace-nowrap"
-                    key={column.id}
-                  >
+                  <th {...column.getHeaderProps()} className="px-4 py-2 whitespace-nowrap" key={column.id}>
                     {column.render("Header")}
                   </th>
                 ))}
@@ -225,11 +305,7 @@ const InvestmentPlan = () => {
               return (
                 <tr {...row.getRowProps()} key={row.id} className="border-b">
                   {row.cells.map((cell) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className="px-4 py-2 whitespace-nowrap"
-                      key={cell.column.id}
-                    >
+                    <td {...cell.getCellProps()} className="px-4 py-2 whitespace-nowrap" key={cell.column.id}>
                       {cell.render("Cell")}
                     </td>
                   ))}
@@ -239,6 +315,7 @@ const InvestmentPlan = () => {
           </tbody>
         </table>
 
+        {/* Pagination */}
         <div className="flex items-center justify-end mt-4">
           <span className="mr-4 text-[16px] font-semibold text-[#103944]">
             Page {pageIndex + 1} of {pageOptions.length}
@@ -286,28 +363,20 @@ const InvestmentPlan = () => {
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Package Name
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Package Name</label>
                 <input
                   type="text"
                   value={editRowData.packageName}
-                  onChange={(e) =>
-                    setEditRowData({ ...editRowData, packageName: e.target.value })
-                  }
+                  onChange={(e) => setEditRowData({ ...editRowData, packageName: e.target.value })}
                   className="w-full border border-gray-300 px-4 py-2 rounded-lg"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Description
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                 <textarea
                   value={editRowData.description}
-                  onChange={(e) =>
-                    setEditRowData({ ...editRowData, description: e.target.value })
-                  }
+                  onChange={(e) => setEditRowData({ ...editRowData, description: e.target.value })}
                   rows={3}
                   className="w-full border border-gray-300 px-4 py-2 rounded-lg"
                 />
@@ -315,34 +384,20 @@ const InvestmentPlan = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    From Amount
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">From Amount</label>
                   <input
                     type="number"
                     value={editRowData.fromAmount}
-                    onChange={(e) =>
-                      setEditRowData({
-                        ...editRowData,
-                        fromAmount: Number(e.target.value),
-                      })
-                    }
+                    onChange={(e) => setEditRowData({ ...editRowData, fromAmount: Number(e.target.value) })}
                     className="w-full border border-gray-300 px-4 py-2 rounded-lg"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    To Amount
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">To Amount</label>
                   <input
                     type="number"
                     value={editRowData.toAmount}
-                    onChange={(e) =>
-                      setEditRowData({
-                        ...editRowData,
-                        toAmount: Number(e.target.value),
-                      })
-                    }
+                    onChange={(e) => setEditRowData({ ...editRowData, toAmount: Number(e.target.value) })}
                     className="w-full border border-gray-300 px-4 py-2 rounded-lg"
                   />
                 </div>
@@ -350,28 +405,20 @@ const InvestmentPlan = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Per Day %
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Per Day %</label>
                   <input
                     type="text"
                     value={editRowData.perDay}
-                    onChange={(e) =>
-                      setEditRowData({ ...editRowData, perDay: e.target.value })
-                    }
+                    onChange={(e) => setEditRowData({ ...editRowData, perDay: e.target.value })}
                     className="w-full border border-gray-300 px-4 py-2 rounded-lg"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Monthly %
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Monthly %</label>
                   <input
                     type="text"
                     value={editRowData.monthly}
-                    onChange={(e) =>
-                      setEditRowData({ ...editRowData, monthly: e.target.value })
-                    }
+                    onChange={(e) => setEditRowData({ ...editRowData, monthly: e.target.value })}
                     className="w-full border border-gray-300 px-4 py-2 rounded-lg"
                   />
                 </div>

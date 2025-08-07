@@ -5,7 +5,7 @@ import { useSidebar } from "../../Contexts/SidebarContext";
 // import ThemeToggleButton from "./ThemeToggleButton";
  
 // import NotificationDropdown from "../components/header/NotificationDropdown";
-// import UserDropdown from "../components/header/UserDropdown";
+import UserDropdown from "../UserDropdown";
 
 import logo from '../../../assets/adminImages/Logo/logo_main.png'
 
@@ -145,7 +145,7 @@ const TopNav = () => {
             {/* <ThemeToggleButton/> */}
             {/* <NotificationDropdown /> */}
           </div>
-          {/* <UserDropdown /> */}
+          <UserDropdown />
         </div>
       </div>
     </header>

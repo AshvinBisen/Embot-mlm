@@ -12,6 +12,14 @@ const InvestmentsPlan = lazy(() => import('../Admin/Pages/InvestmentManagement/I
 const InvestmentsReports = lazy(() => import('../Admin/Pages/InvestmentManagement/Reports'));
 const Withdrawals = lazy(() => import('../Admin/Pages/PayoutManagement/Withdrawals'));
 const WithdrawalReport = lazy(() => import('../Admin/Pages/PayoutManagement/WithdrawalReports'));
+const PerDayIncome = lazy(() => import('../Admin/Pages/IncomeManagement/PerDayIncome'));
+const ReferralIncome = lazy(() => import('../Admin/Pages/IncomeManagement/ReferralIncome'));
+const BonanzaRewards = lazy(() => import('../Admin/Pages/IncomeManagement/BonanzaRewards'));
+const SwapManagementReport = lazy(() => import('../Admin/Pages/SwapManagement/SwapManagementReport'));
+// const PlatformSettings = lazy(() => import('../Admin/Pages/PlatformSettings'));
+// const TransactionHistory = lazy(() => import('../Admin/Pages/TransactionHistory'));
+const SessionLog = lazy(() => import('../Admin/Pages/SessionLog'));
+const Logout = lazy(() => import('../Admin/Pages/Logout'));
 
 // Lazy-loaded Auth Pages
 const Login = lazy(() => import('../Admin/Auth/Login'));
@@ -41,6 +49,14 @@ const AdminRoutes = () => {
           <Route path="investment-management/report" element={<InvestmentsReports />} />
           <Route path="payout-management/withdrawals" element={<Withdrawals />} />
           <Route path="payout-management/withdrawal-report" element={<WithdrawalReport />} />
+          <Route path="income-management/per-day-income" element={<PerDayIncome />} />
+          <Route path="income-management/referrel-income" element={<ReferralIncome />} />
+          <Route path="income-management/bonanza-rewards" element={<BonanzaRewards />} />
+          <Route path="swap-management/report" element={<SwapManagementReport />} />
+          {/* <Route path="platform-settings" element={<PlatformSettings />} />
+          <Route path="transaction-history" element={<TransactionHistory />} /> */}
+          <Route path="session-log" element={<SessionLog />} />
+          <Route path="logout" element={<Logout />} />
         </Route>
       </Routes>
     </Suspense>

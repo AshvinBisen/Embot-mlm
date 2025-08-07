@@ -2,6 +2,9 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useTable, usePagination } from "react-table";
 import dayjs from "dayjs";
 import { Trash2 } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
 
 const SetTokenPrice = () => {
   const [tokenName, setTokenName] = useState("Token A");
@@ -13,36 +16,40 @@ const SetTokenPrice = () => {
     "Token C": 0.75,
   });
   const [isInitialized, setIsInitialized] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
-  // Load data from localStorage on mount
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem("priceHistory"));
     const storedPrices = JSON.parse(localStorage.getItem("lastPrices"));
-
     if (storedHistory) setHistory(storedHistory);
     if (storedPrices) setLastPrices(storedPrices);
-
-    setIsInitialized(true); // Allow localStorage updates after initial load
+    setIsInitialized(true);
   }, []);
 
-  // Persist changes to history
   useEffect(() => {
     if (isInitialized) {
       localStorage.setItem("priceHistory", JSON.stringify(history));
     }
   }, [history, isInitialized]);
 
-  // Persist changes to prices
   useEffect(() => {
     if (isInitialized) {
       localStorage.setItem("lastPrices", JSON.stringify(lastPrices));
     }
   }, [lastPrices, isInitialized]);
 
+  const filteredData = useMemo(() => {
+    if (!searchInput) return history;
+    return history.filter((entry) =>
+      Object.values(entry).some((value) =>
+        String(value).toLowerCase().includes(searchInput.toLowerCase())
+      )
+    );
+  }, [searchInput, history]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!price) return;
-
     const oldPrice = lastPrices[tokenName];
     const date = dayjs().format("YYYY-MM-DD hh:mm:ss A");
 
@@ -54,7 +61,6 @@ const SetTokenPrice = () => {
     };
 
     const updatedHistory = [newEntry, ...history];
-
     setHistory(updatedHistory);
     setLastPrices((prev) => ({
       ...prev,
@@ -64,9 +70,36 @@ const SetTokenPrice = () => {
   };
 
   const handleDelete = (index) => {
-    const updatedHistory = [...history];
+    const updatedHistory = [...filteredData];
     updatedHistory.splice(index, 1);
-    setHistory(updatedHistory);
+    setHistory(
+      history.filter((entry, i) => i !== history.indexOf(filteredData[index]))
+    );
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    const tableColumn = ["Token Name", "Last Price", "New Price", "Updated At"];
+    const tableRows = filteredData.map((item) => [
+      item.tokenName,
+      `$${item.lastPrice}`,
+      `$${item.newPrice}`,
+      item.updatedAt,
+    ]);
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+    });
+
+    doc.save("token_price_history.pdf");
+  };
+
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "TokenPriceHistory");
+    XLSX.writeFile(workbook, "token_price_history.xlsx");
   };
 
   const columns = useMemo(
@@ -88,7 +121,7 @@ const SetTokenPrice = () => {
         ),
       },
     ],
-    [history]
+    [filteredData]
   );
 
   const {
@@ -106,7 +139,7 @@ const SetTokenPrice = () => {
   } = useTable(
     {
       columns,
-      data: history,
+      data: filteredData,
       initialState: { pageIndex: 0, pageSize: 10 },
     },
     usePagination
@@ -119,7 +152,6 @@ const SetTokenPrice = () => {
         <h2 className="text-2xl font-bold text-[#103944] mb-6 text-center">
           Set Token Price
         </h2>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-[16px] font-semibold text-[#103944] mb-2">
@@ -171,9 +203,38 @@ const SetTokenPrice = () => {
       {/* History Table */}
       {history.length > 0 && (
         <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-          <h3 className="text-xl font-semibold mb-4 text-[#103944]">
+          {/* Heading added here */}
+          <h2 className="text-2xl font-bold text-[#103944] mb-4 text-start">
             Price Update History
-          </h3>
+          </h2>
+
+          <div className="flex flex-col md:flex-row items-center justify-between mb-4">
+            <div className="mb-2 md:mb-0">
+              <button
+                onClick={handleExportPDF}
+                className="mr-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 text-sm"
+              >
+                Export PDF
+              </button>
+              <button
+                onClick={handleExportExcel}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm"
+              >
+                Export Excel
+              </button>
+            </div>
+
+            <div className="flex items-center justify-end w-full md:w-auto">
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Search..."
+                className="border border-gray-300 rounded px-4 py-2 w-full max-w-xs"
+              />
+            </div>
+          </div>
+
           <div className="overflow-auto rounded-md">
             <table
               {...getTableProps()}
@@ -220,7 +281,6 @@ const SetTokenPrice = () => {
               </tbody>
             </table>
 
-            {/* Pagination */}
             <div className="flex items-center justify-end mt-4">
               <span className="mr-4 text-[16px] font-semibold text-[#103944]">
                 Page {pageIndex + 1} of {pageOptions.length}
@@ -256,4 +316,3 @@ const SetTokenPrice = () => {
 };
 
 export default SetTokenPrice;
-
