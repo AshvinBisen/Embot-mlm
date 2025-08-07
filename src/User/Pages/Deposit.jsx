@@ -9,16 +9,13 @@ const Deposit = () => {
   const [amount, setAmount] = useState('');
   const [walletConnected, setWalletConnected] = useState(false);
 
-  const walletAddress = '0x1234abcd5678efgh9012ijklmnopqrstuvwx';
+  const walletAddress = '0x1234abcd5678efgh9012ijklmnopqrstuvw';
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(walletAddress);
     toast.success('Wallet address copied!', {
-      icon: <FaCheckCircle className="text-green-400" />,
-      position: "top-center",
-      className: 'bg-[#122121] text-white shadow-lg rounded-md',
-      autoClose: 2000,
-      transition: Slide,
+      icon: <FaCheckCircle className="text-primary" />,
+      
     });
   };
 
@@ -26,11 +23,7 @@ const Deposit = () => {
     // Simulate wallet connect
     setWalletConnected(true);
     toast.success('Wallet connected!', {
-      icon: <FaCheckCircle className="text-green-400" />,
-      position: "top-center",
-      className: 'bg-[#122121] text-white shadow-lg rounded-md',
-      autoClose: 2000,
-      transition: Slide,
+      icon: <FaCheckCircle className="text-primary" />,
     });
   };
 
@@ -38,10 +31,7 @@ const Deposit = () => {
     if (!walletConnected) {
       toast.error('Please connect your wallet first!', {
         icon: <FaTimesCircle className="text-red-400" />,
-        position: "top-center",
-        // className: 'bg-[#122121] text-white shadow-lg rounded-md',
-        autoClose: 2000,
-        transition: Slide,
+   
       });
       return;
     }
@@ -49,54 +39,56 @@ const Deposit = () => {
     if (!amount || parseFloat(amount) <= 0) {
       toast.error('Enter a valid amount!', {
         icon: <FaTimesCircle className="text-red-400" />,
-        position: "top-center",
-        // className: 'bg-[#122121] text-white shadow-lg rounded-md',
-        autoClose: 2000,
-        transition: Slide,
+ 
       });
       return;
     }
 
     toast.success('Deposit successful!', {
-      icon: <FaCheckCircle className="text-green-400" />,
-      position: "top-center",
-    //   className: 'bg-[#122121] text-white shadow-lg rounded-md',
-      autoClose: 2000,
-      transition: Slide,
+      icon: <FaCheckCircle className="text-primary" />,
+      
+      //   className: 'bg-[#122121] text-white shadow-lg rounded-md',
+      
     });
   };
 
   return (
-    <div className="bg-[#12212154] backdrop-blur-xl border border-slate-700 border-gradient shadow-md shadow-slate-800/50 text-white p-6 rounded-md max-w-3xl mx-auto">
+    <div className="bg-[#12212154] backdrop-blur-xl border border-slate-700 border-gradient shadow-md shadow-slate-800/50 text-white p-5 rounded-md max-w-2xl mx-auto">
       {/* <ToastContainer /> */}
 
-      <h2 className="text-2xl font-bold mb-6">Deposit</h2>
-
-      <div className="flex mb-6 gap-4">
+      <div className="flex justify-center mb-6 border-b  border-slate-600    gap-4">
         <button
-          className={`px-4 py-2 rounded text-sm font-semibold ${method === 'qr' ? 'bg-green-600' : 'bg-slate-700 hover:bg-slate-600'}`}
+          className={`px-4 py-2 rounded-t c ${method === 'qr'
+            ? 'text-white border-b-2 border-sky-400 bg-gradient-to-b from-primary/50 to-sky-400/50 rounded-t'
+            : 'bg-slate-800/50 '}`}
           onClick={() => setMethod('qr')}
         >
           Deposit via QR
         </button>
         <button
-          className={`px-4 py-2 rounded text-sm font-semibold ${method === 'wallet' ? 'bg-green-600' : 'bg-slate-700 hover:bg-slate-600'}`}
+          className={`px-4 py-2 rounded-t md:text-base text-sm ${method === 'wallet'
+            ? 'text-white border-b-2 border-sky-400 bg-gradient-to-b from-primary/50 to-sky-400/50 rounded-t'
+            : ' bg-slate-800/50 '}`}
           onClick={() => setMethod('wallet')}
         >
           Deposit via Wallet
         </button>
       </div>
+      {/* <hr className='mb-6' /> */}
+
+      {/* <h2 className="text-2xl font-bold mb-6">Deposit</h2> */}
+
 
       {method === 'qr' ? (
         <div className="space-y-4">
-          <div className="bg-slate-900/30 p-4 rounded flex justify-center">
+          <div className="bg-gradient-to-br from-secondary/50 to-primary/50 p-4 rounded flex justify-center">
             <QRCode value={walletAddress} fgColor="#ffffff" bgColor="transparent" />
           </div>
           <div>
             <label className="block text-sm font-semibold mb-1">Wallet Address</label>
             <div className="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded border border-slate-600">
-              <span className="text-xs truncate">{walletAddress}</span>
-              <button onClick={copyToClipboard} className="ml-auto text-blue-400 hover:text-blue-300">
+              <span className="text-base truncate">{walletAddress}</span>
+              <button onClick={copyToClipboard} className="ml-auto text-sky-400 hover:text-sky-300">
                 <FaCopy />
               </button>
             </div>
@@ -106,16 +98,16 @@ const Deposit = () => {
           </p>
         </div>
       ) : (
-        <div className="space-y-6">
-          <div className="flex items-center gap-4">
+        <div className="space-y-6 mt-10">
+          <div className="flex flex-col items-center justify-center gap-4">
             <button
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-sm font-semibold"
+              className="flex items-center    gap-2 px-4 py-2 bg-secondary hover:bg-sky-700 rounded text-sm font-semibold"
               onClick={handleConnectWallet}
             >
               <FaWallet /> {walletConnected ? 'Connected' : 'Connect Wallet'}
             </button>
             {walletConnected && (
-              <span className="text-green-400 text-sm">Wallet connected</span>
+                <span className="text-primary text-sm">Wallet connected</span>
             )}
           </div>
 

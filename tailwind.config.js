@@ -7,6 +7,10 @@ export default {
   darkMode: "class",  
   theme: {
     extend: {
+      colors: {
+        primary: '#05CE99',    
+        secondary: '#2298D3',  
+      },
       screens: {
         'phone': { 'max': '550px' },
         'tablet': { 'max': '768px' },

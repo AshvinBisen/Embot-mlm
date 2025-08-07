@@ -6,6 +6,8 @@ import Sidebar from "../Components/Navigations/Sidebar";
 import { ThemeProvider } from "../Contexts/ThemeContext";
 import { ToastContainer } from "react-toastify";
 // import vid from "../../../public/assets/userImages/images/bg-video.mp4"
+import "../../Styles/UserStyles/UserComman.css"
+ 
 
 const UserLayout = () => {
     const { isExpanded, isHovered, isMobileOpen } = useSidebar();
@@ -35,8 +37,9 @@ const UserLayout = () => {
                     } ${isMobileOpen ? "ml-0" : ""}`}
             >
                 <TopNav />
-                <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+                <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-5">
                     <Outlet />  {/* like chindren */}
+                    {/* <Footer/> */}
                 </div>
             </div>
         </div>
