@@ -4,24 +4,27 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
 
-const SessionLog = () => {
+const SwapManagementReport = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const data = useMemo(
     () => [
       {
-        adminId: "admin001",
-        loginTime: "2025-08-06 10:15 AM",
-        ip: "192.168.1.1",
-        status: "Success",
+        userName: "Alice",
+        userWallet: "0xABC1234567890DEFABC1234567890DEF",
+        swapFrom: "Token A",
+        swapTo: "Token B",
+        amount: 150,
+        date: "2025-08-07 10:30 AM",
       },
       {
-        adminId: "admin002",
-        loginTime: "2025-08-06 11:45 AM",
-        ip: "192.168.1.2",
-        status: "Failed",
+        userName: "Bob",
+        userWallet: "0xDEF7890123456ABCDEF7890123456ABC",
+        swapFrom: "Token C",
+        swapTo: "Token A",
+        amount: 200,
+        date: "2025-08-06 09:15 AM",
       },
-      // Add more logs here as needed
     ],
     []
   );
@@ -34,20 +37,28 @@ const SessionLog = () => {
         id: "sno",
       },
       {
-        Header: "Admin ID",
-        accessor: "adminId",
+        Header: "User Name",
+        accessor: "userName",
       },
       {
-        Header: "Login Time",
-        accessor: "loginTime",
+        Header: "User Wallet",
+        accessor: "userWallet",
       },
       {
-        Header: "IP Address",
-        accessor: "ip",
+        Header: "Swap From",
+        accessor: "swapFrom",
       },
       {
-        Header: "Status",
-        accessor: "status",
+        Header: "Swap To",
+        accessor: "swapTo",
+      },
+      {
+        Header: "Amount",
+        accessor: "amount",
+      },
+      {
+        Header: "Date",
+        accessor: "date",
       },
     ],
     []
@@ -55,33 +66,37 @@ const SessionLog = () => {
 
   const exportPDF = () => {
     const doc = new jsPDF();
-    doc.text("Admin Session Log", 14, 10);
+    doc.text("Swap Management Report", 14, 10);
     autoTable(doc, {
-      head: [["S.No.", "Admin ID", "Login Time", "IP Address", "Status"]],
+      head: [["S.No.", "User Name", "User Wallet", "Swap From", "Swap To", "Amount", "Date"]],
       body: data.map((row, index) => [
         index + 1,
-        row.adminId,
-        row.loginTime,
-        row.ip,
-        row.status,
+        row.userName,
+        row.userWallet,
+        row.swapFrom,
+        row.swapTo,
+        row.amount,
+        row.date,
       ]),
     });
-    doc.save("admin_session_log.pdf");
+    doc.save("swap_management_report.pdf");
   };
 
   const exportExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(
       data.map((row, index) => ({
         "S.No.": index + 1,
-        "Admin ID": row.adminId,
-        "Login Time": row.loginTime,
-        "IP Address": row.ip,
-        Status: row.status,
+        "User Name": row.userName,
+        "User Wallet": row.userWallet,
+        "Swap From": row.swapFrom,
+        "Swap To": row.swapTo,
+        "Amount": row.amount,
+        Date: row.date,
       }))
     );
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Admin Session Log");
-    XLSX.writeFile(workbook, "admin_session_log.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Swap Management");
+    XLSX.writeFile(workbook, "swap_management_report.xlsx");
   };
 
   const {
@@ -107,13 +122,15 @@ const SessionLog = () => {
     usePagination
   );
 
+  const { pageIndex } = state;
+
   const handleSearch = () => {
     setGlobalFilter(searchInput);
   };
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold text-[#103944] mb-4">Session Log</h1>
+      <h1 className="text-2xl font-bold text-[#103944] mb-4">Swap Management Report</h1>
 
       <div className="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div className="flex gap-2">
@@ -161,10 +178,10 @@ const SessionLog = () => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="bg-white">
-            {page.map((row) => {
+            {page.map((row, rowIndex) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} key={row.id} className="border-b text-start">
+                <tr {...row.getRowProps()} key={row.id || rowIndex} className="border-b">
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
                       {cell.render("Cell")}
@@ -179,11 +196,11 @@ const SessionLog = () => {
 
       <div className="flex items-center justify-end mt-4">
         <span className="text-sm text-gray-600 mr-4">
-          Page {state.pageIndex + 1} of {pageOptions.length}
+          Page {pageIndex + 1} of {pageOptions.length}
         </span>
         <div>
           <button
-            onClick={() => previousPage()}
+            onClick={previousPage}
             disabled={!canPreviousPage}
             className={`px-4 py-2 mr-2 font-semibold rounded ${
               canPreviousPage
@@ -194,7 +211,7 @@ const SessionLog = () => {
             Prev
           </button>
           <button
-            onClick={() => nextPage()}
+            onClick={nextPage}
             disabled={!canNextPage}
             className={`px-4 py-2 font-semibold rounded ${
               canNextPage
@@ -210,4 +227,4 @@ const SessionLog = () => {
   );
 };
 
-export default SessionLog;
+export default SwapManagementReport;

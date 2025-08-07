@@ -11,9 +11,9 @@ import {
   FaMoneyCheckAlt,
   FaHandHoldingUsd,
   FaExchangeAlt,
-  FaCog,
-  FaHistory,
-  FaSignOutAlt,
+  // FaCog,
+  // FaHistory,
+  // FaSignOutAlt,
   FaUsers,
   FaList,
   FaChevronDown,
@@ -79,26 +79,26 @@ const navItems = [
       { name: "Report", path: "/admin/swap-management/report", pro: false },
     ],
   },
-  {
-    icon: <FaCog />,
-    name: "Platform Settings",
-    path: "/admin/platform-settings",
-  },
-  {
-    icon: <FaHistory />,
-    name: "Transaction History",
-    path: "/admin/transaction-history",
-  },
+  // {
+  //   icon: <FaCog />,
+  //   name: "Platform Settings",
+  //   path: "/admin/platform-settings",
+  // },
+  // {
+  //   icon: <FaHistory />,
+  //   name: "Transaction History",
+  //   path: "/admin/transaction-history",
+  // },
   {
     icon: <FaList />,
     name: "Session Log",
     path: "/admin/session-log",
   },
-  {
-    icon: <FaSignOutAlt />,
-    name: "Logout",
-    path: "/admin/logout",
-  },
+  // {
+  //   icon: <FaSignOutAlt />,
+  //   name: "Logout",
+  //   path: "/admin/logout",
+  // },
 ];
 
 const Sidebar = () => {

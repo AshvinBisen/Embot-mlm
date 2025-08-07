@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Deposit = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,11 @@ const Deposit = () => {
     e.preventDefault();
     console.log("Sending OTP...");
     setOtpSent(true);
+
+    toast.info("📩 OTP sent to your email!", {
+      position: "top-right",
+      autoClose: 3000,
+    });
   };
 
   const handleVerifyOtp = (e) => {
@@ -27,17 +34,24 @@ const Deposit = () => {
       const existing = JSON.parse(localStorage.getItem("deposits")) || [];
       const newDeposit = {
         ...formData,
-        timestamp: new Date().toISOString(), // Add timestamp for uniqueness
+        timestamp: new Date().toISOString(),
       };
       localStorage.setItem("deposits", JSON.stringify([...existing, newDeposit]));
-      alert("Deposit successful!");
+
+      toast.success("✅ Deposit successful!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
 
       // Reset form
       setFormData({ userName: "", amount: "", walletType: "My Wallet" });
       setOtp("");
       setOtpSent(false);
     } else {
-      alert("Invalid OTP");
+      toast.error("❌ Invalid OTP. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
 
@@ -128,6 +142,9 @@ const Deposit = () => {
           </form>
         )}
       </div>
+
+      {/* Toast Message Container */}
+      <ToastContainer />
     </div>
   );
 };

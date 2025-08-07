@@ -1,6 +1,9 @@
 import React, { useMemo, useState } from "react";
 import { useTable, usePagination, useGlobalFilter } from "react-table";
-import { FaCheckCircle, FaTimesCircle, FaTimes, FaCheck } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
 
 const truncateAddress = (address) => {
   if (!address) return "";
@@ -52,26 +55,72 @@ const Withdrawals = () => {
     setActionStatus((prev) => ({ ...prev, [rowId]: type }));
   };
 
+  const exportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Withdrawals Report", 14, 10);
+    autoTable(doc, {
+      head: [
+        [
+          "S.No.",
+          "User Account",
+          "Username",
+          "USDT Wallet",
+          "Token Wallet",
+          "Withdraw Date",
+          "Paid Date",
+          "Withdraw Amount",
+          "Withdraw Charges",
+          "Final Amount",
+          "Tokens",
+          "Status",
+        ],
+      ],
+      body: data.map((row, index) => [
+        index + 1,
+        row.userAccount,
+        row.userName,
+        row.usdtWallet,
+        row.tokenWallet,
+        row.withdrawDate,
+        row.paidDate,
+        row.withdrawAmount,
+        row.withdrawCharges,
+        row.finalAmount,
+        row.tokens,
+        row.status,
+      ]),
+    });
+    doc.save("withdrawals_report.pdf");
+  };
+
+  const exportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(
+      data.map((row, index) => ({
+        "S.No.": index + 1,
+        "User Account": row.userAccount,
+        Username: row.userName,
+        "USDT Wallet": row.usdtWallet,
+        "Token Wallet": row.tokenWallet,
+        "Withdraw Date": row.withdrawDate,
+        "Paid Date": row.paidDate,
+        "Withdraw Amount": row.withdrawAmount,
+        "Withdraw Charges": row.withdrawCharges,
+        "Final Amount": row.finalAmount,
+        Tokens: row.tokens,
+        Status: row.status,
+      }))
+    );
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Withdrawals");
+    XLSX.writeFile(workbook, "withdrawals_report.xlsx");
+  };
+
   const columns = useMemo(
     () => [
       {
         Header: "S.No.",
         accessor: (_row, i) => i + 1,
         id: "sno",
-      },
-      {
-        Header: "User Account",
-        accessor: "userAccount",
-        Cell: ({ value }) => (
-          <a
-            href={`/admin-login/${value}`}
-            className="text-blue-600 underline"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Login
-          </a>
-        ),
       },
       {
         Header: "Username",
@@ -126,6 +175,20 @@ const Withdrawals = () => {
           >
             {value}
           </span>
+        ),
+      },
+      {
+        Header: "User Account",
+        accessor: "userAccount",
+        Cell: ({ value }) => (
+          <a
+            href={`/admin-login/${value}`}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[#103944] text-white px-3 py-1 rounded hover:bg-[#0e9d52] transition-all duration-200 inline-block text-sm text-center"
+          >
+            Login
+          </a>
         ),
       },
       {
@@ -199,21 +262,37 @@ const Withdrawals = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold text-[#103944] mb-4">Withdrawals</h1>
 
-      {/* Search Row */}
-      <div className="mb-4 flex items-center justify-end">
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search..."
-          className="border border-gray-300 rounded px-4 py-2 w-full max-w-xs"
-        />
-        <button
-          onClick={handleSearch}
-          className="ml-2 bg-[#103944] text-white px-4 py-2 rounded hover:bg-[#0e9d52] text-sm"
-        >
-          Search
-        </button>
+      {/* Top Controls */}
+      <div className="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="flex gap-2">
+          <button
+            onClick={exportPDF}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 text-sm"
+          >
+            Export PDF
+          </button>
+          <button
+            onClick={exportExcel}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm"
+          >
+            Export Excel
+          </button>
+        </div>
+        <div className="flex items-center w-full sm:w-auto">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search..."
+            className="border border-gray-300 rounded px-4 py-2 w-full max-w-xs"
+          />
+          <button
+            onClick={handleSearch}
+            className="ml-2 bg-[#103944] text-white px-4 py-2 rounded hover:bg-[#0e9d52] text-sm"
+          >
+            Search
+          </button>
+        </div>
       </div>
 
       {/* Table */}
@@ -265,8 +344,8 @@ const Withdrawals = () => {
             disabled={!canPreviousPage}
             className={`px-4 py-2 mr-2 font-semibold rounded ${
               canPreviousPage
-                ? "bg-[#103944] text-white hover:bg-[#0e9d52]"
-                : "bg-[#103944] text-white cursor-not-allowed"
+                ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
+                : "bg-[#103944] text-[#FFF] cursor-not-allowed"
             }`}
           >
             Prev
@@ -276,8 +355,8 @@ const Withdrawals = () => {
             disabled={!canNextPage}
             className={`px-4 py-2 font-semibold rounded ${
               canNextPage
-                ? "bg-[#103944] text-white hover:bg-[#0e9d52]"
-                : "bg-[#103944] text-white cursor-not-allowed"
+                 ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
+              : "bg-[#103944] text-[#FFF] cursor-not-allowed"
             }`}
           >
             Next
