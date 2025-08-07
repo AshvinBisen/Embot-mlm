@@ -1,4 +1,4 @@
-import React from 'react'
+
 import logo from "../../assets/userImages/Logo/logo_lght.png"
 const AuthNav = () => {
   return (

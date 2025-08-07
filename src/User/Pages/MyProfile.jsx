@@ -60,7 +60,7 @@ const MyProfile = () => {
 
   return (
     <>
-      <ToastContainer position="top-right" />
+       
       <div className="bg-[#12212154] backdrop-blur-xl border border-slate-700 border-gradient shadow-md shadow-slate-800/50 text-white p-5 rounded-md">
         {/* Tabs */}
         <div className="flex border-b border-slate-600 mb-6">

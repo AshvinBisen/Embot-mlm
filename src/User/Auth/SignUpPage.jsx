@@ -1,8 +1,8 @@
-import  { useState } from 'react';
-import { FaGoogle, FaApple } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 import loginimg from "../../assets/userImages/images/loginimg.webp";
 import logo from "../../assets/userImages/Logo/logo_lght.png";
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SignUpPage = () => {
     const [formData, setFormData] = useState({
@@ -13,9 +13,18 @@ const SignUpPage = () => {
         otp: '',
     });
 
-    const navigate  = useNavigate()
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [otpSent, setOtpSent] = useState(false);
+    const [timer, setTimer] = useState(0);
+
+    useEffect(() => {
+        let countdown;
+        if (timer > 0) {
+            countdown = setTimeout(() => setTimer(timer - 1), 1000);
+        }
+        return () => clearTimeout(countdown);
+    }, [timer]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,8 +47,12 @@ const SignUpPage = () => {
             setErrors((prev) => ({ ...prev, email: 'Enter a valid email first' }));
             return;
         }
+
+        // simulate sending otp
+        toast.success(`OTP sent to ${formData.email}`);
+        // alert("OTP sent to " + formData.email);
         setOtpSent(true);
-        alert("OTP sent to " + formData.email);
+        setTimer(60); // start 60 second countdown
     };
 
     const handleSubmit = (e) => {
@@ -49,18 +62,18 @@ const SignUpPage = () => {
             setErrors(validationErrors);
             return;
         }
-        navigate("/user/login")
-        // alert("Signup successful with data: " + JSON.stringify(formData, null, 2));
+
+        navigate("/user/login");
     };
 
     return (
-        <div className="w-full h-fit md:h-screen   overflow-hidden shadow-xl flex flex-col-reverse md:flex-row">
+        <div className="w-full h-fit md:h-screen overflow-hidden shadow-xl flex flex-col-reverse md:flex-row">
             <div className="w-full h-screen md:w-1/2 bg-[#1a152d] relative">
                 <img src={loginimg} alt="Placeholder" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/40 flex flex-col justify-between p-6">
-                    <button className="self-end text-sm text-white bg-white/10 px-4 py-1 rounded-full backdrop-blur-md">
+                    <Link to="/" className="self-end text-sm text-white bg-white/10 px-4 py-1 rounded-full backdrop-blur-md">
                         Back to website →
-                    </button>
+                    </Link>
                     <div>
                         <p className="text-xl font-medium">Join the Community,</p>
                         <p className="text-xl font-medium">Grow with us</p>
@@ -73,7 +86,10 @@ const SignUpPage = () => {
                 </div>
             </div>
 
-            <div className="w-full  h-full overflow-y-auto md:min-h-auto flex justify-center md:w-1/2 p-8 md:p-12">
+            <div className="w-full relative h-full overflow-y-auto flex justify-center md:w-1/2 p-8 md:p-12">
+                <Link to="/" className=" absolute  top-5 right-5  text-xs text-white bg-white/10 px-4 py-1 rounded-full backdrop-blur-md">
+                    Back to website →
+                </Link>
                 <div className="w-full max-w-xl">
                     <div className="mb-5">
                         <img src={logo} className='w-20' alt="Logo" />
@@ -95,24 +111,35 @@ const SignUpPage = () => {
                             />
                             {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username}</p>}
                         </div>
+                        <div>
 
-                        <div className='w-full relative rounded-md bg-secondary/10 border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary'>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="Email"
-                                className="bg-transparent h-full px-4 py-3 w-full"
-                            />
-                            <button
-                                type="button"
-                                onClick={handleSendOtp}
-                                className={` ${otpSent ?"bg-green-600":""} absolute right-3 top-1/2 transform -translate-y-1/2 text-nowrap border border-slate-600 px-2 rounded-full text-xs py-1`}>
-                                {otpSent ? "Resend OTP" : "Send OTP"}
-                            </button>
+                            <div className='w-full relative rounded-md bg-secondary/10 border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary'>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Email"
+                                    className="bg-transparent h-full px-4 py-3 w-full"
+                                />
+                                <button
+                                    type="button"
+                                    disabled={timer > 0}
+                                    onClick={handleSendOtp}
+                                    className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-nowrap border px-3 rounded-full text-xs py-1 transition-all duration-200 ${timer > 0
+                                        ? "cursor-not-allowed bg-gray-500 text-white border-gray-500"
+                                        : "bg-white/10 border-slate-600 hover:bg-white/20"
+                                        }`}
+                                >
+                                    {otpSent
+                                        ? timer > 0
+                                            ? `Resend OTP (${timer}s)`
+                                            : "Resend OTP"
+                                        : "Send OTP"}
+                                </button>
+                            </div>
+                            {errors.email && <p className="text-red-500 text-xs    ">{errors.email}</p>}
                         </div>
-                        {errors.email && <p className="text-red-500 text-xs -mt-3">{errors.email}</p>}
 
                         <div>
                             <input
@@ -162,21 +189,7 @@ const SignUpPage = () => {
                         <hr className="flex-1 border-gray-600" />
                     </div>
 
-                    <div className="my-6 flex items-center gap-4">
-                        <hr className="flex-1 border-gray-600" />
-                        <span className="text-gray-400 text-sm">Or sign up with</span>
-                        <hr className="flex-1 border-gray-600" />
-                    </div>
 
-                    <div className="flex gap-4 pb-10 ">
-                        <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-secondary/10 border border-white/10 rounded-md hover:bg-white/10 transition-colors">
-                            <FaGoogle /> Google
-                        </button>
-                        <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-secondary/10 border border-white/10 rounded-md hover:bg-white/10 transition-colors">
-                            <FaApple /> Apple
-                        </button>
-                    </div>
-                     
                 </div>
             </div>
         </div>

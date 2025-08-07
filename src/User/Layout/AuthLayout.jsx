@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import vid from "../../assets/userImages/images/bg-video.mp4"
+import { ToastContainer } from 'react-toastify';
 
 const AuthLayout = () => {
     return (
@@ -16,9 +17,9 @@ const AuthLayout = () => {
                 Your browser does not support the video tag.
                 </video>
 
-            {/* <div>
+            <div>
                 <ToastContainer />
-            </div> */}
+            </div>
              
             
             {/* <AuthNav/> */}
