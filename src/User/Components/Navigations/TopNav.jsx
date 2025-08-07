@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSidebar } from "../../Contexts/SidebarContext";
-// import ThemeToggleButton from "./ThemeToggleButton";
+import NotificationDropdown from "./NotificationDropdown";
+import UserDropdown from "./UserDropdown";
  
-// import NotificationDropdown from "../components/header/NotificationDropdown";
-// import UserDropdown from "../components/header/UserDropdown";
 
 const TopNav = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
@@ -136,9 +135,9 @@ const TopNav = () => {
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
             {/* <ThemeToggleButton/> */}
-            {/* <NotificationDropdown /> */}
+            <NotificationDropdown />
           </div>
-          {/* <UserDropdown /> */}
+          <UserDropdown />
         </div>
       </div>
     </header>

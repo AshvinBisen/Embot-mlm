@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import vid from "../../assets/userImages/images/bg-video.mp4"
+import vid from "../../assets/userImages/images/bg-video.webm"
 import { ToastContainer } from 'react-toastify';
 
 const AuthLayout = () => {
