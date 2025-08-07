@@ -19,13 +19,8 @@ import { useSidebar } from "../../Contexts/SidebarContext";
 import logo1 from "../../../assets/userImages/Logo/logo_lght.png";
 import logo2 from "../../../assets/userImages/Logo/icon2.png";
 
-// MAIN NAVIGATION ITEMS
 const navItems = [
-  {
-    icon: <FaThLarge />,
-    name: "Dashboard",
-    path: "dashboard",
-  },
+  { icon: <FaThLarge />, name: "Dashboard", path: "dashboard" },
   {
     icon: <FaMoneyBillWave />,
     name: "Deposit",
@@ -34,11 +29,7 @@ const navItems = [
       { name: "Report", path: "deposit-report", pro: false },
     ],
   },
-  {
-    icon: <FaWallet />,
-    name: "Wallets",
-    path: "wallets",
-  },
+  { icon: <FaWallet />, name: "Wallets", path: "wallets" },
   {
     icon: <FaChartLine />,
     name: "Invest",
@@ -66,10 +57,13 @@ const navItems = [
   },
   {
     icon: <IoIosGitNetwork />,
-    name: "Network",
+    name: "My Team",
     subItems: [
-      { name: "Level", path: "network-level", pro: false },
-      { name: "Downline", path: "network-downline", pro: false },
+      { name: "Team Downline", path: "team-downline", pro: false },
+      { name: " Team Tree view ", path: "team-tree-view", pro: false },
+      { name: "Direct Referral", path: "direct-referral", pro: false },
+      { name: "Level Wise Team", path: "level-wise-team", pro: false },
+       
     ],
   },
   {
@@ -97,40 +91,29 @@ const navItems = [
       { name: "Report", path: "withdraw-report", pro: false },
     ],
   },
-  {
-    icon: <FaFileAlt />,
-    name: "Transaction History",
-    path: "transaction-history",
-  },
-  {
-    icon: <FaUserCircle />,
-    name: "Profile",
-    path: "my-profile",
-  },
-  {
-    icon: <FaSignOutAlt />,
-    name: "Logout",
-    // path: "/logout",  
-  },
+  { icon: <FaFileAlt />, name: "Transaction History", path: "transaction-history" },
+  { icon: <FaUserCircle />, name: "Profile", path: "my-profile" },
+  { icon: <FaSignOutAlt />, name: "Logout" },
 ];
 
 const Sidebar = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const location = useLocation();
+  const navigate = useNavigate();
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [subMenuHeight, setSubMenuHeight] = useState({});
   const subMenuRefs = useRef({});
-  const navigate = useNavigate();
 
+  // ✅ Fix: now matches partial paths (e.g., includes "dashboard" inside "/user/dashboard")
   const isActive = useCallback(
-    (path) => location.pathname === path,
+    (path) => location.pathname.includes(path),
     [location.pathname]
   );
 
   const handleLogout = () => {
     localStorage.clear();
     sessionStorage.clear();
-    navigate("/login");
+    navigate("/user/login");
   };
 
   useEffect(() => {
@@ -165,7 +148,6 @@ const Sidebar = () => {
   const renderMenuItems = () => (
     <ul className="flex flex-col gap-2">
       {navItems.map((nav, index) => {
-        // Logout button logic
         if (nav.name === "Logout") {
           return (
             <li key={nav.name}>
@@ -307,45 +289,43 @@ const Sidebar = () => {
   );
 
   return (
-    <>
-      <aside
-        className={`fixed top-0 z-[99999] left-0 h-[100vh] bg-white/95 dark:bg-[#00000082] backdrop-blur-md border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
+    <aside
+      className={`fixed top-0 z-[99999] left-0 h-[100vh] bg-white/95 dark:bg-[#00000082] backdrop-blur-md border-r border-gray-200/60 dark:border-gray-700/60 transition-all duration-300 ease-in-out shadow-xl dark:shadow-2xl
         ${isExpanded || isMobileOpen ? "w-[230px]" : isHovered ? "w-[230px]" : "w-[73px]"}
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
-        onMouseEnter={() => !isExpanded && setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {/* LOGO SECTION */}
-        <div className={`py-6 px-6 flex border-b border-gray-100 dark:border-gray-800/50 ${!isExpanded && !isHovered ? "lg:px-[0.9rem]" : ""} justify-start`}>
-          <Link to="/" className="transition-transform duration-200 hover:scale-105">
-            {isExpanded || isHovered || isMobileOpen ? (
-              <>
-                <img className="dark:hidden drop-shadow-sm" src={logo1} alt="Logo" width={100} />
-                <img className="hidden dark:block drop-shadow-sm" src={logo1} alt="Logo" width={100} />
-              </>
-            ) : (
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
-                <img src={logo2} alt="Logo" width={50} className="" />
-              </div>
-            )}
-          </Link>
-        </div>
-
-        {/* NAVIGATION SECTION */}
-        <div className="flex flex-col h-full pb-36 overflow-y-auto no-scrollbar">
-          <nav className="flex-1 px-3 py-6">
-            <div className="space-y-8">
-              <div>
-                <h2 className={`mb-6 text-sm font-bold uppercase tracking-wider flex leading-5 ${!isExpanded && !isHovered ? "lg:justify-center text-gray-400 dark:text-gray-500" : "justify-start text-gray-500 dark:text-gray-400"}`}>
-                  {isExpanded || isHovered || isMobileOpen ? "Navigation" : <div className="w-6 h-0.5 mb-3 bg-gray-300 dark:bg-[#d6f7ff] rounded-full" />}
-                </h2>
-                {renderMenuItems()}
-              </div>
+      onMouseEnter={() => !isExpanded && setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* LOGO SECTION */}
+      <div className={`py-6 px-6 flex border-b border-gray-100 dark:border-gray-800/50 ${!isExpanded && !isHovered ? "lg:px-[0.9rem]" : ""} justify-start`}>
+        <Link to="/" className="transition-transform duration-200 hover:scale-105">
+          {isExpanded || isHovered || isMobileOpen ? (
+            <>
+              <img className="dark:hidden drop-shadow-sm" src={logo1} alt="Logo" width={100} />
+              <img className="hidden dark:block drop-shadow-sm" src={logo1} alt="Logo" width={100} />
+            </>
+          ) : (
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
+              <img src={logo2} alt="Logo" width={50} className="" />
             </div>
-          </nav>
-        </div>
-      </aside>
-    </>
+          )}
+        </Link>
+      </div>
+
+      {/* NAVIGATION */}
+      <div className="flex flex-col h-full pb-36 overflow-y-auto no-scrollbar">
+        <nav className="flex-1 px-3 py-6">
+          <div className="space-y-8">
+            <div>
+              <h2 className={`mb-6 text-sm font-bold uppercase tracking-wider flex leading-5 ${!isExpanded && !isHovered ? "lg:justify-center text-gray-400 dark:text-gray-500" : "justify-start text-gray-500 dark:text-gray-400"}`}>
+                {isExpanded || isHovered || isMobileOpen ? "Navigation" : <div className="w-6 h-0.5 mb-3 bg-gray-300 dark:bg-[#d6f7ff] rounded-full" />}
+              </h2>
+              {renderMenuItems()}
+            </div>
+          </div>
+        </nav>
+      </div>
+    </aside>
   );
 };
 

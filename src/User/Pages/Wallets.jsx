@@ -11,6 +11,10 @@ const Wallets = () => {
         {
             name: 'Principle Wallet',
             balance: 2398.75,
+        },
+        {
+            name: 'Emgt Wallet',
+            balance: 2398.75,
         }
     ];
 

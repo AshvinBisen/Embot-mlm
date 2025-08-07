@@ -1,5 +1,4 @@
 import  { useState } from 'react';
-import { FaGoogle, FaApple } from 'react-icons/fa';
 import loginimg from "../../assets/userImages/images/loginimg.webp";
 import logo from "../../assets/userImages/Logo/logo_lght.png";
 import { Link, useNavigate } from 'react-router-dom';
@@ -73,9 +72,9 @@ const LoginPage = () => {
                     className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col justify-between p-6">
-                    <button className="self-end text-sm text-white bg-white/10 px-4 py-1 rounded-full backdrop-blur-md">
+                    <Link to="/" className="self-end text-sm text-white bg-white/10 px-4 py-1 rounded-full backdrop-blur-md">
                         Back to website →
-                    </button>
+                    </Link>
                     <div>
                         <p className="text-xl font-medium">Capturing Moments,</p>
                         <p className="text-xl font-medium">Creating Memories</p>
@@ -89,7 +88,10 @@ const LoginPage = () => {
             </div>
 
             {/* Right Login Form */}
-            <div className="w-full min-h-screen md:min-h-auto flex items-center justify-center md:w-1/2 p-8 md:p-12">
+            <div className="w-full relative min-h-screen md:min-h-auto flex items-center justify-center md:w-1/2 p-8 md:p-12">
+                <Link to="/" className=" absolute  top-5 right-5  text-xs text-white bg-white/10 px-4 py-1 rounded-full backdrop-blur-md">
+                    Back to website →
+                </Link>
                 <div className="w-full max-w-xl">
                     <div className="mb-5">
                         <img src={logo} className="w-20" alt="Logo" />
@@ -172,20 +174,7 @@ const LoginPage = () => {
                         <hr className="flex-1 border-gray-600" />
                     </div>
 
-                    <div className="my-6 flex items-center gap-4">
-                        <hr className="flex-1 border-gray-600" />
-                        <span className="text-gray-400 text-sm">Or sign in with</span>
-                        <hr className="flex-1 border-gray-600" />
-                    </div>
-
-                    <div className="flex gap-4">
-                        <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-secondary/10 border border-white/10 rounded-md hover:bg-white/10 transition-colors">
-                            <FaGoogle /> Google
-                        </button>
-                        <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-secondary/10 border border-white/10 rounded-md hover:bg-white/10 transition-colors">
-                            <FaApple /> Apple
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
