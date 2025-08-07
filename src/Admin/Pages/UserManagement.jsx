@@ -149,7 +149,6 @@ const UserManagement = () => {
         />
       </div>
 
-      {/* <div className="w-full overflow-x-auto"> */}
        <div className="w-full overflow-x-auto  bg-white rounded-lg shadow-md border border-gray-200 p-4">
         <div className="min-w-[2200px]">
           <table {...getTableProps()} className="w-full text-sm border">
