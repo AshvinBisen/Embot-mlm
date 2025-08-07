@@ -51,7 +51,7 @@ const navItems = [
     name: "Investment Management",
     subItems: [
       { name: "Investments Plan", path: "/admin/investment-management/investments-plan", pro: false },
-      { name: "Staking Profits", path: "/admin/investment-management/staking-profits", pro: false },
+      // { name: "Staking Profits", path: "/admin/investment-management/staking-profits", pro: false },
       { name: "Report", path: "/admin/investment-management/report", pro: false },
     ],
   },
@@ -60,7 +60,7 @@ const navItems = [
     name: "Payout Management",
     subItems: [
       { name: "Withdrawals", path: "/admin/payout-management/withdrawals", pro: false },
-      { name: "Report", path: "/admin/payout-management/report", pro: false },
+      { name: "Withdrawal Report", path: "/admin/payout-management/withdrawal-report", pro: false },
     ],
   },
   {
