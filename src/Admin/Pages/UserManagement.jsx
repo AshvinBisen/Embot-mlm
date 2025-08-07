@@ -149,110 +149,76 @@ const UserManagement = () => {
         />
       </div>
 
-      {/* <div className="w-full overflow-x-auto">
-        <table {...getTableProps()} className="min-w-[2000px] w-full text-sm border">
-          <thead className="sticky top-0 z-10 bg-[#103944] text-white">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="text-left">
-                {headerGroup.headers.map((column, colIndex) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className={`p-2 border whitespace-nowrap ${
-                      colIndex === 0 ? "sticky left-0 z-20 bg-[#103944]" : ""
-                    }`}
-                  >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                  {row.cells.map((cell, colIndex) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className={`p-2 border whitespace-nowrap ${
-                        colIndex === 0 ? "sticky left-0 bg-white z-10" : ""
-                      }`}
+      {/* <div className="w-full overflow-x-auto"> */}
+       <div className="w-full overflow-x-auto  bg-white rounded-lg shadow-md border border-gray-200 p-4">
+        <div className="min-w-[2200px]">
+          <table {...getTableProps()} className="w-full text-sm border">
+            <thead className="sticky top-0 z-10 bg-[#103944] text-white">
+              {headerGroups.map((headerGroup, hgIndex) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={hgIndex} className="text-left">
+                  {headerGroup.headers.map((column, colIndex) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      key={column.id} // ✅ Key added here
+                      className={`p-2 border whitespace-nowrap ${colIndex === 0 ? "sticky left-0 z-20 bg-[#103944]" : ""}`}
                     >
-                      {cell.render("Cell")}
-                    </td>
+                      {column.render("Header")}
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div> */}
+              ))}
+            </thead>
 
-      <div className="w-full overflow-x-auto">
-  <div className="min-w-[2200px]">
-    <table {...getTableProps()} className="w-full text-sm border">
-      <thead className="sticky top-0 z-10 bg-[#103944] text-white">
-        {headerGroups.map((headerGroup, hgIndex) => (
-          <tr {...headerGroup.getHeaderGroupProps()} key={hgIndex} className="text-left">
-            {headerGroup.headers.map((column, colIndex) => (
-              <th
-                {...column.getHeaderProps()}
-                key={column.id} // ✅ Key added here
-                className={`p-2 border whitespace-nowrap ${colIndex === 0 ? "sticky left-0 z-20 bg-[#103944]" : ""}`}
-              >
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-
-      <tbody {...getTableBodyProps()}>
-            {page.map((row, rowIndex) => {
-      prepareRow(row);
-      return (
-        <tr {...row.getRowProps()} key={row.id} className="hover:bg-gray-100"> {/* ✅ key={row.id} */}
-          {row.cells.map((cell, cellIndex) => (
-            <td
-              {...cell.getCellProps()}
-              key={cell.column.id} // ✅ Key here too
-              className={`p-2 border whitespace-nowrap ${cellIndex === 0 ? "sticky left-0 bg-white z-10" : ""}`}
-            >
-              {cell.render("Cell")}
-            </td>
-          ))}
-        </tr>
-      );
-    })}
-      </tbody>
-    </table>
-  </div>
-</div>
-
-
-      <div className="flex justify-between items-center mt-4">
-        <span>
-          Page {pageIndex + 1} of {pageOptions.length}
-        </span>
-        <div className="space-x-2">
-          <button
-            onClick={previousPage}
-            disabled={!canPreviousPage}
-            className="bg-blue-500 px-4 py-1 text-white rounded disabled:opacity-50"
-          >
-            Prev
-          </button>
-          <button
-            onClick={nextPage}
-            disabled={!canNextPage}
-            className="bg-blue-500 px-4 py-1 text-white rounded disabled:opacity-50"
-          >
-            Next
-          </button>
+            <tbody {...getTableBodyProps()}>
+                  {page.map((row, rowIndex) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} key={row.id} className="hover:bg-gray-100"> {/* ✅ key={row.id} */}
+                {row.cells.map((cell, cellIndex) => (
+                  <td
+                    {...cell.getCellProps()}
+                    key={cell.column.id} // ✅ Key here too
+                    className={`p-2 border whitespace-nowrap ${cellIndex === 0 ? " left-0 bg-white z-10" : ""}`}
+                  >
+                    {cell.render("Cell")}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+            </tbody>
+          </table>
         </div>
       </div>
+          
+      <div className="flex items-center justify-end mt-4">
+        <span className="mr-4 text-[16px] font-semibold text-[#103944]">
+          Page {pageIndex + 1} of {pageOptions.length}
+        </span>
+        <button
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+          className={`px-4 py-2 mr-2 font-semibold rounded ${
+            canPreviousPage
+              ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
+              : "bg-[#103944] text-[#FFF] cursor-not-allowed"
+          }`}
+        >
+          Prev
+        </button>
+        <button
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+          className={`px-4 py-2 font-semibold rounded ${
+            canNextPage
+              ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
+              : "bg-[#103944] text-[#FFF] cursor-not-allowed"
+          }`}
+        >
+          Next
+        </button>
+      </div>
+
     </div>
   );
 };

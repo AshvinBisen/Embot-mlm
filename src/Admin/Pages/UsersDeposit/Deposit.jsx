@@ -22,10 +22,17 @@ const Deposit = () => {
 
   const handleVerifyOtp = (e) => {
     e.preventDefault();
+
     if (otp === "123456") {
       const existing = JSON.parse(localStorage.getItem("deposits")) || [];
-      localStorage.setItem("deposits", JSON.stringify([...existing, formData]));
+      const newDeposit = {
+        ...formData,
+        timestamp: new Date().toISOString(), // Add timestamp for uniqueness
+      };
+      localStorage.setItem("deposits", JSON.stringify([...existing, newDeposit]));
       alert("Deposit successful!");
+
+      // Reset form
       setFormData({ userName: "", amount: "", walletType: "My Wallet" });
       setOtp("");
       setOtpSent(false);
@@ -44,7 +51,7 @@ const Deposit = () => {
         {!otpSent ? (
           <form onSubmit={handleSendOtp} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[16px] font-medium text-[#103944] mb-1">
                 User Name
               </label>
               <input
@@ -58,7 +65,7 @@ const Deposit = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[16px] font-medium text-[#103944] mb-1">
                 Amount
               </label>
               <input
@@ -72,7 +79,7 @@ const Deposit = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[16px] font-medium text-[#103944] mb-1">
                 Wallet Type
               </label>
               <select
@@ -82,14 +89,14 @@ const Deposit = () => {
                 className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
                 <option value="My Wallet">My Wallet</option>
-                <option value="Principle">Principle</option>
+                <option value="Principle">Principle Wallet</option>
               </select>
             </div>
 
             <div className="text-center">
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition"
+                className="w-[160px] mt-4 bg-[#103944] hover:bg-[#0e9d52] text-white font-medium py-2 px-4 rounded-md transition"
               >
                 Send OTP
               </button>
@@ -98,7 +105,7 @@ const Deposit = () => {
         ) : (
           <form onSubmit={handleVerifyOtp} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[16px] font-medium text-[#103944] mb-1">
                 Enter OTP (sent to your email)
               </label>
               <input
@@ -113,9 +120,9 @@ const Deposit = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition"
+                className="w-[160px] bg-[#103944] hover:bg-[#0e9d52] text-white font-medium py-2 px-4 rounded-md transition"
               >
-                Submit Deposit
+                Submit
               </button>
             </div>
           </form>
