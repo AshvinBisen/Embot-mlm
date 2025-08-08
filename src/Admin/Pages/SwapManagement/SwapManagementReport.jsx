@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTable, usePagination, useGlobalFilter } from "react-table";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -31,35 +31,13 @@ const SwapManagementReport = () => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: "S.No.",
-        accessor: (_row, i) => i + 1,
-        id: "sno",
-      },
-      {
-        Header: "User Name",
-        accessor: "userName",
-      },
-      {
-        Header: "User Wallet",
-        accessor: "userWallet",
-      },
-      {
-        Header: "Swap From",
-        accessor: "swapFrom",
-      },
-      {
-        Header: "Swap To",
-        accessor: "swapTo",
-      },
-      {
-        Header: "Amount",
-        accessor: "amount",
-      },
-      {
-        Header: "Date",
-        accessor: "date",
-      },
+      { Header: "S.No.", accessor: (_row, i) => i + 1, id: "sno" },
+      { Header: "User Name", accessor: "userName" },
+      { Header: "User Wallet", accessor: "userWallet" },
+      { Header: "Swap From", accessor: "swapFrom" },
+      { Header: "Swap To", accessor: "swapTo" },
+      { Header: "Amount", accessor: "amount" },
+      { Header: "Date", accessor: "date" },
     ],
     []
   );
@@ -127,6 +105,11 @@ const SwapManagementReport = () => {
   const handleSearch = () => {
     setGlobalFilter(searchInput);
   };
+
+  // 🔄 Auto-search on every keystroke (1+ char)
+  useEffect(() => {
+    setGlobalFilter(searchInput);
+  }, [searchInput, setGlobalFilter]);
 
   return (
     <div className="p-6">

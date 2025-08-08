@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTable, usePagination } from "react-table";
 import { FaEdit, FaBan, FaPlus, FaTrash } from "react-icons/fa";
 import jsPDF from "jspdf";
@@ -10,6 +10,7 @@ const InvestmentPlan = () => {
   const [editRowData, setEditRowData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [errors, setErrors] = useState({});
 
   const [data, setData] = useState([
     {
@@ -58,6 +59,42 @@ const InvestmentPlan = () => {
 
   const [originalData] = useState([...data]);
 
+  useEffect(() => {
+    if (searchInput === "") {
+      setData(originalData);
+    } else {
+      handleSearch();
+    }
+  }, [searchInput]);
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!editRowData.packageName.trim()) {
+      newErrors.packageName = "Package Name is required";
+    }
+    if (!editRowData.description.trim()) {
+      newErrors.description = "Description is required";
+    }
+    if (!editRowData.fromAmount && editRowData.fromAmount !== 0) {
+      newErrors.fromAmount = "From Amount is required";
+    }
+    if (!editRowData.toAmount && editRowData.toAmount !== 0) {
+      newErrors.toAmount = "To Amount is required";
+    }
+    if (!editRowData.perDay.trim()) {
+      newErrors.perDay = "Per Day % is required";
+    } else if (isNaN(parseFloat(editRowData.perDay))) {
+      newErrors.perDay = "Per Day % must be a number";
+    }
+    if (!editRowData.monthly.trim()) {
+      newErrors.monthly = "Monthly % is required";
+    } else if (isNaN(parseFloat(editRowData.monthly))) {
+      newErrors.monthly = "Monthly % must be a number";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleDelete = (packageName) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this package?");
     if (confirmDelete) {
@@ -87,12 +124,10 @@ const InvestmentPlan = () => {
       row.perDay,
       row.monthly,
     ]);
-
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
     });
-
     doc.save("investment_plans.pdf");
   };
 
@@ -106,7 +141,6 @@ const InvestmentPlan = () => {
       "Per Day %": row.perDay,
       "Monthly %": row.monthly,
     })));
-
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "InvestmentPlans");
     XLSX.writeFile(workbook, "investment_plans.xlsx");
@@ -202,39 +236,53 @@ const InvestmentPlan = () => {
   );
 
   const openEditModal = (rowData) => {
-    setEditRowData(rowData);
+    setEditRowData({
+      ...rowData,
+      perDay: rowData.perDay.replace("%", ""),
+      monthly: rowData.monthly.replace("%", ""),
+    });
     setIsEditing(true);
     setIsModalOpen(true);
+    setErrors({});
   };
 
   const openAddModal = () => {
     setEditRowData({
       packageName: "",
       description: "",
-      fromAmount: 0,
-      toAmount: 0,
+      fromAmount: "",
+      toAmount: "",
       perDay: "",
       monthly: "",
     });
     setIsEditing(false);
     setIsModalOpen(true);
+    setErrors({});
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setEditRowData(null);
+    setErrors({});
   };
 
   const handleSave = () => {
-    if (isEditing) {
-      const updatedData = data.map((item) =>
-        item.packageName === editRowData.packageName ? editRowData : item
-      );
-      setData(updatedData);
-    } else {
-      setData([...data, editRowData]);
+    if (validateForm()) {
+      const formattedData = {
+        ...editRowData,
+        perDay: `${parseFloat(editRowData.perDay)}%`,
+        monthly: `${parseFloat(editRowData.monthly)}%`,
+      };
+      if (isEditing) {
+        const updatedData = data.map((item) =>
+          item.packageName === editRowData.packageName ? formattedData : item
+        );
+        setData(updatedData);
+      } else {
+        setData([...data, formattedData]);
+      }
+      closeModal();
     }
-    closeModal();
   };
 
   return (
@@ -249,9 +297,7 @@ const InvestmentPlan = () => {
         </button>
       </div>
 
-      {/* 🔍 Search and Export Section */}
       <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
-        {/* Export Buttons */}
         <div className="flex gap-2">
           <button
             onClick={handleExportPDF}
@@ -266,8 +312,6 @@ const InvestmentPlan = () => {
             Export Excel
           </button>
         </div>
-
-        {/* Search Bar */}
         <div className="flex items-center justify-end">
           <input
             type="text"
@@ -368,8 +412,11 @@ const InvestmentPlan = () => {
                   type="text"
                   value={editRowData.packageName}
                   onChange={(e) => setEditRowData({ ...editRowData, packageName: e.target.value })}
-                  className="w-full border border-gray-300 px-4 py-2 rounded-lg"
+                  className={`w-full border ${errors.packageName ? "border-red-500" : "border-gray-300"} px-4 py-2 rounded-lg`}
                 />
+                {errors.packageName && (
+                  <p className="text-red-500 text-xs mt-1">{errors.packageName}</p>
+                )}
               </div>
 
               <div>
@@ -378,8 +425,11 @@ const InvestmentPlan = () => {
                   value={editRowData.description}
                   onChange={(e) => setEditRowData({ ...editRowData, description: e.target.value })}
                   rows={3}
-                  className="w-full border border-gray-300 px-4 py-2 rounded-lg"
+                  className={`w-full border ${errors.description ? "border-red-500" : "border-gray-300"} px-4 py-2 rounded-lg`}
                 />
+                {errors.description && (
+                  <p className="text-red-500 text-xs mt-1">{errors.description}</p>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -389,8 +439,11 @@ const InvestmentPlan = () => {
                     type="number"
                     value={editRowData.fromAmount}
                     onChange={(e) => setEditRowData({ ...editRowData, fromAmount: Number(e.target.value) })}
-                    className="w-full border border-gray-300 px-4 py-2 rounded-lg"
+                    className={`w-full border ${errors.fromAmount ? "border-red-500" : "border-gray-300"} px-4 py-2 rounded-lg`}
                   />
+                  {errors.fromAmount && (
+                    <p className="text-red-500 text-xs mt-1">{errors.fromAmount}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">To Amount</label>
@@ -398,8 +451,11 @@ const InvestmentPlan = () => {
                     type="number"
                     value={editRowData.toAmount}
                     onChange={(e) => setEditRowData({ ...editRowData, toAmount: Number(e.target.value) })}
-                    className="w-full border border-gray-300 px-4 py-2 rounded-lg"
+                    className={`w-full border ${errors.toAmount ? "border-red-500" : "border-gray-300"} px-4 py-2 rounded-lg`}
                   />
+                  {errors.toAmount && (
+                    <p className="text-red-500 text-xs mt-1">{errors.toAmount}</p>
+                  )}
                 </div>
               </div>
 
@@ -410,8 +466,11 @@ const InvestmentPlan = () => {
                     type="text"
                     value={editRowData.perDay}
                     onChange={(e) => setEditRowData({ ...editRowData, perDay: e.target.value })}
-                    className="w-full border border-gray-300 px-4 py-2 rounded-lg"
+                    className={`w-full border ${errors.perDay ? "border-red-500" : "border-gray-300"} px-4 py-2 rounded-lg`}
                   />
+                  {errors.perDay && (
+                    <p className="text-red-500 text-xs mt-1">{errors.perDay}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Monthly %</label>
@@ -419,8 +478,11 @@ const InvestmentPlan = () => {
                     type="text"
                     value={editRowData.monthly}
                     onChange={(e) => setEditRowData({ ...editRowData, monthly: e.target.value })}
-                    className="w-full border border-gray-300 px-4 py-2 rounded-lg"
+                    className={`w-full border ${errors.monthly ? "border-red-500" : "border-gray-300"} px-4 py-2 rounded-lg`}
                   />
+                  {errors.monthly && (
+                    <p className="text-red-500 text-xs mt-1">{errors.monthly}</p>
+                  )}
                 </div>
               </div>
 

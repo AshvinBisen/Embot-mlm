@@ -17,6 +17,7 @@ const SetTokenPrice = () => {
   });
   const [isInitialized, setIsInitialized] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem("priceHistory"));
@@ -49,24 +50,33 @@ const SetTokenPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!price) return;
-    const oldPrice = lastPrices[tokenName];
-    const date = dayjs().format("YYYY-MM-DD hh:mm:ss A");
+    if (!price || price.trim() === "") {
+      setMessage({ type: "error", text: "Please enter a valid price." });
+    } else {
+      const oldPrice = lastPrices[tokenName];
+      const date = dayjs().format("YYYY-MM-DD hh:mm:ss A");
 
-    const newEntry = {
-      tokenName,
-      lastPrice: oldPrice,
-      newPrice: parseFloat(price),
-      updatedAt: date,
-    };
+      const newEntry = {
+        tokenName,
+        lastPrice: oldPrice,
+        newPrice: parseFloat(price),
+        updatedAt: date,
+      };
 
-    const updatedHistory = [newEntry, ...history];
-    setHistory(updatedHistory);
-    setLastPrices((prev) => ({
-      ...prev,
-      [tokenName]: parseFloat(price),
-    }));
-    setPrice("");
+      const updatedHistory = [newEntry, ...history];
+      setHistory(updatedHistory);
+      setLastPrices((prev) => ({
+        ...prev,
+        [tokenName]: parseFloat(price),
+      }));
+      setMessage({ type: "success", text: "Price updated successfully!" });
+      setPrice("");
+    }
+
+    // Clear the message after 3 seconds
+    setTimeout(() => {
+      setMessage(null);
+    }, 3000);
   };
 
   const handleDelete = (index) => {
@@ -178,7 +188,6 @@ const SetTokenPrice = () => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder={`Current: $${lastPrices[tokenName]}`}
-              required
               className="w-full border border-gray-300 px-4 py-2 rounded-lg"
             />
             <p className="text-[14px] text-gray-500 mt-2">
@@ -197,13 +206,23 @@ const SetTokenPrice = () => {
               Save Price
             </button>
           </div>
+
+          {/* Message Display */}
+          {message && (
+            <div
+              className={`mt-4 p-3 rounded-lg text-white text-sm font-medium ${
+                message.type === "success" ? "bg-green-600" : "bg-red-600"
+              }`}
+            >
+              {message.text}
+            </div>
+          )}
         </form>
       </div>
 
       {/* History Table */}
       {history.length > 0 && (
         <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-          {/* Heading added here */}
           <h2 className="text-2xl font-bold text-[#103944] mb-4 text-start">
             Price Update History
           </h2>

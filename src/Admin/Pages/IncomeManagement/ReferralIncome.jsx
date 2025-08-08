@@ -1,5 +1,5 @@
 // pages/ReferralIncome.js
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTable, usePagination, useGlobalFilter } from "react-table";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -96,6 +96,12 @@ const ReferralIncome = () => {
     usePagination
   );
 
+  // ✅ Real-time search effect
+  useEffect(() => {
+    setGlobalFilter(searchInput);
+  }, [searchInput, setGlobalFilter]);
+
+  // ✅ Optional button trigger
   const handleSearch = () => {
     setGlobalFilter(searchInput);
   };

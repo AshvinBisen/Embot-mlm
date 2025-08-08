@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTable, usePagination, useGlobalFilter } from "react-table";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -46,63 +46,6 @@ const WithdrawReports = () => {
     ],
     []
   );
-
-  const exportPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Withdrawals Report", 14, 10);
-    autoTable(doc, {
-      head: [
-        [
-          "S.No.",
-          "Username",
-          "USDT Wallet",
-          "Token Wallet",
-          "Withdraw Date",
-          "Paid Date",
-          "Withdraw Amount",
-          "Withdraw Charges",
-          "Final Amount",
-          "Tokens",
-          "Status",
-        ],
-      ],
-      body: data.map((row, index) => [
-        index + 1,
-        row.userName,
-        row.usdtWallet,
-        row.tokenWallet,
-        row.withdrawDate,
-        row.paidDate,
-        row.withdrawAmount,
-        row.withdrawCharges,
-        row.finalAmount,
-        row.tokens,
-        row.status,
-      ]),
-    });
-    doc.save("withdrawals_report.pdf");
-  };
-
-  const exportExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(
-      data.map((row, index) => ({
-        "S.No.": index + 1,
-        Username: row.userName,
-        "USDT Wallet": row.usdtWallet,
-        "Token Wallet": row.tokenWallet,
-        "Withdraw Date": row.withdrawDate,
-        "Paid Date": row.paidDate,
-        "Withdraw Amount": row.withdrawAmount,
-        "Withdraw Charges": row.withdrawCharges,
-        "Final Amount": row.finalAmount,
-        Tokens: row.tokens,
-        Status: row.status,
-      }))
-    );
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Withdrawals Report");
-    XLSX.writeFile(workbook, "withdrawals_report.xlsx");
-  };
 
   const columns = useMemo(
     () => [
@@ -193,13 +136,77 @@ const WithdrawReports = () => {
     usePagination
   );
 
+  // 🔁 Search as user types (real-time)
+  useEffect(() => {
+    setGlobalFilter(searchInput);
+  }, [searchInput, setGlobalFilter]);
+
   const handleSearch = () => {
     setGlobalFilter(searchInput);
   };
 
+  const exportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Withdrawals Report", 14, 10);
+    autoTable(doc, {
+      head: [
+        [
+          "S.No.",
+          "Username",
+          "USDT Wallet",
+          "Token Wallet",
+          "Withdraw Date",
+          "Paid Date",
+          "Withdraw Amount",
+          "Withdraw Charges",
+          "Final Amount",
+          "Tokens",
+          "Status",
+        ],
+      ],
+      body: data.map((row, index) => [
+        index + 1,
+        row.userName,
+        row.usdtWallet,
+        row.tokenWallet,
+        row.withdrawDate,
+        row.paidDate,
+        row.withdrawAmount,
+        row.withdrawCharges,
+        row.finalAmount,
+        row.tokens,
+        row.status,
+      ]),
+    });
+    doc.save("withdrawals_report.pdf");
+  };
+
+  const exportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(
+      data.map((row, index) => ({
+        "S.No.": index + 1,
+        Username: row.userName,
+        "USDT Wallet": row.usdtWallet,
+        "Token Wallet": row.tokenWallet,
+        "Withdraw Date": row.withdrawDate,
+        "Paid Date": row.paidDate,
+        "Withdraw Amount": row.withdrawAmount,
+        "Withdraw Charges": row.withdrawCharges,
+        "Final Amount": row.finalAmount,
+        Tokens: row.tokens,
+        Status: row.status,
+      }))
+    );
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Withdrawals Report");
+    XLSX.writeFile(workbook, "withdrawals_report.xlsx");
+  };
+
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold text-[#103944] mb-4">Withdraw Reports</h1>
+      <h1 className="text-2xl font-bold text-[#103944] mb-4">
+        Withdraw Reports
+      </h1>
 
       {/* Top Controls */}
       <div className="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -257,11 +264,7 @@ const WithdrawReports = () => {
               return (
                 <tr {...row.getRowProps()} key={row.id} className="border-b">
                   {row.cells.map((cell) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className="px-4 py-2"
-                      key={cell.column.id}
-                    >
+                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
                       {cell.render("Cell")}
                     </td>
                   ))}
@@ -294,8 +297,8 @@ const WithdrawReports = () => {
             disabled={!canNextPage}
             className={`px-4 py-2 font-semibold rounded ${
               canNextPage
-                 ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
-              : "bg-[#103944] text-[#FFF] cursor-not-allowed"
+                ? "bg-[#103944]  text-[#FFF] hover:bg-[#0e9d52]"
+                : "bg-[#103944] text-[#fff] cursor-not-allowed"
             }`}
           >
             Next

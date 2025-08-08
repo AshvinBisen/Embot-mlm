@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import AdminLayout from '../Admin/Layout/AdminLayout';
 
@@ -16,8 +16,6 @@ const PerDayIncome = lazy(() => import('../Admin/Pages/IncomeManagement/PerDayIn
 const ReferralIncome = lazy(() => import('../Admin/Pages/IncomeManagement/ReferralIncome'));
 const BonanzaRewards = lazy(() => import('../Admin/Pages/IncomeManagement/BonanzaRewards'));
 const SwapManagementReport = lazy(() => import('../Admin/Pages/SwapManagement/SwapManagementReport'));
-// const PlatformSettings = lazy(() => import('../Admin/Pages/PlatformSettings'));
-// const TransactionHistory = lazy(() => import('../Admin/Pages/TransactionHistory'));
 const SessionLog = lazy(() => import('../Admin/Pages/SessionLog'));
 const Logout = lazy(() => import('../Admin/Pages/Logout'));
 
@@ -27,19 +25,32 @@ const SignUp = lazy(() => import('../Admin/Auth/SignUp'));
 const ForgetPassword = lazy(() => import('../Admin/Auth/ForgetPassword'));
 const ResetPassword = lazy(() => import('../Admin/Auth/ResetPassword'));
 
+// Inline Private Route Wrapper
+const PrivateRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem('adminToken'); // Use your token key
+  return isAuthenticated ? children : <Navigate to="/admin/login" />;
+};
+
 const AdminRoutes = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        {/* Auth Routes */}
+        {/* Public Auth Routes */}
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin/sign-up" element={<SignUp />} />
         <Route path="/admin/forget-password" element={<ForgetPassword />} />
         <Route path="/admin/reset-password" element={<ResetPassword />} />
 
         {/* Protected Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <AdminLayout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="user-managment" element={<UserManagment />} />
           <Route path="set-token-price" element={<SetTokenPrice />} />
@@ -53,8 +64,6 @@ const AdminRoutes = () => {
           <Route path="income-management/referrel-income" element={<ReferralIncome />} />
           <Route path="income-management/bonanza-rewards" element={<BonanzaRewards />} />
           <Route path="swap-management/report" element={<SwapManagementReport />} />
-          {/* <Route path="platform-settings" element={<PlatformSettings />} />
-          <Route path="transaction-history" element={<TransactionHistory />} /> */}
           <Route path="session-log" element={<SessionLog />} />
           <Route path="logout" element={<Logout />} />
         </Route>

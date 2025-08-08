@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaUser, FaSignOutAlt, FaChevronDown } from "react-icons/fa";
 import EMicon from '../../assets/adminImages/Logo/icon1.png';
 import logo from '../../assets/adminImages/Logo/logo_main.png';
@@ -6,11 +7,17 @@ import logo from '../../assets/adminImages/Logo/logo_main.png';
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(""); // ✅ new state
+  const [successMessage, setSuccessMessage] = useState("");
   const dropdownRef = useRef();
+  const navigate = useNavigate(); // ✅ For redirecting on logout
 
   const handleToggle = () => setIsOpen(!isOpen);
-  const handleLogout = () => alert("Logged out!");
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken"); // ✅ Clear token
+    navigate("/admin/login"); // ✅ Redirect to login
+  };
+
   const handleClickOutside = (e) => {
     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
       setIsOpen(false);
@@ -29,11 +36,11 @@ const UserDropdown = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setSuccessMessage(""); // clear message on close
+    setSuccessMessage("");
   };
 
   const handleSave = () => {
-    setSuccessMessage("Profile updated successfully!"); // ✅ themed message
+    setSuccessMessage("Profile updated successfully!");
     setTimeout(() => {
       setSuccessMessage("");
       setShowModal(false);

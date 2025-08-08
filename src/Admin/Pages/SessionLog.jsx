@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTable, usePagination, useGlobalFilter } from "react-table";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -107,8 +107,15 @@ const SessionLog = () => {
     usePagination
   );
 
+  const { pageIndex } = state;
+
+  // 🔁 Auto-filter on every keystroke
+  useEffect(() => {
+    setGlobalFilter(searchInput || undefined);
+  }, [searchInput, setGlobalFilter]);
+
   const handleSearch = () => {
-    setGlobalFilter(searchInput);
+    setGlobalFilter(searchInput || undefined);
   };
 
   return (
@@ -161,10 +168,10 @@ const SessionLog = () => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="bg-white">
-            {page.map((row) => {
+            {page.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} key={row.id} className="border-b text-start">
+                <tr {...row.getRowProps()} key={i} className="border-b text-start">
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
                       {cell.render("Cell")}
@@ -179,7 +186,7 @@ const SessionLog = () => {
 
       <div className="flex items-center justify-end mt-4">
         <span className="text-sm text-gray-600 mr-4">
-          Page {state.pageIndex + 1} of {pageOptions.length}
+          Page {pageIndex + 1} of {pageOptions.length}
         </span>
         <div>
           <button

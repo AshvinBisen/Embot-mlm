@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../../assets/adminImages/Logo/logo_main.png';
 import bgImage from '../../assets/adminImages/images/bg_login.jpg';
 
@@ -9,12 +9,16 @@ const ForgetPassword = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [timer, setTimer] = useState(0);
   const [animate, setAnimate] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // 'success' or 'error'
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setAnimate(true);
   }, []);
 
-  // Countdown for resend OTP
+  // Countdown timer for resend OTP
   useEffect(() => {
     let interval;
     if (otpSent && timer > 0) {
@@ -25,20 +29,81 @@ const ForgetPassword = () => {
     return () => clearInterval(interval);
   }, [otpSent, timer]);
 
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   const handleSendOtp = () => {
-    if (!email) return alert("Please enter your email.");
+    setMessage("");
+    if (!email) {
+      setMessage("Please enter your email.");
+      setMessageType("error");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setMessage("Please enter a valid email address.");
+      setMessageType("error");
+      return;
+    }
+
+    // Simulate API call
     setOtpSent(true);
     setTimer(60);
-    console.log("OTP sent for password reset to:", email);
-    // API call to send OTP
+    setMessage("OTP sent successfully to your email.");
+    setMessageType("success");
+    console.log("OTP sent to:", email);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!otp) return alert("Please enter OTP.");
-    console.log("OTP submitted:", { email, otp });
-    // API call to verify OTP and proceed
-  };
+  e.preventDefault();
+  setMessage("");
+
+  if (!otp) {
+    setMessage("Please enter the OTP.");
+    setMessageType("error");
+    return;
+  }
+
+  if (!/^\d{6}$/.test(otp)) {
+    setMessage("OTP must be exactly 6 digits.");
+    setMessageType("error");
+    return;
+  }
+
+  // Simulate OTP verification
+  console.log("OTP verified:", { email, otp });
+
+  setMessage("OTP verified successfully.");
+  setMessageType("success");
+
+  setTimeout(() => {
+    navigate("/admin/reset-password", { state: { email } });
+  }, 1000);
+};
+
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setMessage("");
+
+  //   if (!otp) {
+  //     setMessage("Please enter the OTP.");
+  //     setMessageType("error");
+  //     return;
+  //   }
+
+  //   // Simulate OTP verification and redirect
+  //   console.log("OTP verified:", { email, otp });
+
+  //   setMessage("OTP verified successfully.");
+  //   setMessageType("success");
+
+  //   setTimeout(() => {
+  //     navigate("/admin/reset-password", { state: { email } });
+  //   }, 1000);
+  // };
 
   return (
     <div
@@ -59,6 +124,17 @@ const ForgetPassword = () => {
         <h2 className="text-[28px] text-center font-bold text-[#103944] mb-6">
           Forgot Password
         </h2>
+
+        {/* Alert Messages */}
+        {message && (
+          <div
+            className={`mb-4 text-sm font-medium p-2 rounded text-center ${
+              messageType === "error" ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+            }`}
+          >
+            {message}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit}>

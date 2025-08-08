@@ -1,5 +1,5 @@
 // pages/BonanzaRewards.js
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTable, usePagination, useGlobalFilter } from "react-table";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -95,6 +95,11 @@ const BonanzaRewards = () => {
     useGlobalFilter,
     usePagination
   );
+
+  // Trigger search as user types (1+ characters)
+  useEffect(() => {
+    setGlobalFilter(searchInput || "");
+  }, [searchInput, setGlobalFilter]);
 
   const handleSearch = () => {
     setGlobalFilter(searchInput);

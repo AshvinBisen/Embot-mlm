@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTable, usePagination } from "react-table";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -49,16 +49,22 @@ const InvestmentReport = () => {
     []
   );
 
+  // 🔍 Search Function
   const handleSearch = () => {
-    const filtered = data.filter(
-      (item) =>
-        item.userName.toLowerCase().includes(searchInput.toLowerCase()) ||
-        item.userWallet.toLowerCase().includes(searchInput.toLowerCase()) ||
-        item.packageName.toLowerCase().includes(searchInput.toLowerCase())
+    const filtered = data.filter((item) =>
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(searchInput.toLowerCase())
+      )
     );
     setFilteredData(filtered);
   };
 
+  // 🔁 Auto-search when typing (even 1 character)
+  useEffect(() => {
+    handleSearch();
+  }, [searchInput]);
+
+  // 📤 Export to PDF
   const exportPDF = () => {
     const doc = new jsPDF();
     autoTable(doc, {
@@ -75,6 +81,7 @@ const InvestmentReport = () => {
     doc.save("investment_report.pdf");
   };
 
+  // 📤 Export to Excel
   const exportExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(
       (filteredData.length > 0 ? filteredData : data).map((item, index) => ({
@@ -91,7 +98,7 @@ const InvestmentReport = () => {
     XLSX.writeFile(workbook, "investment_report.xlsx");
   };
 
-  const tableData = filteredData.length > 0 ? filteredData : data;
+  const tableData = filteredData.length > 0 || searchInput ? filteredData : data;
 
   const columns = useMemo(
     () => [
@@ -204,22 +211,30 @@ const InvestmentReport = () => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="bg-white">
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.id} className="border-b">
-                  {row.cells.map((cell) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className="px-4 py-2 whitespace-nowrap"
-                      key={cell.column.id}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
+            {page.length > 0 ? (
+              page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={row.id} className="border-b">
+                    {row.cells.map((cell) => (
+                      <td
+                        {...cell.getCellProps()}
+                        className="px-4 py-2 whitespace-nowrap"
+                        key={cell.column.id}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={columns.length} className="text-center py-4">
+                  No matching records found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
 
@@ -244,7 +259,7 @@ const InvestmentReport = () => {
             disabled={!canNextPage}
             className={`px-4 py-2 font-semibold rounded ${
               canNextPage
-                ? "bg-[#103944]  text-[#FFF] hover:bg-[#0e9d52]"
+                ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
                 : "bg-[#103944] text-[#fff] cursor-not-allowed"
             }`}
           >

@@ -89,13 +89,16 @@ const PerDayIncome = () => {
     usePagination
   );
 
+  // Search handler (for button)
   const handleSearch = () => {
-    setGlobalFilter(searchInput);
+    setGlobalFilter(searchInput || undefined);
   };
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold text-[#103944] mb-4">Per Day Income</h1>
+
+      {/* Top Controls */}
       <div className="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div className="flex gap-2">
           <button onClick={exportPDF} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 text-sm">Export PDF</button>
@@ -105,7 +108,10 @@ const PerDayIncome = () => {
           <input
             type="text"
             value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+              setGlobalFilter(e.target.value || undefined); // ✅ Real-time search here
+            }}
             placeholder="Search..."
             className="border border-gray-300 rounded px-4 py-2 w-full max-w-xs"
           />
@@ -113,6 +119,7 @@ const PerDayIncome = () => {
         </div>
       </div>
 
+      {/* Table */}
       <div className="overflow-x-auto bg-white rounded-lg shadow border border-gray-200">
         <table {...getTableProps()} className="min-w-full text-sm text-left text-gray-800">
           <thead className="bg-[#103944] text-white">
@@ -143,6 +150,7 @@ const PerDayIncome = () => {
         </table>
       </div>
 
+      {/* Pagination */}
       <div className="flex items-center justify-end mt-4">
         <span className="text-sm text-gray-600 mr-4">Page {state.pageIndex + 1} of {pageOptions.length}</span>
         <div>

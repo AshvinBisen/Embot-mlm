@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTable, usePagination, useGlobalFilter } from "react-table";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import jsPDF from "jspdf";
@@ -51,6 +51,22 @@ const Withdrawals = () => {
     []
   );
 
+  const [filteredData, setFilteredData] = useState(data);
+
+  useEffect(() => {
+    if (searchInput.trim() === "") {
+      setFilteredData(data);
+    } else {
+      const lowerSearch = searchInput.toLowerCase();
+      const filtered = data.filter((item) =>
+        Object.values(item).some((val) =>
+          String(val).toLowerCase().includes(lowerSearch)
+        )
+      );
+      setFilteredData(filtered);
+    }
+  }, [searchInput, data]);
+
   const handleAction = (rowId, type) => {
     setActionStatus((prev) => ({ ...prev, [rowId]: type }));
   };
@@ -75,7 +91,7 @@ const Withdrawals = () => {
           "Status",
         ],
       ],
-      body: data.map((row, index) => [
+      body: filteredData.map((row, index) => [
         index + 1,
         row.userAccount,
         row.userName,
@@ -95,7 +111,7 @@ const Withdrawals = () => {
 
   const exportExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(
-      data.map((row, index) => ({
+      filteredData.map((row, index) => ({
         "S.No.": index + 1,
         "User Account": row.userAccount,
         Username: row.userName,
@@ -182,7 +198,7 @@ const Withdrawals = () => {
         accessor: "userAccount",
         Cell: ({ value }) => (
           <a
-            href={`/admin-login/${value}`}
+            href={`/user/login?account=${value}`}
             target="_blank"
             rel="noreferrer"
             className="bg-[#103944] text-white px-3 py-1 rounded hover:bg-[#0e9d52] transition-all duration-200 inline-block text-sm text-center"
@@ -195,7 +211,6 @@ const Withdrawals = () => {
         Header: "Action",
         Cell: ({ row }) => {
           const status = actionStatus[row.original.id];
-
           if (status === "Approved")
             return (
               <span className="text-green-600 font-bold flex items-center gap-1">
@@ -208,7 +223,6 @@ const Withdrawals = () => {
                 <FaTimes /> Rejected
               </span>
             );
-
           return (
             <div className="flex gap-2">
               <button
@@ -243,20 +257,14 @@ const Withdrawals = () => {
     canPreviousPage,
     pageOptions,
     state,
-    setGlobalFilter,
   } = useTable(
     {
       columns,
-      data,
+      data: filteredData,
       initialState: { pageSize: 5 },
     },
-    useGlobalFilter,
     usePagination
   );
-
-  const handleSearch = () => {
-    setGlobalFilter(searchInput);
-  };
 
   return (
     <div className="p-6">
@@ -287,7 +295,7 @@ const Withdrawals = () => {
             className="border border-gray-300 rounded px-4 py-2 w-full max-w-xs"
           />
           <button
-            onClick={handleSearch}
+            onClick={() => setSearchInput(searchInput)}
             className="ml-2 bg-[#103944] text-white px-4 py-2 rounded hover:bg-[#0e9d52] text-sm"
           >
             Search
@@ -297,10 +305,7 @@ const Withdrawals = () => {
 
       {/* Table */}
       <div className="overflow-x-auto bg-white rounded-lg shadow border border-gray-200">
-        <table
-          {...getTableProps()}
-          className="min-w-full text-sm text-left text-gray-800"
-        >
+        <table {...getTableProps()} className="min-w-full text-sm text-left text-gray-800">
           <thead className="bg-[#103944] text-white">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
@@ -318,11 +323,7 @@ const Withdrawals = () => {
               return (
                 <tr {...row.getRowProps()} key={row.id} className="border-b">
                   {row.cells.map((cell) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className="px-4 py-2"
-                      key={cell.column.id}
-                    >
+                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
                       {cell.render("Cell")}
                     </td>
                   ))}
@@ -355,8 +356,8 @@ const Withdrawals = () => {
             disabled={!canNextPage}
             className={`px-4 py-2 font-semibold rounded ${
               canNextPage
-                 ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
-              : "bg-[#103944] text-[#FFF] cursor-not-allowed"
+                ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
+                : "bg-[#103944] text-[#FFF] cursor-not-allowed"
             }`}
           >
             Next
