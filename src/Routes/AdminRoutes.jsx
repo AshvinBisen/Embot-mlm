@@ -1,8 +1,15 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import AdminLayout from '../Admin/Layout/AdminLayout';
+import AdminLoader from '../Admin/Components/AdminLoader';
 
-// Lazy-loaded Admin Pages
+// ✅ Lazy-loaded Auth Pages
+const Login = lazy(() => import('../Admin/Auth/Login'));
+const SignUp = lazy(() => import('../Admin/Auth/SignUp'));
+const ForgetPassword = lazy(() => import('../Admin/Auth/ForgetPassword'));
+const ResetPassword = lazy(() => import('../Admin/Auth/ResetPassword'));
+
+// ✅ Lazy-loaded Admin Pages
 const Dashboard = lazy(() => import('../Admin/Pages/Dashboard'));
 const UserManagment = lazy(() => import('../Admin/Pages/UserManagement'));
 const SetTokenPrice = lazy(() => import('../Admin/Pages/SetTokenPrice'));
@@ -19,56 +26,181 @@ const SwapManagementReport = lazy(() => import('../Admin/Pages/SwapManagement/Sw
 const SessionLog = lazy(() => import('../Admin/Pages/SessionLog'));
 const Logout = lazy(() => import('../Admin/Pages/Logout'));
 
-// Lazy-loaded Auth Pages
-const Login = lazy(() => import('../Admin/Auth/Login'));
-const SignUp = lazy(() => import('../Admin/Auth/SignUp'));
-const ForgetPassword = lazy(() => import('../Admin/Auth/ForgetPassword'));
-const ResetPassword = lazy(() => import('../Admin/Auth/ResetPassword'));
-
-// Inline Private Route Wrapper
+// ✅ Private Route Component
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('adminToken'); // Use your token key
+  const isAuthenticated = localStorage.getItem('adminToken');
   return isAuthenticated ? children : <Navigate to="/admin/login" />;
 };
 
 const AdminRoutes = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Routes>
-        {/* Public Auth Routes */}
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin/sign-up" element={<SignUp />} />
-        <Route path="/admin/forget-password" element={<ForgetPassword />} />
-        <Route path="/admin/reset-password" element={<ResetPassword />} />
+    <Routes>
+      {/* ✅ Public Auth Routes with Lazy + Loader */}
+      <Route
+        path="/admin/login"
+        element={
+          <Suspense fallback={<AdminLoader />}>
+            <Login />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/admin/sign-up"
+        element={
+          <Suspense fallback={<AdminLoader />}>
+            <SignUp />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/admin/forget-password"
+        element={
+          <Suspense fallback={<AdminLoader />}>
+            <ForgetPassword />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/admin/reset-password"
+        element={
+          <Suspense fallback={<AdminLoader />}>
+            <ResetPassword />
+          </Suspense>
+        }
+      />
 
-        {/* Protected Admin Routes */}
+      {/* ✅ Protected Admin Routes */}
+      <Route
+        path="/admin"
+        element={
+          <PrivateRoute>
+            <AdminLayout />
+          </PrivateRoute>
+        }
+      >
+        <Route index element={<Navigate to="dashboard" />} />
         <Route
-          path="/admin"
+          path="dashboard"
           element={
-            <PrivateRoute>
-              <AdminLayout />
-            </PrivateRoute>
+            <Suspense fallback={<AdminLoader />}>
+              <Dashboard />
+            </Suspense>
           }
-        >
-          <Route index element={<Navigate to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="user-managment" element={<UserManagment />} />
-          <Route path="set-token-price" element={<SetTokenPrice />} />
-          <Route path="user-deposit/deposit" element={<Deposit />} />
-          <Route path="user-deposit/deposit-report" element={<DepositReport />} />
-          <Route path="investment-management/investments-plan" element={<InvestmentsPlan />} />
-          <Route path="investment-management/report" element={<InvestmentsReports />} />
-          <Route path="payout-management/withdrawals" element={<Withdrawals />} />
-          <Route path="payout-management/withdrawal-report" element={<WithdrawalReport />} />
-          <Route path="income-management/per-day-income" element={<PerDayIncome />} />
-          <Route path="income-management/referrel-income" element={<ReferralIncome />} />
-          <Route path="income-management/bonanza-rewards" element={<BonanzaRewards />} />
-          <Route path="swap-management/report" element={<SwapManagementReport />} />
-          <Route path="session-log" element={<SessionLog />} />
-          <Route path="logout" element={<Logout />} />
-        </Route>
-      </Routes>
-    </Suspense>
+        />
+        <Route
+          path="user-managment"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <UserManagment />
+            </Suspense>
+          }
+        />
+        <Route
+          path="set-token-price"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <SetTokenPrice />
+            </Suspense>
+          }
+        />
+        <Route
+          path="user-deposit/deposit"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <Deposit />
+            </Suspense>
+          }
+        />
+        <Route
+          path="user-deposit/deposit-report"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <DepositReport />
+            </Suspense>
+          }
+        />
+        <Route
+          path="investment-management/investments-plan"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <InvestmentsPlan />
+            </Suspense>
+          }
+        />
+        <Route
+          path="investment-management/report"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <InvestmentsReports />
+            </Suspense>
+          }
+        />
+        <Route
+          path="payout-management/withdrawals"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <Withdrawals />
+            </Suspense>
+          }
+        />
+        <Route
+          path="payout-management/withdrawal-report"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <WithdrawalReport />
+            </Suspense>
+          }
+        />
+        <Route
+          path="income-management/per-day-income"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <PerDayIncome />
+            </Suspense>
+          }
+        />
+        <Route
+          path="income-management/referrel-income"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <ReferralIncome />
+            </Suspense>
+          }
+        />
+        <Route
+          path="income-management/bonanza-rewards"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <BonanzaRewards />
+            </Suspense>
+          }
+        />
+        <Route
+          path="swap-management/report"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <SwapManagementReport />
+            </Suspense>
+          }
+        />
+        <Route
+          path="session-log"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <SessionLog />
+            </Suspense>
+          }
+        />
+        <Route
+          path="logout"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <Logout />
+            </Suspense>
+          }
+        />
+      </Route>
+    </Routes>
   );
 };
 
