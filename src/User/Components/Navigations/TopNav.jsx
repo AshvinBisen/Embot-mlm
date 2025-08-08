@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSidebar } from "../../Contexts/SidebarContext";
 import NotificationDropdown from "./NotificationDropdown";
 import UserDropdown from "./UserDropdown";
- 
+import logo from "../../../assets/userImages/Logo/logo_lght.png"
 
 const TopNav = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
@@ -68,12 +68,12 @@ const TopNav = () => {
           <Link to="/" className="lg:hidden">
             <img
               className="dark:hidden"
-              src="./images/logo/logo.svg"
+              src={logo}
               alt="Logo"
             />
             <img
               className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
+              src={logo}
               alt="Logo"
             />
           </Link>
