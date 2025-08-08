@@ -1,262 +1,392 @@
-import React, { useMemo, useState } from "react";
-import { useTable, usePagination, useGlobalFilter } from "react-table";
-import { FaEye, FaEyeSlash, FaEdit } from "react-icons/fa";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const UserManagement = () => {
-  const [showPasswordRow, setShowPasswordRow] = useState({});
+  const users = [
+    {
+      id: 1,
+      sponsorId: 'SPONSOR100',
+      userId: 'USER1000',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'Reward 1',
+      email: 'user1@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Paid',
+      status: 'Active',
+    },
+    {
+      id: 2,
+      sponsorId: 'SPONSOR101',
+      userId: 'USER1001',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'No reward',
+      email: 'user2@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Unpaid',
+      status: 'Inactive',
+    },
+    {
+      id: 1,
+      sponsorId: 'SPONSOR100',
+      userId: 'USER1000',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'Reward 1',
+      email: 'user1@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Paid',
+      status: 'Active',
+    },
+    {
+      id: 2,
+      sponsorId: 'SPONSOR101',
+      userId: 'USER1001',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'No reward',
+      email: 'user2@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Unpaid',
+      status: 'Inactive',
+    },
+    {
+      id: 1,
+      sponsorId: 'SPONSOR100',
+      userId: 'USER1000',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'Reward 1',
+      email: 'user1@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Paid',
+      status: 'Active',
+    },
+    {
+      id: 2,
+      sponsorId: 'SPONSOR101',
+      userId: 'USER1001',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'No reward',
+      email: 'user2@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Unpaid',
+      status: 'Inactive',
+    },
+    {
+      id: 1,
+      sponsorId: 'SPONSOR100',
+      userId: 'USER1000',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'Reward 1',
+      email: 'user1@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Paid',
+      status: 'Active',
+    },
+    {
+      id: 2,
+      sponsorId: 'SPONSOR101',
+      userId: 'USER1001',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'No reward',
+      email: 'user2@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Unpaid',
+      status: 'Inactive',
+    },
+    {
+      id: 1,
+      sponsorId: 'SPONSOR100',
+      userId: 'USER1000',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'Reward 1',
+      email: 'user1@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Paid',
+      status: 'Active',
+    },
+    {
+      id: 2,
+      sponsorId: 'SPONSOR101',
+      userId: 'USER1001',
+      myWallet: 50,
+      eWallet: 100,
+      tradeProfitWallet: 30,
+      reward: 'No reward',
+      email: 'user2@mail.com',
+      walletAddress: '0x12...abcd',
+      investmentPackage: 'Gold',
+      totalEarnings: '$150 / EMGT 200',
+      registrationDate: '2025-08-01',
+      paidStatus: 'Unpaid',
+      status: 'Inactive',
+    },
+    // Add more user objects...
+  ];
 
-  const data = useMemo(() => {
-    return Array.from({ length: 60 }).map((_, i) => ({
-      sNo: i + 1,
-      sponsorId: `SPONSOR${i + 100}`,
-      userId: `USER${i + 1000}`,
-      password: "user@123",
-      myWallet: "50",
-      eWallet: "100",
-      tradeProfitWallet: "30",
-      reward: i % 2 === 0 ? "Reward 1" : "No reward",
-      email: `user${i + 1}@mail.com`,
-      walletAddress: "0x12...abcd",
-      package: "Gold",
-      earnings: "$150 / EMGT 200",
-      registrationDate: "2025-08-01",
-      paidStatus: i % 2 === 0 ? "Paid" : "Unpaid",
-      status: i % 2 === 0 ? "Active" : "Inactive",
-    }));
-  }, []);
+  const pageSize = 2;
+  const [pageIndex, setPageIndex] = useState(0);
+  const totalPages = Math.ceil(users.length / pageSize);
 
-  const columns = useMemo(() => [
-    { Header: "S.No.", accessor: "sNo" },
-    { Header: "Sponsor ID", accessor: "sponsorId" },
-    { Header: "User ID", accessor: "userId" },
-    {
-      Header: "Password",
-      accessor: "password",
-      Cell: ({ row }) => {
-        const rowIndex = row.index;
-        const isShown = showPasswordRow[rowIndex];
-        return (
-          <div className="flex items-center gap-2">
-            <span>{isShown ? row.original.password : "********"}</span>
-            <button
-              onClick={() =>
-                setShowPasswordRow((prev) => ({
-                  ...prev,
-                  [rowIndex]: !prev[rowIndex],
-                }))
-              }
-            >
-              {isShown ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-        );
-      },
-    },
-    { Header: "My Wallet", accessor: "myWallet" },
-    { Header: "E Wallet", accessor: "eWallet" },
-    { Header: "Trade Profit Wallet", accessor: "tradeProfitWallet" },
-    { Header: "Reward", accessor: "reward" },
-    { Header: "Email ID", accessor: "email" },
-    { Header: "Wallet Address", accessor: "walletAddress" },
-    { Header: "Investment Package", accessor: "package" },
-    { Header: "Total Earnings (USD/EMGT)", accessor: "earnings" },
-    { Header: "Registration Date", accessor: "registrationDate" },
-    { Header: "Paid Status", accessor: "paidStatus" },
-    { Header: "Status", accessor: "status" },
-    {
-      Header: "Block Action",
-      Cell: () => (
-        <div className="flex gap-2">
-          <button className="bg-green-500 px-2 py-1 rounded text-white text-sm">Active</button>
-          <button className="bg-red-500 px-2 py-1 rounded text-white text-sm">Block</button>
-        </div>
-      ),
-    },
-    {
-      Header: "USDT Withdraw",
-      Cell: () => (
-        <div className="flex gap-2">
-          <button className="bg-blue-500 px-2 py-1 rounded text-white text-sm">On</button>
-          <button className="bg-gray-500 px-2 py-1 rounded text-white text-sm">Off</button>
-        </div>
-      ),
-    },
-    {
-      Header: "ROI",
-      Cell: () => (
-        <div className="flex gap-2">
-          <button className="bg-blue-500 px-2 py-1 rounded text-white text-sm">On</button>
-          <button className="bg-gray-500 px-2 py-1 rounded text-white text-sm">Off</button>
-        </div>
-      ),
-    },
-    {
-      Header: "Quick Login",
-      Cell: () => (
-        <button className="bg-purple-600 text-white px-3 py-1 rounded text-sm">Login</button>
-      ),
-    },
-    {
-      Header: "Action",
-      Cell: () => (
-        <button className="text-blue-500 text-lg">
-          <FaEdit />
-        </button>
-      ),
-    },
-  ], [showPasswordRow]);
+  const paginatedUsers = users.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    pageOptions,
-    state,
-    setGlobalFilter,
-  } = useTable(
-    { columns, data, initialState: { pageSize: 20 } },
-    useGlobalFilter,
-    usePagination
-  );
+  const canPreviousPage = pageIndex > 0;
+  const canNextPage = pageIndex < totalPages - 1;
 
-  const { globalFilter, pageIndex } = state;
+  const previousPage = () => {
+    if (canPreviousPage) {
+      setPageIndex((prev) => prev - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (canNextPage) {
+      setPageIndex((prev) => prev + 1);
+    }
+  };
 
   const exportToExcel = () => {
-    const exportData = data.map(({ password, ...rest }) => rest);
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const data = users.map((user) => ({
+      'S.No.': user.id,
+      'Sponsor ID': user.sponsorId,
+      'User ID': user.userId,
+      Password: '********',
+      'My Wallet': user.myWallet,
+      'E Wallet': user.eWallet,
+      'Trade Profit Wallet': user.tradeProfitWallet,
+      Reward: user.reward,
+      'Email ID': user.email,
+      'Wallet Address': user.walletAddress,
+      'Investment Package': user.investmentPackage,
+      'Total Earnings (USD/EMGT)': user.totalEarnings,
+      'Registration Date': user.registrationDate,
+      'Paid Status': user.paidStatus,
+      Status: user.status,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
-    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-    const dataBlob = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(dataBlob, "User_Management.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
+    XLSX.writeFile(workbook, 'UserManagement.xlsx');
   };
 
   const exportToPDF = () => {
-    const input = document.getElementById("user-table");
-    if (!input) return;
+    const doc = new jsPDF();
+    const pageSize = 20;
 
-    html2canvas(input, { scale: 2 }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("l", "mm", "a4");
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 10, pdfWidth, pdfHeight);
-      pdf.save("User_Management.pdf");
-    });
+    const columns = [
+      'S.No.',
+      'Sponsor ID',
+      'User ID',
+      'Password',
+      'My Wallet',
+      'E Wallet',
+      'Trade Profit Wallet',
+      'Reward',
+      'Email ID',
+      'Wallet Address',
+      'Investment Package',
+      'Total Earnings (USD/EMGT)',
+      'Registration Date',
+      'Paid Status',
+      'Status',
+    ];
+
+    const data = users.map((user) => [
+      user.id,
+      user.sponsorId,
+      user.userId,
+      '********',
+      user.myWallet,
+      user.eWallet,
+      user.tradeProfitWallet,
+      user.reward,
+      user.email,
+      user.walletAddress,
+      user.investmentPackage,
+      user.totalEarnings,
+      user.registrationDate,
+      user.paidStatus,
+      user.status,
+    ]);
+
+    let page = 1;
+    let start = 0;
+    while (start < data.length) {
+      const pageData = data.slice(start, start + pageSize);
+      doc.autoTable({
+        head: [columns],
+        body: pageData,
+        startY: page === 1 ? 20 : 10,
+        theme: 'striped',
+        headStyles: { fillColor: [16, 57, 68] },
+        styles: { fontSize: 8, cellPadding: 2 },
+        margin: { top: 20 },
+        didDrawPage: () => {
+          doc.setFontSize(10);
+          doc.text(`Page ${page}`, doc.internal.pageSize.getWidth() - 30, 10);
+        },
+      });
+      start += pageSize;
+      if (start < data.length) {
+        doc.addPage();
+        page++;
+      }
+    }
+
+    doc.save('UserManagement.pdf');
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4 text-left text-[#103944]">User Management</h2>
+    <div className="p-4 mx-auto max-w-[1260px] md:p-6">
+      <h2 className="text-2xl font-bold mb-4 text-left text-[#103944]">
+        User Management
+      </h2>
 
-      {/* Export + Search */}
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex gap-2">
-          <button onClick={exportToPDF} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 text-sm">
+      <div className="mb-4 flex flex-col md:flex-row items-center justify-between">
+        <div className="flex gap-2 mb-4 md:mb-0">
+          <button
+            onClick={exportToPDF}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 text-sm"
+          >
             Export PDF
           </button>
-          <button onClick={exportToExcel} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm">
+          <button
+            onClick={exportToExcel}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm"
+          >
             Export Excel
           </button>
         </div>
-
-        <div className="flex items-center justify-end">
+        <div className="flex items-center w-full md:w-auto">
           <input
-            value={globalFilter || ""}
-            onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search..."
             className="border border-gray-300 rounded px-4 py-2 w-full max-w-xs"
           />
-          <button
-            onClick={() => {}}
-            className="ml-2 bg-[#103944] text-white px-4 py-2 rounded hover:bg-[#0e9d52] text-sm"
-          >
+          <button className="ml-2 bg-[#103944] text-white px-4 py-2 rounded hover:bg-[#0e9d52] text-sm">
             Search
           </button>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="w-full overflow-x-auto bg-white rounded-lg shadow-md border border-gray-200 p-4">
-        {/* <div className="min-w-[1800px]" id="user-table">
-          <table {...getTableProps()} className="w-full text-sm border"> */}
-        <div id="user-table" className="w-full overflow-x-auto">
-          <table {...getTableProps()} className="min-w-[1800px] w-full text-sm border">
-            <thead className="sticky top-0 z-10 bg-[#103944] text-white">
-              {headerGroups.map((headerGroup, hgIndex) => (
-                <tr {...headerGroup.getHeaderGroupProps()} key={hgIndex} className="text-left">
-                  {headerGroup.headers.map((column, colIndex) => (
-                    <th
-                      {...column.getHeaderProps()}
-                      key={column.id}
-                      className={`p-2 border whitespace-nowrap ${colIndex === 0 ? "sticky left-0 z-20 bg-[#103944]" : ""}`}
-                    >
-                      {column.render("Header")}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-
-            <tbody {...getTableBodyProps()}>
-              {page.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()} key={row.id} className="hover:bg-gray-100">
-                    {row.cells.map((cell, cellIndex) => (
-                      <td
-                        {...cell.getCellProps()}
-                        key={cell.column.id}
-                        className={`p-2 border whitespace-nowrap ${cellIndex === 0 ? "left-0 bg-white z-10" : ""}`}
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+      <div className="overflow-x-auto bg-white rounded-lg shadow-md border border-gray-200 p-4">
+        <table className="min-w-[1800px] w-full text-sm border">
+          <thead className="sticky top-0 z-10 bg-[#103944] text-white">
+            <tr className="text-left">
+              <th className="p-2 border sticky left-0 z-20 bg-[#103944] whitespace-nowrap">S.No.</th>
+              <th className="p-2 border whitespace-nowrap">Sponsor ID</th>
+              <th className="p-2 border whitespace-nowrap">User ID</th>
+              <th className="p-2 border whitespace-nowrap">Password</th>
+              <th className="p-2 border whitespace-nowrap">My Wallet</th>
+              <th className="p-2 border whitespace-nowrap">E Wallet</th>
+              <th className="p-2 border whitespace-nowrap">Trade Profit Wallet</th>
+              <th className="p-2 border whitespace-nowrap">Reward</th>
+              <th className="p-2 border whitespace-nowrap">Email ID</th>
+              <th className="p-2 border whitespace-nowrap">Wallet Address</th>
+              <th className="p-2 border whitespace-nowrap">Investment Package</th>
+              <th className="p-2 border whitespace-nowrap">Total Earnings (USD/EMGT)</th>
+              <th className="p-2 border whitespace-nowrap">Registration Date</th>
+              <th className="p-2 border whitespace-nowrap">Paid Status</th>
+              <th className="p-2 border whitespace-nowrap">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedUsers.map((user) => (
+              <tr key={user.id} className="hover:bg-gray-100">
+                <td className="p-2 border sticky left-0 bg-white z-10">{user.id}</td>
+                <td className="p-2 border">{user.sponsorId}</td>
+                <td className="p-2 border">{user.userId}</td>
+                <td className="p-2 border">********</td>
+                <td className="p-2 border">{user.myWallet}</td>
+                <td className="p-2 border">{user.eWallet}</td>
+                <td className="p-2 border">{user.tradeProfitWallet}</td>
+                <td className="p-2 border">{user.reward}</td>
+                <td className="p-2 border">{user.email}</td>
+                <td className="p-2 border">{user.walletAddress}</td>
+                <td className="p-2 border">{user.investmentPackage}</td>
+                <td className="p-2 border">{user.totalEarnings}</td>
+                <td className="p-2 border">{user.registrationDate}</td>
+                <td className="p-2 border">{user.paidStatus}</td>
+                <td className="p-2 border">{user.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Pagination */}
       <div className="flex items-center justify-end mt-4">
-        <span className="mr-4 text-[16px] font-semibold text-[#103944]">
-          Page {pageIndex + 1} of {pageOptions.length}
+        <span className="text-sm text-gray-600 mr-4">
+          Page {pageIndex + 1} of {totalPages}
         </span>
-        <button
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-          className={`px-4 py-2 mr-2 font-semibold rounded ${
-            canPreviousPage
-              ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
+        <div>
+          <button
+            onClick={previousPage}
+            disabled={!canPreviousPage}
+            className={`px-4 py-2 mr-2 font-semibold rounded ${
+              canPreviousPage
+                ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
+                : "bg-[#103944] text-[#FFF] cursor-not-allowed"
+            }`}
+          >
+            Prev
+          </button>
+          <button
+            onClick={nextPage}
+            disabled={!canNextPage}
+            className={`px-4 py-2 font-semibold rounded ${
+              canNextPage
+               ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
               : "bg-[#103944] text-[#FFF] cursor-not-allowed"
-          }`}
-        >
-          Prev
-        </button>
-        <button
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-          className={`px-4 py-2 font-semibold rounded ${
-            canNextPage
-              ? "bg-[#103944] text-[#FFF] hover:bg-[#0e9d52]"
-              : "bg-[#103944] text-[#FFF] cursor-not-allowed"
-          }`}
-        >
-          Next
-        </button>
+            }`}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
