@@ -67,12 +67,12 @@ const TopNav = () => {
 
           <Link to="/" className="lg:hidden">
             <img
-              className="dark:hidden"
+              className="dark:hidden w-20"
               src={logo}
               alt="Logo"
             />
             <img
-              className="hidden dark:block"
+              className="hidden w-20 dark:block"
               src={logo}
               alt="Logo"
             />
