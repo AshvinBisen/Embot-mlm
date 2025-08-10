@@ -16,6 +16,7 @@ const SetTokenPrice = lazy(() => import('../Admin/Pages/SetTokenPrice'));
 const Deposit = lazy(() => import('../Admin/Pages/UsersDeposit/Deposit'));
 const DepositReport = lazy(() => import('../Admin/Pages/UsersDeposit/DepositReport'));
 const InvestmentsPlan = lazy(() => import('../Admin/Pages/InvestmentManagement/InvestmentsPlan'));
+const BonanzaPlan = lazy(() => import('../Admin/Pages/InvestmentManagement/BonanzaPlan'));
 const InvestmentsReports = lazy(() => import('../Admin/Pages/InvestmentManagement/Reports'));
 const Withdrawals = lazy(() => import('../Admin/Pages/PayoutManagement/Withdrawals'));
 const WithdrawalReport = lazy(() => import('../Admin/Pages/PayoutManagement/WithdrawalReports'));
@@ -124,6 +125,14 @@ const AdminRoutes = () => {
           element={
             <Suspense fallback={<AdminLoader />}>
               <InvestmentsPlan />
+            </Suspense>
+          }
+        />
+        <Route
+          path="investment-management/bonanza-plan"
+          element={
+            <Suspense fallback={<AdminLoader />}>
+              <BonanzaPlan />
             </Suspense>
           }
         />

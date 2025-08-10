@@ -51,7 +51,7 @@ const navItems = [
     name: "Investment Management",
     subItems: [
       { name: "Investments Plan", path: "/admin/investment-management/investments-plan", pro: false },
-      // { name: "Staking Profits", path: "/admin/investment-management/staking-profits", pro: false },
+      { name: "Bonanza Plan", path: "/admin/investment-management/bonanza-plan", pro: false },
       { name: "Report", path: "/admin/investment-management/report", pro: false },
     ],
   },
